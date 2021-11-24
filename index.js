@@ -30,7 +30,10 @@ async function main() {
         res.send("Server is live")
     })
 
+    // Login Route
     app.use("/login", loginRoutes)
+
+    
 }
 
 main()
