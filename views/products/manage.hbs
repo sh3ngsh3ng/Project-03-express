@@ -17,7 +17,21 @@
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'listWeek' //listDay, listWeek, listMonth, listYear
+            initialView: 'dayGridMonth', //listDay, listWeek, listMonth, listYear
+            
+            // for list view:  https://fullcalendar.io/docs/list-view
+            // to modify events: https://fullcalendar.io/docs/event-object
+            events: [
+            {
+                title: "Test",
+                backgroundColor: 'red',
+                start: '2021-11-25',
+                end: '2021-11-26',
+                borderColor: 'green',
+                backgroundColor: 'red'
+            }
+            ],
+
         });
         calendar.render();
       });
