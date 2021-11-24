@@ -24,6 +24,7 @@ app.use(
 // Routes
 const loginRoutes = require("./routes/login")
 const vendorRoutes = require("./routes/vendor")
+const productRoutes = require("./routes/products")
 
 async function main() {
     // Main Page
@@ -34,9 +35,11 @@ async function main() {
     // Login Route
     app.use("/login", loginRoutes)
 
-
     // Vendor Route
     app.use("/user", vendorRoutes)
+
+    // Manage Product Routes
+    app.use("/products", productRoutes)
 }
 
 main()
