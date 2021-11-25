@@ -2,6 +2,29 @@
 
 {{#block 'content'}}
 <h1>Here to view all the inventory</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Vendor ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each products}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{product_name}}</td>
+                <td>{{product_description}}</td>
+                <td>{{vendor_id}}</td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+
 {{/block}}
 
 

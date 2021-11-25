@@ -38,4 +38,4 @@ const Order = bookshelf.model("Order", {
     tableName: 'orders'
 })
 
-module.exports = {Product, Vendor}
+module.exports = {Product, Vendor, User, Cart, CartItems, ProductSlot, OrderItem, Order}
