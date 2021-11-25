@@ -32,7 +32,9 @@ exports.up = function(db) {
 };
 
 exports.down = function(db) {
-  return db.dropColumn('vendor_id')
+  return db.removeForeignKey('products', 'product_vendor_fk').then(()=> {
+    return db.removeColumn('products', 'vendor_id')
+  })
 };
 
 exports._meta = {
