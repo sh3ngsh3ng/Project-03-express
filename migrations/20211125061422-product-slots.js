@@ -18,7 +18,7 @@ exports.up = function(db) {
   return db.createTable('product_slots', {
     id: {type: 'int', primaryKey: true, autoIncrement: true, unsigned: true},
     slot_date: {type: 'date'},
-    slot_time: {type: 'timestamp'},
+    slot_time: {type: 'datetime'},
     slot_availability: {type: 'int'},
     slot_quantity: {type: 'int'},
     product_id: {

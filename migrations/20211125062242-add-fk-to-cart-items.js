@@ -32,7 +32,7 @@ exports.up = function(db) {
 };
 
 exports.down = function(db) {
-  return db.removeForeignKey('cart_items, product_slots_id').then(()=>{
+  return db.removeForeignKey('cart_items', 'cart_items_product_slots_id').then(()=>{
     db.removeColumn('cart_items', 'product_slots_id')
   })
 };

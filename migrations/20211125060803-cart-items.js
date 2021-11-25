@@ -36,7 +36,7 @@ exports.up = function(db) {
 };
 
 exports.down = function(db) {
-  return dropTable('cart_items')
+  return db.dropTable('cart_items')
 };
 
 exports._meta = {
