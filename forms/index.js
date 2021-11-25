@@ -25,7 +25,7 @@ var bootstrapField = function (name, object) {
 };
 
 
-const addNewProduct = () => {
+const createProductForm = () => {
     return forms.create({
         'title': fields.string({
             required: true,
@@ -51,4 +51,4 @@ const addNewProduct = () => {
     })
 }
 
-module.exports = {bootstrapField, addNewProduct}
+module.exports = {bootstrapField, createProductForm}
