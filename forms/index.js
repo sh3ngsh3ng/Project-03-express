@@ -27,21 +27,24 @@ var bootstrapField = function (name, object) {
 // caolan form documentation: https://github.com/caolan/forms
 const createProductForm = () => {
     return forms.create({
-        'title': fields.string({
+        'product_name': fields.string({
+            label: "Title",
             required: true,
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
             }
         }),
-        'description': fields.string({
+        'product_description': fields.string({
+            label: "Describe Your Product",
             required: true,
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
             }
         }),
-        'price': fields.string({
+        'product_price': fields.string({
+            label: "Price",
             required: true,
             errorAfterField: true,
             cssClasses: {
