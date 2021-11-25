@@ -29,6 +29,11 @@ router.post('/add', async(req,res)=>{
             product.set('vendor_id', 1)
             await product.save()
             res.redirect('/products')
+        },
+        'error': async(form) => {
+            res.render('products/add-product', {
+                'form': form.toHTML(bootstrapField)
+            })
         }
     })
 })

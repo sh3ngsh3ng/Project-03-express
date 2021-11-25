@@ -24,7 +24,7 @@ var bootstrapField = function (name, object) {
     return '<div class="form-group">' + label + widget + error + '</div>';
 };
 
-
+// caolan form documentation: https://github.com/caolan/forms
 const createProductForm = () => {
     return forms.create({
         'title': fields.string({
@@ -46,7 +46,8 @@ const createProductForm = () => {
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
-            }
+            },
+            'validators': [validators.integer()]
         })
     })
 }
