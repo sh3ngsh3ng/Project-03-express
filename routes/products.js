@@ -45,7 +45,7 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
 })
 
 // view update product form
-router.get('/:product_id/update', async (req, res) => {
+router.get('/:product_id/update', checkIfAuthenticated, async (req, res) => {
     const productId = req.params.product_id
     const product = await Product.where({
         'id': productId
@@ -67,7 +67,7 @@ router.get('/:product_id/update', async (req, res) => {
 
 
 // process update product form
-router.post("/:product_id/update", async(req,res) => {
+router.post("/:product_id/update", checkIfAuthenticated, async(req,res) => {
     const product = await Product.where({
         'id': req.params.product_id
     }).fetch({
@@ -91,7 +91,7 @@ router.post("/:product_id/update", async(req,res) => {
 })
 
 // view for deletion of product
-router.get("/:product_id/delete", async(req,res)=> {
+router.get("/:product_id/delete", checkIfAuthenticated, async(req,res)=> {
     const product = await Product.where({
         'id': req.params.product_id
     }).fetch({
@@ -106,7 +106,7 @@ router.get("/:product_id/delete", async(req,res)=> {
 
 
 // process deletion of product
-router.post("/:product_id/delete", async(req,res)=>{
+router.post("/:product_id/delete", cehckIfAuthenticated, async(req,res)=>{
     const product = await Product.where({
         'id': req.params.product_id
     }).fetch({
