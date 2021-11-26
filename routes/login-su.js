@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const {User} = require("../models")
 
-const {createRegistrationForm, bootstrapField} = require("../forms")
+const {createRegistrationForm, createLoginForm, bootstrapField} = require("../forms")
 
 // display sign up form
 router.get("/sign-up", (req,res) => {
@@ -43,8 +43,55 @@ router.post("/sign-up", (req,res) => {
     })
 })
 
+// view login form
 router.get("/login", (req,res) => {
-    res.send("Login here")
+    const loginForm = createLoginForm()
+    res.render("login-su/login", {
+        'form': loginForm.toHTML(bootstrapField)
+    })
+})
+
+
+// process login form
+router.post("/login", (req,res) => {
+    const loginForm = createLoginForm()
+    loginForm.handle(req, {
+        'success': async (form) => {
+            let user = await User.where({
+                'username': form.data.username
+            }).fetch({
+                require: false
+            })
+
+            if (!user) {
+                req.flash("error_messages", "Login Failed. Please try again.")
+                res.redirect("/login")
+            } else {
+                // user found (login success + fail)
+                if (user.get("password") === form.data.password) {
+                    // to store details in session file
+                    req.session.user = {
+                        id: user.get("id"),
+                        username: user.get('username'),
+                        email: user.get('email')
+                    }
+                    req.flash("success_messages", "You have logged in successfully! " + user.get("username"))
+                    res.redirect("/user/profile")
+                } else {
+                    req.flash("error_messages", "Login Failed. Please try again")
+                    res.redirect("/login")
+                }
+                
+            }
+
+        },
+        'error': async(form) => {
+            req.flash("error_messages", "Login Failed. Please try again")
+            res.render("login-su/login", {
+                'form': form.toHTML(bootstrapField)
+            })
+        }
+    })
 })
 
 module.exports = router
