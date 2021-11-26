@@ -1,10 +1,10 @@
 const express = require("express")
 const router = express.Router()
-const {User} = require("../models")
+const {Vendor} = require("../models")
 
 const {createRegistrationForm, createLoginForm, bootstrapField} = require("../forms")
 
-// display sign up form
+// display vendor sign up form
 router.get("/sign-up", (req,res) => {
     const registerForm = createRegistrationForm()
     res.render("login-su/sign-up", {
@@ -13,25 +13,20 @@ router.get("/sign-up", (req,res) => {
 })
 
 
-// process sign up form
+// process vendor sign up form
 router.post("/sign-up", (req,res) => {
     const registerForm = createRegistrationForm()
     registerForm.handle(req, {
         'success': async(form) => {
-            const user = new User({
+            const vendor = new Vendor({
+                'vendor_name': form.data.vendor_name,
+                'vendor_phone': form.data.vendor_phone,
+                'vendor_email': form.data.vendor_email,
                 'username': form.data.username,
-                'password': form.data.password,
-                'email': form.data.email,
-                'user_type': "admin"
+                'password': form.data.password
             })
 
-            // user.set((form) => {
-            //     let data = form.data
-            //     const {confirm_password, ...newData} = data
-            //     return newData
-            // })
-
-            await user.save()
+            await vendor.save()
             req.flash("success_messages", "You have signed up successfully!")
             res.redirect("/login")
         },
@@ -43,7 +38,7 @@ router.post("/sign-up", (req,res) => {
     })
 })
 
-// view login form
+// view vendor login form
 router.get("/login", (req,res) => {
     const loginForm = createLoginForm()
     res.render("login-su/login", {
@@ -52,30 +47,30 @@ router.get("/login", (req,res) => {
 })
 
 
-// process login form
+// process vendor login form
 router.post("/login", (req,res) => {
     const loginForm = createLoginForm()
     loginForm.handle(req, {
         'success': async (form) => {
-            let user = await User.where({
+            let vendor = await Vendor.where({
                 'username': form.data.username
             }).fetch({
                 require: false
             })
 
-            if (!user) {
+            if (!vendor) {
                 req.flash("error_messages", "Login Failed. Please try again.")
                 res.redirect("/login")
             } else {
                 // user found (login success + fail)
-                if (user.get("password") === form.data.password) {
+                if (vendor.get("password") === form.data.password) {
                     // to store details in session file
-                    req.session.user = {
-                        id: user.get("id"),
-                        username: user.get('username'),
-                        email: user.get('email')
+                    req.session.vendor = {
+                        id: vendor.get("id"),
+                        username: vendor.get('username'),
+                        email: vendor.get('vendor_email')
                     }
-                    req.flash("success_messages", "You have logged in successfully! " + user.get("username"))
+                    req.flash("success_messages", "You have logged in successfully! " + vendor.get("username"))
                     res.redirect("/user/profile")
                 } else {
                     req.flash("error_messages", "Login Failed. Please try again")

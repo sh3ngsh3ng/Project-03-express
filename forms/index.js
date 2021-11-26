@@ -57,14 +57,30 @@ const createProductForm = () => {
 
 const createRegistrationForm = () => {
     return forms.create({
-        'username': fields.string({
+        'vendor_name': fields.string({
+            label: "Full Name",
             required: true,
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
             }
         }),
-        'email': fields.string({
+        'vendor_phone': fields.string({
+            label: "Contact Number",
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'vendor_email': fields.string({
+            label: "Email",
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'username': fields.string({
             required: true,
             errorAfterField: true,
             cssClasses: {
