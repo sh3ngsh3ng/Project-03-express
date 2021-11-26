@@ -1,6 +1,18 @@
 {{#extends 'base'}}
 
 {{#block 'content'}}
+{{#if success_messages}}
+    <div class="alert alert-success">
+        {{this.success_messages}}
+    </div>
+{{/if}}
+
+{{#if error_messages}}
+    <div class="alert alert-danger">
+        {{this.error_messages}}
+    </div>
+{{/if}}
+
 <h1>Here to view all the inventory</h1>
 <a class="btn btn-primary" href="/products/add">Add</a>
 <table class="table">

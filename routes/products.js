@@ -7,7 +7,6 @@ const {bootstrapField, createProductForm} = require ("../forms")
 // view all products
 router.get("/", async (req,res) => {
     let products = await Product.collection().fetch()
-    console.log(products.toJSON())
     res.render("products/inventory", {
         'products': products.toJSON()
     })
@@ -33,9 +32,11 @@ router.post('/add', async(req,res)=>{
             product.set(form.data)
             product.set('vendor_id', 1)
             await product.save()
+            req.flash("success_messages", "New Product has been added")
             res.redirect('/products')
         },
         'error': async(form) => {
+            req.flash("error_messages", "Please fill up the form properly")
             res.render('products/add-product', {
                 'form': form.toHTML(bootstrapField)
             })
