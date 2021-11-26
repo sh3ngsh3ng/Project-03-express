@@ -3,6 +3,15 @@ const router = express.Router()
 const {Vendor} = require("../models")
 
 const {createRegistrationForm, createLoginForm, bootstrapField} = require("../forms")
+const crypto = require('crypto')
+
+// hash password function
+const hashPassword = (password) => {
+    const md5 = crypto.createHash('md5')
+    const hash = md5.update(password).digest('base64')
+    return hash
+}
+
 
 // display vendor sign up form
 router.get("/sign-up", (req,res) => {
@@ -23,7 +32,7 @@ router.post("/sign-up", (req,res) => {
                 'vendor_phone': form.data.vendor_phone,
                 'vendor_email': form.data.vendor_email,
                 'username': form.data.username,
-                'password': form.data.password
+                'password': hashPassword(form.data.password)
             })
 
             await vendor.save()
@@ -63,7 +72,7 @@ router.post("/login", (req,res) => {
                 res.redirect("/login")
             } else {
                 // user found (login success + fail)
-                if (vendor.get("password") === form.data.password) {
+                if (vendor.get("password") === hashPassword(form.data.password)) {
                     // to store details in session file
                     req.session.vendor = {
                         id: vendor.get("id"),
@@ -71,7 +80,7 @@ router.post("/login", (req,res) => {
                         email: vendor.get('vendor_email')
                     }
                     req.flash("success_messages", "You have logged in successfully! " + vendor.get("username"))
-                    res.redirect("/user/profile")
+                    res.redirect("/vendor/profile")
                 } else {
                     req.flash("error_messages", "Login Failed. Please try again")
                     res.redirect("/login")

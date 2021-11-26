@@ -2,10 +2,10 @@ const express = require("express")
 const router = express.Router()
 const {Product} = require("../models")
 const {bootstrapField, createProductForm} = require ("../forms")
-
+const {checkIfAuthenticated} = require("../middleware")
 
 // view all products
-router.get("/", async (req,res) => {
+router.get("/", checkIfAuthenticated, async (req,res) => {
     let products = await Product.collection().fetch()
     res.render("products/inventory", {
         'products': products.toJSON()
@@ -13,7 +13,7 @@ router.get("/", async (req,res) => {
 })
 
 // view add product form
-router.get('/add', (req,res)=>{
+router.get('/add', checkIfAuthenticated, (req,res)=>{
     const productForm = createProductForm()
     res.render('products/add-product', {
         'form': productForm.toHTML(bootstrapField)
@@ -21,7 +21,7 @@ router.get('/add', (req,res)=>{
 })
 
 // process add product form
-router.post('/add', async(req,res)=>{
+router.post('/add', checkIfAuthenticated, async(req,res)=>{
     const productForm = createProductForm()
     productForm.handle(req, {
         'success': async(form) => {

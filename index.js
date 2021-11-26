@@ -6,7 +6,6 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const FileStore = require('session-file-store')(session)
 
-
 let app = express()
 
 
@@ -54,7 +53,7 @@ async function main() {
     app.use("/", loginSignUpRoutes)
 
     // Vendor Route
-    app.use("/user", vendorRoutes)
+    app.use("/vendor", vendorRoutes)
 
     // Manage Product Routes
     app.use("/products", productRoutes)
