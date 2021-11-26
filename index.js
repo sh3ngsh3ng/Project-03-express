@@ -41,7 +41,7 @@ app.use(function(req,res,next) {
 
 
 // Routes
-const loginRoutes = require("./routes/login")
+const loginSignUpRoutes = require("./routes/login-su")
 const vendorRoutes = require("./routes/vendor")
 const productRoutes = require("./routes/products")
 
@@ -52,7 +52,7 @@ async function main() {
     })
 
     // Login Route
-    app.use("/login", loginRoutes)
+    app.use("/", loginSignUpRoutes)
 
     // Vendor Route
     app.use("/user", vendorRoutes)
