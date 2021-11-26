@@ -47,9 +47,6 @@ const productRoutes = require("./routes/products")
 
 async function main() {
     // Main Page
-    app.get("/", (req,res) => {
-        res.send("Server is live")
-    })
 
     // Login Route
     app.use("/", loginSignUpRoutes)

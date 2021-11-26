@@ -21,8 +21,15 @@ router.post("/sign-up", (req,res) => {
             const user = new User({
                 'username': form.data.username,
                 'password': form.data.password,
-                'user_type': "admin",
+                'email': form.data.email,
+                'user_type': "admin"
             })
+
+            // user.set((form) => {
+            //     let data = form.data
+            //     const {confirm_password, ...newData} = data
+            //     return newData
+            // })
 
             await user.save()
             req.flash("success_messages", "You have signed up successfully!")
@@ -34,6 +41,10 @@ router.post("/sign-up", (req,res) => {
             })
         }
     })
+})
+
+router.get("/login", (req,res) => {
+    res.send("Login here")
 })
 
 module.exports = router
