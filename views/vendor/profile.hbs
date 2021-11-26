@@ -2,13 +2,17 @@
 
 {{#block 'content'}}
 
-{{#if "success_messages"}}
-    <div class="alert alert-success">
-        {{success_messages}}
-    </div>
-{{/if}}
+    {{#if success_messages}}
+        <div class="alert alert-success">
+            {{success_messages}}
+        </div>
+    {{/if}}
 
     <h1>User Front Page here!</h1>
+    {{user.email}}
+    {{user.username}}
+
+    <a href="/user/logout" class="btn btn-danger">Logout</a>
 {{/block}}
 
 {{/extends}}

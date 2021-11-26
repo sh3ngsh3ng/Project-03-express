@@ -47,7 +47,9 @@ const productRoutes = require("./routes/products")
 
 async function main() {
     // Main Page
-
+    app.get("/main", (req,res)=> {
+        res.send("Main Page" + res.locals.success_messages)
+    })
     // Login Route
     app.use("/", loginSignUpRoutes)
 
