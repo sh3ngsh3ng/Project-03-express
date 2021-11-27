@@ -32,12 +32,18 @@ app.use(session({
 
 app.use(flash())
 
+// middle ware to save flash messages
 app.use(function(req,res,next) {
     res.locals.success_messages = req.flash("success_messages")
     res.locals.error_messages = req.flash("error_messages")
     next()
 })
 
+// middle ware to pass session informatio nfo vendor to all hbs
+app.use(function(req,res,next) {
+    res.locals.vendor = req.session.vendor
+    next()
+})
 
 // Routes
 const loginSignUpRoutes = require("./routes/login-su")

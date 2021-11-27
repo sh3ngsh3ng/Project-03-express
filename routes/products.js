@@ -101,12 +101,11 @@ router.get("/:product_id/delete", checkIfAuthenticated, async(req,res)=> {
     res.render('products/delete-product', {
         'product': product.toJSON()
     })
-
 })
 
 
 // process deletion of product
-router.post("/:product_id/delete", cehckIfAuthenticated, async(req,res)=>{
+router.post("/:product_id/delete", checkIfAuthenticated, async(req,res)=>{
     const product = await Product.where({
         'id': req.params.product_id
     }).fetch({
