@@ -2,12 +2,12 @@ const express = require("express")
 const router = express.Router()
 
 // profile page
-router.get("/profile", (req,res) => {
+router.get("/dashboard", (req,res) => {
     const vendor = req.session.vendor
     if (!vendor) {
         res.send("you need to login")
     } else {
-        res.render("vendor/profile", {
+        res.render("vendor/dashboard", {
             'vendor': vendor
         })
     }

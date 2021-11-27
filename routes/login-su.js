@@ -80,7 +80,7 @@ router.post("/login", (req,res) => {
                         email: vendor.get('vendor_email')
                     }
                     req.flash("success_messages", "You have logged in successfully! " + vendor.get("username"))
-                    res.redirect("/vendor/profile")
+                    res.redirect("/vendor/dashboard")
                 } else {
                     req.flash("error_messages", "Login Failed. Please try again")
                     res.redirect("/login")
