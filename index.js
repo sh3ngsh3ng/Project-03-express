@@ -13,7 +13,7 @@ let app = express()
 
 
 app.set("view engine", "hbs")
-
+app.use(express.static("public"))
 
 wax.on(hbs.handlebars)
 wax.setLayoutPath("./views/layouts")
