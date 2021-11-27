@@ -5,6 +5,9 @@ require("dotenv").config()
 const session = require('express-session')
 const flash = require('connect-flash')
 const FileStore = require('session-file-store')(session)
+const csrf = require('csurf')
+
+
 
 let app = express()
 
@@ -44,6 +47,27 @@ app.use(function(req,res,next) {
     res.locals.vendor = req.session.vendor
     next()
 })
+
+// middleware to enable csrf for all routes
+app.use(csrf())
+
+// handle csrf error 
+app.use(function(err, req, res, next) {
+    if (err && err.code == "EBADCSRFTOKEN") {
+        req.flash('error_messages', "The form has expired. Please try again.")
+        res.redirect('back')
+    } else {
+        next()
+    }
+})
+
+// share csrf token with all hbs
+app.use(function(req,res,next){
+    res.locals.csrfToken = req.csrfToken()
+    next()
+})
+
+
 
 // Routes
 const loginSignUpRoutes = require("./routes/login-su")

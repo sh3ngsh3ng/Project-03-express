@@ -14,7 +14,6 @@ router.get("/profile", (req,res) => {
     
 })
 
-
 // schedule page
 router.get("/schedule", (req,res) => {
     res.render('vendor/schedule')

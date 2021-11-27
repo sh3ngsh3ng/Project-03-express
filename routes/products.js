@@ -30,7 +30,7 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
             // product.set('product_description', form.data.description)
             // product.set('product_price', form.data.price)
             product.set(form.data)
-            product.set('vendor_id', 1)
+            product.set('vendor_id', 8)
             await product.save()
             req.flash("success_messages", "New Product has been added")
             res.redirect('/products')

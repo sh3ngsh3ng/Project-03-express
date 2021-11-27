@@ -11,6 +11,7 @@
 <h1>Add New Product</h1>
 <a href="/products" class="btn btn-sm btn-danger">Back</a>
 <form method="POST">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
     {{{form}}}
     <input type="submit" value= "Add Product" class="btn btn-primary"/>
 </form>
