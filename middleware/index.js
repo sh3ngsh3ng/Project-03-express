@@ -14,7 +14,6 @@ const cloudinaryVariables = (req,res,next) => {
         cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
         cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
     }
-    console.log(res.locals.cloudinary_variables)
     next()
 }
 

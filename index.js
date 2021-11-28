@@ -92,7 +92,7 @@ async function main() {
     app.use("/products", productRoutes)
 
     // Upload image to cloudinary
-    app.use("/upload", uploadImage)
+    app.use("/upload-image", uploadImage)
 }
 
 main()
