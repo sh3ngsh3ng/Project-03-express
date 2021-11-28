@@ -3,3 +3,12 @@
 .vendor-nav-bar-items {
     justify-content: end;
 }
+
+
+/* preview card */
+#product_description {
+    height: 80px;
+    white-space: initial;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
