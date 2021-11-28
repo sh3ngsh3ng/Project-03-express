@@ -1,14 +1,65 @@
 {{#extends 'base'}}
 
 {{#block 'content'}}
-<h1>Add New Product</h1>
-<a href="/products" class="btn btn-sm btn-danger">Back</a>
-<h2>{{product.product_name}}</h2>
-<form method="POST">
-    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
-    {{{form}}}
-    <input type="submit" value= "Update" class="btn btn-primary"/>
-</form>
+    <h1>Add New Product</h1>
+    <a href="/products" class="btn btn-sm btn-danger">Back</a>
+    <h2>{{product.product_name}}</h2>
+    <form method="POST">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+        {{#if product.image_url}}
+                <img src="{{product.thumbnail_url}}" id="uploaded_image" style="display:block"/>
+            {{else}}
+                <img src="" id ="uploaded-image" style="display:none"/>
+        {{/if}}
+        <a href="#" id="upload_widget" class ="btn btn-secondary btn-sm">Upload</a>
+
+        {{{form}}}
+        <input type="submit" value= "Update" class="btn btn-primary"/>
+    </form>
+{{/block}}
+
+{{#block 'script'}}
+    {{!-- axios cdn --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+
+    {{!-- cloudinary widget cdn --}}
+    <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+
+    <script>
+        function generateSignature(callback, params_to_sign) {
+            axios.get('/upload-image/sign', {
+                params: {
+                    params_to_sign
+                }
+            }).then(function(response) {
+                callback(response.data)
+            })
+        }
+
+        var myWidget = cloudinary.createUploadWidget({
+            cloudName: `{{cloudinary_variables.cloudinaryName}}`,
+            apiKey: `{{cloudinary_variables.cloudinaryApiKey}}`,
+            uploadPreset: `{{cloudinary_variables.cloudinaryPreset}}`,
+            uploadSignature: generateSignature
+        }, (error, result) => {
+            if (!error && result.event === "success") {
+                console.log('Done! Here is the image infor: ', result)
+                document.querySelector("#upload_widget").style.display="none"
+
+                document.querySelector('#id_image_url').value = result.info.url;
+                document.querySelector('#id_thumbnail_url').value = result.info.thumbnail_url;
+                document.querySelector('#uploaded_image').src = result.info.thumbnail_url;
+                document.querySelector('#uploaded_image').style.display = 'inline';
+            }
+        })
+
+        document.getElementById("upload_widget").addEventListener('click', function() {
+            console.log({{cloudinaryName}})
+            myWidget.open()
+        }, false)
+
+
+    </script>
 {{/block}}
 
 

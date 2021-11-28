@@ -1,25 +1,23 @@
 {{#extends 'base'}}
 
 {{#block 'content'}}
-{{#if error_messages}}
-    <div class="alert alert-danger">
-        {{this.error_messages}}
-    </div>
-{{/if}}
+    {{#if error_messages}}
+        <div class="alert alert-danger">
+            {{this.error_messages}}
+        </div>
+    {{/if}}
 
-<h1>Add New Product</h1>
-<a href="/products" class="btn btn-sm btn-danger">Back</a>
-<form method="POST">
-    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
-    {{{form}}}
-    <div>
-        <a href="#" class = "btn btn-primary" id="upload_widget">Upload</a>
-        <img src="" style="display:none" id="uploaded_image"/>
-    </div>
-    <input type="submit" value= "Add Product" class="btn btn-primary"/>
-</form>
-
-
+    <h1>Add New Product</h1>
+    <a href="/products" class="btn btn-sm btn-danger">Back</a>
+    <form method="POST">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+        {{{form}}}
+        <div>
+            <a href="#" class = "btn btn-primary" id="upload_widget">Upload</a>
+            <img src="" style="display:none" id="uploaded_image"/>
+        </div>
+        <input type="submit" value= "Add Product" class="btn btn-primary"/>
+    </form>
 {{/block}}
 
 
@@ -54,6 +52,7 @@
             document.querySelector("#upload_widget").style.display="none"
 
             document.querySelector('#id_image_url').value = result.info.url;
+            document.querySelector('#id_thumbnail_url').value = result.info.thumbnail_url;
             document.querySelector('#uploaded_image').src = result.info.thumbnail_url;
             document.querySelector('#uploaded_image').style.display = 'inline';
         }

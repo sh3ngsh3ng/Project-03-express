@@ -45,7 +45,7 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
 })
 
 // view update product form
-router.get('/:product_id/update', checkIfAuthenticated, async (req, res) => {
+router.get('/:product_id/update', [checkIfAuthenticated, cloudinaryVariables], async (req, res) => {
     const productId = req.params.product_id
     const product = await Product.where({
         'id': productId
