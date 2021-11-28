@@ -7,8 +7,19 @@
         </div>
     {{/if}}
 
+    {{!-- start of tabs --}}
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="/products" onclick="">Product Listings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/products/add">Add New</a>
+      </li>
+    </ul>
+    {{!-- end of tabs --}}
+
     <h1>Add New Product</h1>
-    <a href="/products" class="btn btn-sm btn-danger">Back</a>
+
     <form method="POST">
         <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
         {{{form}}}
@@ -59,7 +70,6 @@
     })
 
     document.getElementById("upload_widget").addEventListener('click', function() {
-        console.log({{cloudinaryName}})
         myWidget.open()
     }, false)
 

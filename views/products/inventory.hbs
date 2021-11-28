@@ -13,8 +13,18 @@
         </div>
     {{/if}}
 
-    <h1>Here to view all the inventory</h1>
-    <a class="btn btn-primary" href="/products/add">Add</a>
+    
+    {{!-- start of tabs --}}
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/products" onclick="">Product Listings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/products/add">Add New</a>
+      </li>
+    </ul>
+    {{!-- end of tabs --}}
+    
     <div class="accordion" id="accordionExample">
         <div class="accordion-item">
 
