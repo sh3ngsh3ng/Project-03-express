@@ -12,3 +12,22 @@
     overflow: hidden;
     text-overflow: ellipsis
 }
+
+
+/* start of add-new-products */
+#preview-card-div {
+    display: flex;
+    justify-content: center;
+}
+
+#preview-card-title-div {
+    display: flex;
+    justify-content: center;
+}
+
+#add-product-form-div {
+    margin: 20px;
+}
+
+
+

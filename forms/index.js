@@ -29,7 +29,7 @@ var bootstrapField = function (name, object) {
 const createProductForm = () => {
     return forms.create({
         'product_name': fields.string({
-            label: "Title",
+            label: "Title of Escape Room",
             required: true,
             errorAfterField: true,
             cssClasses: {
@@ -37,7 +37,7 @@ const createProductForm = () => {
             }
         }),
         'product_description': fields.string({
-            label: "Describe Your Product",
+            label: "Describe the Room",
             required: true,
             errorAfterField: true,
             cssClasses: {
@@ -45,7 +45,7 @@ const createProductForm = () => {
             }
         }),
         'product_price': fields.string({
-            label: "Price",
+            label: "Price Per Pax",
             required: true,
             errorAfterField: true,
             cssClasses: {
