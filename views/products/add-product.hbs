@@ -19,6 +19,15 @@
     {{!-- end of tabs --}}
 
     <h1>Add New Product</h1>
+    <h4>Preview</h4>
+    <div class="card" style="width: 18rem;">
+        <img id="card-image" class="card-img-top" src="/images/preview.png" alt="preview image">
+        <div class="card-body">
+            <h5 id="product_name" class="card-title">Card title</h5>
+            <p id="product_description" class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
 
     <form method="POST">
         <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
@@ -41,6 +50,7 @@
 <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
 
 <script>
+    {{!-- Start of Widget Set-up --}}
     function generateSignature(callback, params_to_sign) {
         axios.get('/upload-image/sign', {
             params: {
@@ -50,8 +60,6 @@
             callback(response.data)
         })
     }
-
-
     var myWidget = cloudinary.createUploadWidget({
         cloudName: `{{cloudinary_variables.cloudinaryName}}`,
         apiKey: `{{cloudinary_variables.cloudinaryApiKey}}`,
@@ -61,20 +69,35 @@
         if (!error && result.event === "success") {
             console.log('Done! Here is the image infor: ', result)
             document.querySelector("#upload_widget").style.display="none"
-
-            document.querySelector('#id_image_url').value = result.info.url;
-            document.querySelector('#id_thumbnail_url').value = result.info.thumbnail_url;
-            document.querySelector('#uploaded_image').src = result.info.thumbnail_url;
-            document.querySelector('#uploaded_image').style.display = 'inline';
+            document.querySelector('#id_image_url').value = result.info.url
+            document.querySelector('#id_thumbnail_url').value = result.info.thumbnail_url
+            document.querySelector("#card-image").src = result.info.url
+            document.querySelector('#uploaded_image').src = result.info.thumbnail_url
+            document.querySelector('#uploaded_image').style.display = 'inline'
         }
     })
 
     document.getElementById("upload_widget").addEventListener('click', function() {
         myWidget.open()
     }, false)
+    {{!-- End of Widget Setup --}}
 
 
+    {{!-- Start of Live Update --}}
+    document.querySelector("#id_product_name").addEventListener("change", function(){
+        document.querySelector("#product_name").innerHTML = this.value
+    })
+    document.querySelector("#id_product_description").addEventListener("change", function(){
+        document.querySelector("#product_description").innerHTML = this.value
+    })
+
+
+    {{!-- End of Live update --}}
 </script>
+
+
+
+
 
 
 {{/block}}
