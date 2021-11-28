@@ -51,6 +51,9 @@ const createProductForm = () => {
                 label: ['form-label']
             },
             'validators': [validators.integer()]
+        }),
+        'image_url': fields.string({
+            widget: widgets.hidden()
         })
     })
 }

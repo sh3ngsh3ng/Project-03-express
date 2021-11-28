@@ -73,6 +73,7 @@ app.use(function(req,res,next){
 const loginSignUpRoutes = require("./routes/login-su")
 const vendorRoutes = require("./routes/vendor")
 const productRoutes = require("./routes/products")
+const uploadImage = require("./routes/cloudinary")
 
 async function main() {
 
@@ -89,6 +90,9 @@ async function main() {
 
     // Manage Product Routes
     app.use("/products", productRoutes)
+
+    // Upload image to cloudinary
+    app.use("/upload", uploadImage)
 }
 
 main()
