@@ -31,10 +31,12 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
     productForm.handle(req, {
         'success': async(form) => {
             const product = new Product()
-            // product.set('product_name', form.data.title)
-            // product.set('product_description', form.data.description)
-            // product.set('product_price', form.data.price)
-            product.set(form.data)
+
+            // product.set(form.data)
+
+            product.set('product_name', form.data.product_name)
+            product.set('product_description', form.data.product_description)
+            product.set('product_price', form.data.product_price * 100)
             product.set('vendor_id', 8)
             product.set('product_status', "active")
             await product.save()

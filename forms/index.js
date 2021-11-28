@@ -45,7 +45,7 @@ const createProductForm = () => {
             }
         }),
         'product_price': fields.string({
-            label: "Price Per Pax",
+            label: "Price/Pax (SGD)",
             required: true,
             errorAfterField: true,
             cssClasses: {
