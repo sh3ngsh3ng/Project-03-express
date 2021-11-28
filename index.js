@@ -13,6 +13,11 @@ let app = express()
 
 
 app.set("view engine", "hbs")
+hbs.handlebars.registerHelper('ifEqual', function(x, y, options) {
+    return (x == y) ? options.fn(this) : options.inverse(this)
+})
+
+
 app.use(express.static("public"))
 
 wax.on(hbs.handlebars)
@@ -34,6 +39,7 @@ app.use(session({
 }))
 
 app.use(flash())
+
 
 // middle ware to save flash messages
 app.use(function(req,res,next) {

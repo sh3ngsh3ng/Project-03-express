@@ -17,6 +17,7 @@
     <a class="btn btn-primary" href="/products/add">Add</a>
     <div class="accordion" id="accordionExample">
         <div class="accordion-item">
+
             {{!-- start of Active Products --}}
             {{!-- Accordion Header --}}
             <h2 class="accordion-header" id="headingOne">
@@ -26,6 +27,7 @@
             </h2>
             {{!-- Accordion Body --}}
             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                
                 <table class="table">
                     <thead>
                         <tr>
@@ -38,6 +40,7 @@
                     </thead>
                     <tbody>
                         {{#each products}}
+                            {{#ifEqual product_status "active"}}
                             <tr>
                                 <td>
                                     <img src='{{thumbnail_url}}'/>
@@ -50,13 +53,61 @@
                                     <a href="/products/{{id}}/delete" class="btn btn-sm btn-danger">Delete</a>
                                 </td>
                             </tr>
+                            {{/ifEqual}}
                         {{/each}}
                     </tbody>
                 </table>
+                
+                
+                
             </div>
             {{!-- end of Active Products --}}
-            {{!-- Start of Inactive Products --}}
 
+
+            {{!-- Start of Inactive Products --}}
+            {{!-- Accordion Header --}}
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    Inactive Products
+                </button>
+            </h2>
+            {{!-- Accordion Body --}}
+            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Thumbnail</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each products}}
+                            {{#ifEqual product_status "inactive"}}
+                            <tr>
+                                <td>
+                                    <img src='{{thumbnail_url}}'/>
+                                </td>
+                                <td>{{product_name}}</td>
+                                <td>{{product_description}}</td>
+                                <td>{{product_price}}</td>
+                                <td>
+                                    <a href="/products/{{id}}/update" class="btn btn-sm btn-primary">Update</a>
+                                    <a href="/products/{{id}}/delete" class="btn btn-sm btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                            {{/ifEqual}}
+                        {{/each}}
+                    </tbody>
+                </table>
+                
+                
+                
+            </div>
+            {{!-- end of Inactive Products --}}
             
         </div>
     </div>

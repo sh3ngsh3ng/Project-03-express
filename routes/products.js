@@ -3,6 +3,11 @@ const router = express.Router()
 const {Product} = require("../models")
 const {bootstrapField, createProductForm} = require ("../forms")
 const {checkIfAuthenticated, cloudinaryVariables} = require("../middleware")
+// var helpers = require("handlebars-helpers")()
+
+
+
+
 
 // view all products
 router.get("/", checkIfAuthenticated, async (req,res) => {
@@ -31,6 +36,7 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
             // product.set('product_price', form.data.price)
             product.set(form.data)
             product.set('vendor_id', 8)
+            product.set('product_status', "active")
             await product.save()
             req.flash("success_messages", "New Product has been added")
             res.redirect('/products')
@@ -42,7 +48,7 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
             })
         }
     })
-})
+}) 
 
 // view update product form
 router.get('/:product_id/update', [checkIfAuthenticated, cloudinaryVariables], async (req, res) => {
