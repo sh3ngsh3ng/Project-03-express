@@ -8,9 +8,18 @@ const checkIfAuthenticated = (req, res, next) => {
 }
 
 
-
+const cloudinaryVariables = (req,res,next) => {
+    res.locals.cloudinary_variables = {
+        cloudinaryName: process.env.CLOUDINARY_NAME,
+        cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+        cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
+    }
+    console.log(res.locals.cloudinary_variables)
+    next()
+}
 
 
 module.exports = {
-    checkIfAuthenticated
+    checkIfAuthenticated,
+    cloudinaryVariables
 }

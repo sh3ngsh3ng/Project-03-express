@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const {Product} = require("../models")
 const {bootstrapField, createProductForm} = require ("../forms")
-const {checkIfAuthenticated} = require("../middleware")
+const {checkIfAuthenticated, cloudinaryVariables} = require("../middleware")
 
 // view all products
 router.get("/", checkIfAuthenticated, async (req,res) => {
@@ -13,10 +13,10 @@ router.get("/", checkIfAuthenticated, async (req,res) => {
 })
 
 // view add product form
-router.get('/add', checkIfAuthenticated, (req,res)=>{
+router.get('/add', [checkIfAuthenticated, cloudinaryVariables], (req,res)=>{
     const productForm = createProductForm()
     res.render('products/add-product', {
-        'form': productForm.toHTML(bootstrapField)
+        'form': productForm.toHTML(bootstrapField),
     })
 })
 
