@@ -13,10 +13,15 @@ let app = express()
 
 
 app.set("view engine", "hbs")
+
+// custom handlebars
 hbs.handlebars.registerHelper('ifEqual', function(x, y, options) {
     return (x == y) ? options.fn(this) : options.inverse(this)
 })
 
+hbs.handlebars.registerHelper('changeToDollar', function(x) {
+    return x / 100
+})
 
 app.use(express.static("public"))
 

@@ -32,7 +32,7 @@
             {{!-- Accordion Header --}}
             <h2 class="accordion-header" id="panelsStayOpen-headingOne">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                    Active Products
+                    Active Listings
                 </button>
             </h2>
             {{!-- Accordion Body --}}
@@ -58,7 +58,7 @@
                                 </td>
                                 <td>{{product_name}}</td>
                                 <td>{{product_description}}</td>
-                                <td>{{product_price}}</td>
+                                <td>${{changeToDollar product_price}}</td>
                                 <td>{{room_size}}</td>
                                 <td>
                                     <a href="/products/{{id}}/update" class="btn btn-sm btn-primary">Update</a>
@@ -80,7 +80,7 @@
             {{!-- Accordion Header --}}
             <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
-                    Inactive Products
+                    Inactive Listings
                 </button>
             </h2>
             {{!-- Accordion Body --}}
@@ -106,7 +106,7 @@
                                 </td>
                                 <td>{{product_name}}</td>
                                 <td>{{product_description}}</td>
-                                <td>{{product_price}}</td>
+                                <td>${{changeToDollar product_price}}</td>
                                 <td>{{room_size}}</td>
                                 <td>
                                     <a href="/products/{{id}}/update" class="btn btn-sm btn-primary">Update</a>
@@ -125,6 +125,9 @@
             
         </div>
     </div>
+{{/block}}
+
+{{#block 'script'}}
 {{/block}}
 
 
