@@ -23,7 +23,7 @@ exports.up = function(db) {
 };
 
 exports.down = function(db) {
-  return db.removeColumn('vendors', 'email')
+  return db.removeColumn('vendors', 'vendor_email')
 };
 
 exports._meta = {

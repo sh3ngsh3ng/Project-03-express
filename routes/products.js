@@ -11,14 +11,31 @@ const {checkIfAuthenticated, cloudinaryVariables} = require("../middleware")
 
 // view all products
 router.get("/", checkIfAuthenticated, async (req,res) => {
+
+    // try {
+    //     let products = await Product.collection().where({
+    //         "vendor_id": req.session.vendor.id
+    //     }).fetch({
+    //         require: true
+    //     })
+    //     res.render("products/inventory", {
+    //         'products': products.toJSON()
+    //     })
+    // } catch(err){
+    //     res.render("products/inventory")
+    // }
+
+    
+
     let products = await Product.collection().where({
         "vendor_id": req.session.vendor.id
     }).fetch({
-        require: true
+        require: false
     })
     res.render("products/inventory", {
         'products': products.toJSON()
     })
+
 })
 
 // view add product form
@@ -146,7 +163,7 @@ router.get("/:product_id/add-session", checkIfAuthenticated, async(req,res)=> {
 
     res.render("products/add-session", {
         'product': product.toJSON(),
-        'form': addSessionForm
+        'form': addSessionForm.toHTML(bootstrapField)
     })
 })
 
@@ -164,17 +181,23 @@ router.post("/:product_id/add-session", checkIfAuthenticated, async(req,res)=> {
             })
 
             const productSlot = new ProductSlot()
-            productSlot.set("slot_date", form.data.slot_date)
-            productSlot.set("slot_time", form.data.slot_time)
+            productSlot.set("slot_datetime", form.data.slot_datetime)
             productSlot.set('slot_availability', true)
-            productSlot.set('slot_quantity', product.room_size)
+            productSlot.set('slot_quantity', product.toJSON().room_size)
             productSlot.set('product_id', req.params.product_id)
             await productSlot.save()
             res.redirect("/products")
         },
         'error': async(form) => {
+            const product = await Product.where({
+                'id': req.params.product_id
+            }).fetch({
+                require: true
+            })
+
             // req.flash("error_messages", "Please fill up the form properly")
-            res.render('products/add-session', {
+            res.render(`products/add-session`, {
+                'product': product.toJSON(),
                 'form': form.toHTML(bootstrapField)
             })
         }
