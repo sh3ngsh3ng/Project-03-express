@@ -1,0 +1,32 @@
+{{#extends 'base'}}
+
+{{#block 'content'}}
+<h1>Add Dates Here</h1>
+<div id="preview-card-title-div">
+    <h4>{{product.product_name}}</h4>
+</div>
+<div id="preview-card-div">
+    <div class="card" style="width: 18rem;">
+        <img id="card-image" class="card-img-top" src="{{product.image_url}}" alt="preview image">
+        <div class="card-body">
+            <h5 id="product_name" class="card-title">{{product.product_name}}</h5>
+            <p id="product_description" class="card-text">{{product.product_description}}</p>
+            <p id="product_price"></p>
+            <btn class="btn btn-success">Book Now!</btn>
+        </div>
+    </div>
+</div>
+
+
+<form method="POST">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+    {{form}}
+    <input type="submit" class="btn btn-success" value="Add Session"/>
+</form>
+
+
+{{/block}}
+
+
+
+{{/extends}}

@@ -140,9 +140,34 @@ const createLoginForm = () => {
     })
 }
 
+const createAddSessionForm = () => {
+    return forms.create({
+        'slot_date': fields.date({
+            label: "Choose a Date",
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.datetimeLocal()
+        }),
+        "slot_time": fields.string({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: [[1, "Time 1"],[2, "Time 2"]]
+        })
+    })
+}
+
+
 
 module.exports = {bootstrapField, 
                 createProductForm, 
                 createRegistrationForm,
-                createLoginForm
+                createLoginForm,
+                createAddSessionForm
             }

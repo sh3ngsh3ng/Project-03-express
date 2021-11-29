@@ -7,6 +7,13 @@ const Product = bookshelf.model('Product', {
     }
 })
 
+const ProductSlot = bookshelf.model('ProductSlot', {
+    tableName: 'product_slots',
+    product() {
+        return this.belongsTo('Product')
+    }
+})
+
 const Vendor = bookshelf.model('Vendor', {
     tableName: 'vendors',
     products() {
@@ -26,9 +33,7 @@ const CartItems = bookshelf.model('CartItems', {
     tableName: 'cart_items'
 })
 
-const ProductSlot = bookshelf.model('ProductSlot', {
-    tableName: 'product_slots'
-})
+
 
 const OrderItem = bookshelf.model('OrderItem', {
     tableName: "order_items"
