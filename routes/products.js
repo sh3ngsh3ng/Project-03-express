@@ -25,7 +25,6 @@ router.get("/", checkIfAuthenticated, async (req,res) => {
     //     res.render("products/inventory")
     // }
 
-    
 
     let products = await Product.collection().where({
         "vendor_id": req.session.vendor.id
@@ -148,6 +147,13 @@ router.post("/:product_id/delete", checkIfAuthenticated, async(req,res)=>{
     await product.destroy()
     res.redirect("/products")
 })
+
+
+// view sessions page
+router.get("/manage-sessions", checkIfAuthenticated, (req,res)=>{
+    res.render("products/manage-sessions")
+})
+
 
 
 // view for adding session of product (into product slots table)
