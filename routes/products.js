@@ -38,7 +38,10 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
             product.set('product_description', form.data.product_description)
             product.set('product_price', form.data.product_price * 100)
             product.set('vendor_id', 8)
-            product.set('product_status', "active")
+            product.set('product_status', "inactive")
+            product.set('thumbnail_url', form.data.thumbnail_url)
+            product.set('image_url', form.data.image_url)
+            product.set('room_size', form.data.room_size)
             await product.save()
             req.flash("success_messages", "New Product has been added")
             res.redirect('/products')
@@ -66,6 +69,7 @@ router.get('/:product_id/update', [checkIfAuthenticated, cloudinaryVariables], a
     productForm.fields.product_name.value = product.get('product_name')
     productForm.fields.product_description.value = product.get('product_description')
     productForm.fields.product_price.value = product.get('product_price')
+    productForm.fields.room_size.value = product.get("room_size")
 
     res.render("products/update-product", {
         'form': productForm.toHTML(bootstrapField),

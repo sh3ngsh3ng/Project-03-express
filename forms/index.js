@@ -51,13 +51,22 @@ const createProductForm = () => {
             cssClasses: {
                 label: ['form-label']
             },
-            'validators': [validators.integer()]
+            'validators': [validators.integer(), validators.max(100), validators.min(10)]
         }),
         'image_url': fields.string({
             widget: widgets.hidden()
         }),
         'thumbnail_url': fields.string({
             widget: widgets.hidden()
+        }),
+        'room_size': fields.string({
+            label: "Room Size",
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            'validators': [validators.integer(), validators.max(100, "For Room Size more than 20pax, please send in a request to the administrator.")]
         })
     })
 }
