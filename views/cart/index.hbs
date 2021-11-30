@@ -8,8 +8,12 @@
     <li class="list-group-item my-3">
         <h4>Product Name: Need get product => slot id {{product_slots_id}}</h3>
             <h5>Cost: ??? need get product </h5>        
-            <h5>Quantity: {{cart_items_quantity}}</h5>   
+            <h5>Quantity: {{cart_items_quantity}}</h5>
+            <a class="btn btn-success" href="/cart/{{product_slots_id}}/add-one">AddOne</a>
+            <a class="btn btn-secondary" href="/cart/{{product_slots_id}}/delete-one">DeleteOne</a>
+            <a class="btn btn-primary" href="/cart/{{product_slots_id}}/delete-item">Delete</a>   
     </li>
+    
     {{/each}}
 </ul>
 {{/block}}

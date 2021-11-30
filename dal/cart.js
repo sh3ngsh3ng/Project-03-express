@@ -29,15 +29,51 @@ const addCartItems = async(userId, productSlotId) => {
     return cartItem
 }
 
-const plusOneCartItem = async(userId, productSlotId) => {
+const deleteCartItem = async (userId, productSlotId) => {
+    let cartItem = await getSpecificCartItems(userId, productSlotId)
+
+    if (cartItem) {
+        await cartItem.destroy()
+        console.log("Cart Item Deleted")
+        return
+    }
+    
+    console.log("Cart Item Not Deleted")
+}
+
+const addOneCartItem = async(userId, productSlotId) => {
     let cartItem = await CartItems.where({
         "user_id": userId,
         "product_slots_id": productSlotId
     }).fetch({
         require: false
     })
-    cartItem.set('cart_items_quantity', cartItem.get('cart_items_quantity') + 1)
-    await cartItem.save()
+
+    if (cartItem) {
+        cartItem.set('cart_items_quantity', cartItem.get('cart_items_quantity') + 1)
+        await cartItem.save()
+    }
 }
 
-module.exports = {getAllCartItems, getSpecificCartItems, addCartItems, plusOneCartItem}
+const removeOneQuantity = async(userId, productSlotId) => {
+    let cartItem = await CartItems.where({
+        "user_id": userId,
+        "product_slots_id": productSlotId
+    }).fetch({
+        require: false
+    })
+    if (cartItem) {
+        cartItem.set('cart_items_quantity', cartItem.get('cart_items_quantity') - 1)
+        await cartItem.save()
+    }
+    
+}
+
+
+module.exports = {getAllCartItems, 
+    getSpecificCartItems, 
+    addCartItems, 
+    addOneCartItem,
+    deleteCartItem,
+    removeOneQuantity
+    }

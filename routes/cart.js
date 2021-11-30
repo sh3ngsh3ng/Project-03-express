@@ -17,6 +17,20 @@ router.get("/:productSlotId/add-item", async (req,res) => {
     console.log("added successfully")
 })
 
+router.get("/:productSlotId/delete-item", async(req,res)=>{
+    await cartServiceLayer.deleteItemFromCart(1, req.params.productSlotId)
+    res.redirect("/cart")
+})
+
+router.get("/:productSlotId/delete-one", async(req,res)=>{
+    await cartServiceLayer.removeOneQuantityFromCart(1, req.params.productSlotId)
+    res.redirect("/cart")
+})
+
+router.get("/:productSlotId/add-one", async(req,res)=>{
+    await cartServiceLayer.addOneQuantityToCart(1, req.params.productSlotId)
+    res.redirect("/cart")
+})
 
 
 module.exports = router
