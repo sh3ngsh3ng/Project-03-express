@@ -3,31 +3,14 @@ const router = express.Router()
 const {Product, ProductSlot} = require("../models")
 const {bootstrapField, createProductForm, createAddSessionForm} = require ("../forms")
 const {checkIfAuthenticated, cloudinaryVariables} = require("../middleware")
-// var helpers = require("handlebars-helpers")()
-
-
-
+const productServiceLayer = require("../services/products")
 
 
 // view all products
 router.get("/", checkIfAuthenticated, async (req,res) => {
-
-    // get active products
-    let activeProducts = await Product.collection().where({
-        "vendor_id": req.session.vendor.id,
-        "product_status": "active"
-    }).fetch({
-        require: false
-    })
-
-    // get inactive products
-    let inactiveProducts = await Product.collection().where({
-        "vendor_id": req.session.vendor.id,
-        "product_status": "inactive"
-    }).fetch({
-        require: false
-    })
-
+    let vendor = req.session.vendor.id
+    let activeProducts = await productServiceLayer.displayActiveListings(vendor)
+    let inactiveProducts = await await productServiceLayer.displayInactiveListings(vendor)
     // pass to hbs
     res.render("products/inventory", {
         'activeProducts': activeProducts.toJSON(),
