@@ -23,6 +23,7 @@ hbs.handlebars.registerHelper('changeToDollar', function(x) {
     return x / 100
 })
 
+
 app.use(express.static("public"))
 
 wax.on(hbs.handlebars)
@@ -86,6 +87,7 @@ const vendorRoutes = require("./routes/vendor")
 const productRoutes = require("./routes/products")
 const uploadImage = require("./routes/cloudinary")
 const cartRoutes = require("./routes/cart")
+const { options } = require("./routes/products")
 
 
 async function main() {

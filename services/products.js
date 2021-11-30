@@ -12,15 +12,17 @@ const displayInactiveListings = async(vendor) => {
 
 const displayAllProductSessions = async(vendor) => {
     let result = await productsDataLayer.getProductSlotsByVendorId(vendor)
-    let allSessions = result.toJSON() // array of objects
-
-    // get all the products
-
-
-    // get all the sessions of the products
-
-    console.log(allSessions)
-    return allSessions
+    let allProducts = result.toJSON() // array of objects (products)
+    let arrayOfProductsWithSessions = []
+    // select products with product slots
+    for (let i = 0; i < allProducts.length; i++) {
+        let productSlotsArray = allProducts[i].productslots
+        if (productSlotsArray.length > 0) {
+            arrayOfProductsWithSessions.push(allProducts[i])
+        }
+    }
+    
+    return arrayOfProductsWithSessions
 }
 
 module.exports = {

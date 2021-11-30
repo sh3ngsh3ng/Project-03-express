@@ -29,6 +29,7 @@
                     Upcoming Sessions
                 </button>
             </h2>
+
             {{!-- Accordion Body --}}
             <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne" data-bs-parent="#accordionExample">
                 <table class="table">
@@ -38,22 +39,23 @@
                             <th>Date</th>
                             <th>Time</th>
                             <th>Quantity</th>
-                            <th>Edit Product</th>
+                            <th>View Participants</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each sessions}}
+                        {{#each product}}
+                            {{#each productslots}}
                             <tr>
                                 <td>
-                                    <img src='{{thumbnail_url}}'/>
+                                    <img src='{{../thumbnail_url}}'/>
                                 </td>
-                                <td>sessions.id</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                </td>
+                                <td>{{../product_name}}</td>
+                                <td>{{slot_datetime}}</td>
+                                <td>{{slot_datetime}}</td>
+                                <td>? / {{slot_quantity}}</td>
+                                <td>Click here</td>
                             </tr>
+                            {{/each}}
                         {{/each}}
                     </tbody>
                 </table>

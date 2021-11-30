@@ -133,17 +133,9 @@ router.post("/:product_id/delete", checkIfAuthenticated, async(req,res)=>{
 // view sessions page
 router.get("/manage-sessions", checkIfAuthenticated, async (req,res)=>{
 
-    // get vendor's products
-    // let vendorProducts = await Product.collection().where({
-    //     'vendor_id': 1
-    // }).fetch({
-    //     require: false
-    // })
-
-    let allSessions = await productServiceLayer.displayAllProductSessions(2)
-
+    let allProductsWithProductSlots = await productServiceLayer.displayAllProductSessions(req.session.vendor.id)
     res.render("products/manage-sessions", {
-        'sessions': allSessions
+        'product': allProductsWithProductSlots
     })
 })
 
