@@ -85,6 +85,8 @@ const loginSignUpRoutes = require("./routes/login-su")
 const vendorRoutes = require("./routes/vendor")
 const productRoutes = require("./routes/products")
 const uploadImage = require("./routes/cloudinary")
+const cartRoutes = require("./routes/cart")
+
 
 async function main() {
 
@@ -104,6 +106,10 @@ async function main() {
 
     // Upload image to cloudinary
     app.use("/upload-image", uploadImage)
+
+
+    // shopping cart
+    app.use("/cart", cartRoutes)
 }
 
 main()
