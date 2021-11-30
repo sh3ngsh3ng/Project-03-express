@@ -1,7 +1,17 @@
 {{#extends 'base'}}
 
 {{#block 'content'}}
+<h1>My shopping cart</h1>
 
+<ul class="list-group">
+    {{#each cartItems}}
+    <li class="list-group-item my-3">
+        <h4>Product Name: Need get product => slot id {{product_slots_id}}</h3>
+            <h5>Cost: ??? need get product </h5>        
+            <h5>Quantity: {{cart_items_quantity}}</h5>   
+    </li>
+    {{/each}}
+</ul>
 {{/block}}
 
 
