@@ -48,7 +48,7 @@
                             <th>Thumbnail</th>
                             <th>Title</th>
                             <th>Description</th>
-                            <th>Price</th>
+                            <th>Price/Pax</th>
                             <th>Room Size</th>
                             <th>Edit Product</th>
                         </tr>
@@ -67,15 +67,14 @@
                                 <td>
                                     <a href="/products/{{id}}/update" class="btn btn-sm btn-primary">Update</a>
                                     <a href="/products/{{id}}/delete" class="btn btn-sm btn-danger">Delete</a>
+                                    <a href="/products/{{id}}/add-session" class="btn btn-sm btn-secondary">Add Session</a>
+                                    
                                 </td>
                             </tr>
                             {{/ifEqual}}
                         {{/each}}
                     </tbody>
                 </table>
-                
-                
-                
             </div>
             {{!-- end of Active Products --}}
 
@@ -96,7 +95,7 @@
                             <th>Thumbnail</th>
                             <th>Title</th>
                             <th>Description</th>
-                            <th>Price</th>
+                            <th>Price/Pax</th>
                             <th>Room Size</th>
                             <th>Edit Product</th>
                         </tr>
@@ -115,6 +114,7 @@
                                 <td>
                                     <a href="/products/{{id}}/update" class="btn btn-sm btn-primary">Update</a>
                                     <a href="/products/{{id}}/delete" class="btn btn-sm btn-danger">Delete</a>
+                                    <a href="/products/{{id}}/add-session" class="btn btn-sm btn-secondary">Add Session</a>
                                 </td>
                             </tr>
                             {{/ifEqual}}

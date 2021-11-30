@@ -17,16 +17,16 @@ exports.setup = function(options, seedLink) {
 exports.up = function(db) {
   return db.createTable('cart_items', {
     id: {type: 'int', primaryKey: true, autoIncrement: true, unsigned: true},
-    cart_id: {
+    user_id: {
       type: 'int',
       unsigned: true,
       notNull: true,
       foreignKey: {
-        name: "cart_items_cart_id",
-        table: "cart",
-        rules: {
+        name: "cart_items_user_id",
+        table: "users",
+        rules : {
           onDelete: 'cascade',
-          onUpdate: "restrict",
+          onUpdate: 'restrict'
         },
         mapping: 'id'
       }

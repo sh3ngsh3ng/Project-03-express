@@ -154,8 +154,6 @@ router.get("/manage-sessions", checkIfAuthenticated, (req,res)=>{
     res.render("products/manage-sessions")
 })
 
-
-
 // view for adding session of product (into product slots table)
 router.get("/:product_id/add-session", checkIfAuthenticated, async(req,res)=> {
     const productId = req.params.product_id
@@ -211,6 +209,7 @@ router.post("/:product_id/add-session", checkIfAuthenticated, async(req,res)=> {
 
 
 })
+
 
 
 module.exports = router
