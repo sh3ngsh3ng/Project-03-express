@@ -10,7 +10,7 @@ const productServiceLayer = require("../services/products")
 router.get("/", checkIfAuthenticated, async (req,res) => {
     let vendor = req.session.vendor.id
     let activeProducts = await productServiceLayer.displayActiveListings(vendor)
-    let inactiveProducts = await await productServiceLayer.displayInactiveListings(vendor)
+    let inactiveProducts = await productServiceLayer.displayInactiveListings(vendor)
     // pass to hbs
     res.render("products/inventory", {
         'activeProducts': activeProducts.toJSON(),
@@ -131,8 +131,20 @@ router.post("/:product_id/delete", checkIfAuthenticated, async(req,res)=>{
 
 
 // view sessions page
-router.get("/manage-sessions", checkIfAuthenticated, (req,res)=>{
-    res.render("products/manage-sessions")
+router.get("/manage-sessions", checkIfAuthenticated, async (req,res)=>{
+
+    // get vendor's products
+    // let vendorProducts = await Product.collection().where({
+    //     'vendor_id': 1
+    // }).fetch({
+    //     require: false
+    // })
+
+    let allSessions = await productServiceLayer.displayAllProductSessions(2)
+
+    res.render("products/manage-sessions", {
+        'sessions': allSessions
+    })
 })
 
 // view for adding session of product (into product slots table)

@@ -4,6 +4,9 @@ const Product = bookshelf.model('Product', {
     tableName: 'products',
     vendor() {
         return this.belongsTo('Vendor')
+    },
+    productslots() {
+        return this.hasMany('ProductSlot')
     }
 })
 
@@ -11,7 +14,11 @@ const ProductSlot = bookshelf.model('ProductSlot', {
     tableName: 'product_slots',
     product() {
         return this.belongsTo('Product')
+    },
+    product(){
+        return this.belongsTo('Product')
     }
+
 })
 
 const Vendor = bookshelf.model('Vendor', {
@@ -30,7 +37,10 @@ const Cart = bookshelf.model('Cart', {
 })
 
 const CartItems = bookshelf.model('CartItems', {
-    tableName: 'cart_items'
+    tableName: 'cart_items',
+    productslot() {
+        return this.belongsTo('ProductSlot')
+    }
 })
 
 

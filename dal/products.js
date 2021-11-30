@@ -20,8 +20,16 @@ const getInactiveProductListings = async(vendor) => {
     })
 }
 
+const getProductSlotsByVendorId = async(vendor) => {
+    let vendorSessions = await Product.where({"vendor_id": vendor}).fetchAll({
+        require: false,
+        withRelated: ['productslots']
+    })
+    return vendorSessions
+} 
 
 module.exports = {
     getActiveProductListings,
-    getInactiveProductListings
+    getInactiveProductListings,
+    getProductSlotsByVendorId
 }
