@@ -196,5 +196,30 @@ router.post("/:product_id/add-session", checkIfAuthenticated, async(req,res)=> {
 })
 
 
+// change product listing to "active"
+router.get("/:product_id/add-listing", async (req,res) => {
+    let product = await Product.where({
+        "id": req.params.product_id
+    }).fetch({
+        require: false
+    })
+    product.set("product_status", "active")
+    await product.save()
+    res.redirect("/products")
+    console.log("Listing Added Successfully")
+})
+
+router.get("/:product_id/remove-listing", async(req,res)=>{
+    let product = await Product.where({
+        "id": req.params.product_id
+    }).fetch({
+        require: false
+    })
+    product.set("product_status", "inactive")
+    await product.save()
+    res.redirect("/products")
+    console.log("Listing Removed Successfully")
+})
+
 
 module.exports = router
