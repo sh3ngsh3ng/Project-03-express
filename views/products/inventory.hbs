@@ -41,7 +41,7 @@
             </h2>
             {{!-- Accordion Body --}}
             <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne" data-bs-parent="#accordionExample">
-                
+                {{#if activeProducts}}
                 <table class="table">
                     <thead>
                         <tr>
@@ -54,8 +54,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each products}}
-                            {{#ifEqual product_status "active"}}
+                        {{#each activeProducts}}
                             <tr>
                                 <td>
                                     <img src='{{thumbnail_url}}'/>
@@ -71,11 +70,15 @@
                                     
                                 </td>
                             </tr>
-                            {{/ifEqual}}
                         {{/each}}
                     </tbody>
                 </table>
             </div>
+            {{else}}
+            <h1>You have no active listings</h1>
+            {{/if}}
+
+
             {{!-- end of Active Products --}}
 
 
@@ -88,7 +91,7 @@
             </h2>
             {{!-- Accordion Body --}}
             <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo" data-bs-parent="#accordionExample">
-                
+                {{#if inactiveProducts}}
                 <table class="table">
                     <thead>
                         <tr>
@@ -101,8 +104,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each products}}
-                            {{#ifEqual product_status "inactive"}}
+                        {{#each inactiveProducts}}
                             <tr>
                                 <td>
                                     <img src='{{thumbnail_url}}'/>
@@ -117,11 +119,12 @@
                                     <a href="/products/{{id}}/add-session" class="btn btn-sm btn-secondary">Add Session</a>
                                 </td>
                             </tr>
-                            {{/ifEqual}}
                         {{/each}}
                     </tbody>
                 </table>
-                
+                {{else}}
+                    <h1>No Products Avail</h1>
+                {{/if}}
                 
                 
             </div>

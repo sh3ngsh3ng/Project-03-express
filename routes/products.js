@@ -12,29 +12,27 @@ const {checkIfAuthenticated, cloudinaryVariables} = require("../middleware")
 // view all products
 router.get("/", checkIfAuthenticated, async (req,res) => {
 
-    // try {
-    //     let products = await Product.collection().where({
-    //         "vendor_id": req.session.vendor.id
-    //     }).fetch({
-    //         require: true
-    //     })
-    //     res.render("products/inventory", {
-    //         'products': products.toJSON()
-    //     })
-    // } catch(err){
-    //     res.render("products/inventory")
-    // }
-
-
-    let products = await Product.collection().where({
-        "vendor_id": req.session.vendor.id
+    // get active products
+    let activeProducts = await Product.collection().where({
+        "vendor_id": req.session.vendor.id,
+        "product_status": "active"
     }).fetch({
         require: false
     })
-    res.render("products/inventory", {
-        'products': products.toJSON()
+
+    // get inactive products
+    let inactiveProducts = await Product.collection().where({
+        "vendor_id": req.session.vendor.id,
+        "product_status": "inactive"
+    }).fetch({
+        require: false
     })
 
+    // pass to hbs
+    res.render("products/inventory", {
+        'activeProducts': activeProducts.toJSON(),
+        'inactiveProducts': inactiveProducts.toJSON()
+    })
 })
 
 // view add product form
@@ -58,7 +56,7 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
             product.set('product_description', form.data.product_description)
             product.set('product_price', form.data.product_price * 100)
             product.set('vendor_id', req.session.vendor.id)
-            product.set('product_status', "inactive")
+            product.set('product_status', "active")
             product.set('thumbnail_url', form.data.thumbnail_url)
             product.set('image_url', form.data.image_url)
             product.set('room_size', form.data.room_size)

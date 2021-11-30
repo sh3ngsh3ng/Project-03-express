@@ -53,7 +53,7 @@ app.use(function(req,res,next) {
     next()
 })
 
-// middle ware to pass session informatio nfo vendor to all hbs
+// middle ware to pass session information for vendor to all hbs
 app.use(function(req,res,next) {
     res.locals.vendor = req.session.vendor
     next()
