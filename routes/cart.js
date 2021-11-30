@@ -5,7 +5,6 @@ const cartServiceLayer = require("../services/cart")
 
 router.get("/", async (req,res) => {
     let cartItems = await cartServiceLayer.displayCartItems(1) // replace  1 with userId
-    console.log(cartItems.toJSON())
     res.render("cart/index", {
         cartItems: cartItems.toJSON()
     })
@@ -14,7 +13,6 @@ router.get("/", async (req,res) => {
 router.get("/:productSlotId/add-item", async (req,res) => {
     await cartServiceLayer.addToCart(1, req.params.productSlotId) //change to user id
     res.redirect("/cart")
-    console.log("added successfully")
 })
 
 router.get("/:productSlotId/delete-item", async(req,res)=>{
@@ -32,5 +30,9 @@ router.get("/:productSlotId/add-one", async(req,res)=>{
     res.redirect("/cart")
 })
 
+router.get("/clear", async(req,res)=>{
+    await cartServiceLayer.deleteCart(1)
+    res.redirect("/cart")
+})
 
 module.exports = router
