@@ -1,18 +1,18 @@
 const {CartItems} = require("../models")
 
 
-const getCartItems = async(vendorId) => {
+const getCartItems = async(userId) => {
     return await CartItems.collection().where({
-        "vendor_id": vendorId // change to user id for frontend
+        "user_id": userId // change to user id for frontend
     }).fetch({
         require: false,
         withRelated: ['products_slots_id']
     })
 }
 
-const addCartItems = async(vendorId, productSlotId, quantity) => {
+const addCartItems = async(userId, productSlotId, quantity) => {
     let cartItem = new CartItems({
-        'vendor_id': vendorId,
+        'user_id': userId,
         'cart_items_quantity': quantity,
         'product_slots_id': productSlotId
     })

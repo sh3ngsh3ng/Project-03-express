@@ -87,7 +87,6 @@ const vendorRoutes = require("./routes/vendor")
 const productRoutes = require("./routes/products")
 const uploadImage = require("./routes/cloudinary")
 const cartRoutes = require("./routes/cart")
-const { options } = require("./routes/products")
 
 
 async function main() {
