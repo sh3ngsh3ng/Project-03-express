@@ -5,6 +5,7 @@ const cartServiceLayer = require("../services/cart")
 
 router.get("/", async (req,res) => {
     let cartItems = await cartServiceLayer.displayCartItems(1) // replace  1 with userId
+    console.log(cartItems.toJSON())
     res.render("cart/index", {
         cartItems: cartItems.toJSON()
     })

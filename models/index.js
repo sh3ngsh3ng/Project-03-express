@@ -15,31 +15,32 @@ const ProductSlot = bookshelf.model('ProductSlot', {
     product() {
         return this.belongsTo('Product')
     },
-    product(){
-        return this.belongsTo('Product')
+    cartitems(){
+        return this.hasMany('CartItem')
     }
+})
 
+const CartItem = bookshelf.model('CartItem', {
+    tableName: 'cart_items',
+    productslot() {
+        return this.belongsTo('ProductSlot', 'product_slots_id')
+    },
+    user() {
+        return this.belongsTo('User')
+    }
+})
+
+const User = bookshelf.model('User', {
+    tableName: 'users',
+    cartitems () {
+        return this.hasMany('CartItem')
+    }
 })
 
 const Vendor = bookshelf.model('Vendor', {
     tableName: 'vendors',
     products() {
         return this.hasMany('Product')
-    }
-})
-
-const User = bookshelf.model('Users', {
-    tableName: 'users'
-})
-
-const Cart = bookshelf.model('Cart', {
-    tableName: 'cart'
-})
-
-const CartItems = bookshelf.model('CartItems', {
-    tableName: 'cart_items',
-    productslot() {
-        return this.belongsTo('ProductSlot')
     }
 })
 
@@ -53,4 +54,4 @@ const Order = bookshelf.model("Order", {
     tableName: 'orders'
 })
 
-module.exports = {Product, Vendor, User, Cart, CartItems, ProductSlot, OrderItem, Order}
+module.exports = {Product, Vendor, User, CartItem, ProductSlot, OrderItem, Order}

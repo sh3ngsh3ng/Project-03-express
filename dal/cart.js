@@ -1,17 +1,18 @@
-const {CartItems} = require("../models")
+const {CartItem, ProductSlot} = require("../models")
 
 
 const getAllCartItems = async(userId) => {
-    return await CartItems.collection().where({
+    return await CartItem.where({
         "user_id": userId // change to user id for frontend
-    }).fetch({
+    }).fetchAll({
         require: false,
-        withRelated: ['productslot']
+        withRelated: ["productslot"]
     })
+    
 }
 
 const getSpecificCartItems = async (userId, productSlotId) => {
-    return await CartItems.where({
+    return await CartItem.where({
         'user_id': userId,
         'product_slots_id': productSlotId
     }).fetch({
@@ -20,7 +21,7 @@ const getSpecificCartItems = async (userId, productSlotId) => {
 }
 
 const addCartItems = async(userId, productSlotId) => {
-    let cartItem = new CartItems({
+    let cartItem = new CartItem({
         'user_id': userId,
         'cart_items_quantity': 1,
         'product_slots_id': productSlotId
@@ -48,10 +49,10 @@ const deleteCart = async(userId) => {
     //     console.log("Cart Cleared")
     //     return cartItems
     // }
-    await CartItems.collection().where({
+    await CartItem.collection().where({
         "user_id": userId
-    }).fetch().then((CartItems) => {
-        CartItems.forEach(function(cartItem) {
+    }).fetch().then((CartItem) => {
+        CartItem.forEach(function(cartItem) {
             cartItem.destroy()
         })
     })
@@ -60,7 +61,7 @@ const deleteCart = async(userId) => {
 }
 
 const addOneQuantity = async(userId, productSlotId) => {
-    let cartItem = await CartItems.where({
+    let cartItem = await CartItem.where({
         "user_id": userId,
         "product_slots_id": productSlotId
     }).fetch({
@@ -74,7 +75,7 @@ const addOneQuantity = async(userId, productSlotId) => {
 }
 
 const removeOneQuantity = async(userId, productSlotId) => {
-    let cartItem = await CartItems.where({
+    let cartItem = await CartItem.where({
         "user_id": userId,
         "product_slots_id": productSlotId
     }).fetch({

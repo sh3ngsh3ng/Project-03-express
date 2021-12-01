@@ -39,7 +39,7 @@ app.use(
 
 app.use(session({
     store: new FileStore(),
-    secret: 'testingsession',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true
 }))
