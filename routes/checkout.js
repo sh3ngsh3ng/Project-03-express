@@ -9,52 +9,73 @@ const checkoutServiceLayer = require("../services/checkout")
 // route to check out cart items
 router.get("/", async (req,res)=>{
 
-    // create line items for checkout
+
+    // get cart items
     let cartItems = await cartServiceLayer.displayCartItems(1)
-    
-    let lineItems = []
-    let metadata = []
-    for (let item of cartItems) {
+    let itemArray = cartItems.toJSON()
+    // check validity of checking out
+    let validityArray = []
+    for (let item of itemArray) {
+        let productSlotId = item.productslot.id
+        let checkOutQuantity = item.cart_items_quantity
+        let validity = await checkoutServiceLayer.validCheckOut(productSlotId, checkOutQuantity)
+        validityArray.push(validity)
+    }
 
-        const lineItem = {
-            'name': item.related('productslot').related("product").get('product_name'),
-            'amount': item.related('productslot').related("product").get('product_price'),
-            'quantity': item.get("cart_items_quantity"),
-            'currency': 'SGD'
+    // validity flag
+    let validityFlag = validityArray.every((item) => item)
+
+    // conditional for a valid checkout
+    if (validityFlag) {
+        // create line items for checkout
+        let lineItems = []
+        let metadata = []
+        for (let item of cartItems) {
+
+            const lineItem = {
+                'name': item.related('productslot').related("product").get('product_name'),
+                'amount': item.related('productslot').related("product").get('product_price'),
+                'quantity': item.get("cart_items_quantity"),
+                'currency': 'SGD'
+            }
+            if (item.related('productslot').related("product").get('thumbnail_url')) {
+                lineItem['images'] = [item.related("productslot").related('product').get("thumbnail_url")]
+            }
+
+            lineItems.push(lineItem)
+
+            metadata.push({
+                'product_id': item.related('productslot').related("product").get('id'),
+                'product_slot_id': item.get("id"),
+                'quantity': item.get("cart_items_quantity")
+            })
         }
-        if (item.related('productslot').related("product").get('thumbnail_url')) {
-            lineItem['images'] = [item.related("productslot").related('product').get("thumbnail_url")]
+
+        // create payment session
+        let metadataJSON = JSON.stringify(metadata)
+        let payment = {
+            'payment_method_types': ['card'],
+            'line_items': lineItems,
+            'success_url': process.env.STRIPE_SUCCESS_URL,
+            'cancel_url': process.env.STRIPE_ERROR_URL,
+            'metadata': {
+                'orders': metadataJSON
+            }
         }
 
-        lineItems.push(lineItem)
+        // register session with stripe
+        let stripeSession = await Stripe.checkout.sessions.create(payment)
 
-        metadata.push({
-            'product_id': item.related('productslot').related("product").get('id'),
-            'product_slot_id': item.get("id"),
-            'quantity': item.get("cart_items_quantity")
+        // send back to the browser
+        res.render('checkout/checkout', {
+            'sessionId': stripeSession.id,
+            'publishableKey': process.env.STRIPE_PUBLISHABLE_KEY
         })
+    } else {
+        res.send('cehckout failed')
     }
 
-    // create payment session
-    let metadataJSON = JSON.stringify(metadata)
-    let payment = {
-        'payment_method_types': ['card'],
-        'line_items': lineItems,
-        'success_url': process.env.STRIPE_SUCCESS_URL,
-        'cancel_url': process.env.STRIPE_ERROR_URL,
-        'metadata': {
-            'orders': metadataJSON
-        }
-    }
-
-    // register session with stripe
-    let stripeSession = await Stripe.checkout.sessions.create(payment)
-
-    // send back to the browser
-    res.render('checkout/checkout', {
-        'sessionId': stripeSession.id,
-        'publishableKey': process.env.STRIPE_PUBLISHABLE_KEY
-    })
+    
 
 })
 

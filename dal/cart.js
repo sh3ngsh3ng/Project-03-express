@@ -1,6 +1,8 @@
 const {CartItem} = require("../models")
 
 
+
+
 const getAllCartItems = async(userId) => {
     return await CartItem.where({
         "user_id": userId // change to user id for frontend
@@ -21,6 +23,7 @@ const getSpecificCartItems = async (userId, productSlotId) => {
 }
 
 const addCartItems = async(userId, productSlotId) => {
+
     let cartItem = new CartItem({
         'user_id': userId,
         'cart_items_quantity': 1,
