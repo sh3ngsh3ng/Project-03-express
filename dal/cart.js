@@ -6,7 +6,7 @@ const getAllCartItems = async(userId) => {
         "user_id": userId // change to user id for frontend
     }).fetchAll({
         require: false,
-        withRelated: ["productslot"]
+        withRelated: ["productslot", "productslot.product"]
     })
     
 }
