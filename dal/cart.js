@@ -1,4 +1,4 @@
-const {CartItem, ProductSlot} = require("../models")
+const {CartItem} = require("../models")
 
 
 const getAllCartItems = async(userId) => {
@@ -56,7 +56,7 @@ const deleteCart = async(userId) => {
             cartItem.destroy()
         })
     })
-    console.log("Cart Cleared")
+    
 
 }
 

@@ -60,8 +60,25 @@ app.use(function(req,res,next) {
     next()
 })
 
-// middleware to enable csrf for all routes
-app.use(csrf())
+// CSRF middleware
+// for all routes => app.use(csrf())
+const csrfInstance = csrf()
+app.use(function(req,res,next){
+    if (req.url === "/checkout/process_payment") {
+        return next()
+    } else {
+        csrfInstance(req, res, next)
+    }
+})
+
+// share csrf token with all hbs
+app.use(function(req,res,next){
+
+    if (req.csrfToken) {
+        res.locals.csrfToken = req.csrfToken()
+    }
+    next()
+})
 
 // handle csrf error 
 app.use(function(err, req, res, next) {
@@ -73,11 +90,7 @@ app.use(function(err, req, res, next) {
     }
 })
 
-// share csrf token with all hbs
-app.use(function(req,res,next){
-    res.locals.csrfToken = req.csrfToken()
-    next()
-})
+
 
 
 
