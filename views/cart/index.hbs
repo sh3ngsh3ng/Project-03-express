@@ -2,9 +2,10 @@
 
 {{#block 'content'}}
 <h1>My shopping cart</h1>
-
+<a class="btn btn-danger" href="/cart/clear">Clear Cart</a>
+<a class="btn btn-success" href="/checkout">Checkout</a>
 <ul class="list-group">
-    <a class="btn btn-success" href="/cart/clear">Clear Cart</a>
+    
     {{#each cartItems}}
     <li class="list-group-item my-3">
         <h4>Product Name: {{productslot.product.product_name}}</h3>

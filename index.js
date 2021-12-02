@@ -87,10 +87,9 @@ const vendorRoutes = require("./routes/vendor")
 const productRoutes = require("./routes/products")
 const uploadImage = require("./routes/cloudinary")
 const cartRoutes = require("./routes/cart")
-
+const checkoutRoutes = require("./routes/checkout")
 
 async function main() {
-
 
     // Main Page
     app.get("/main", (req,res)=> {
@@ -111,6 +110,12 @@ async function main() {
 
     // shopping cart
     app.use("/cart", cartRoutes)
+
+
+    // check out
+    app.use("/checkout", checkoutRoutes)
+
+
 }
 
 main()
