@@ -2,15 +2,15 @@ const productsDataLayer = require("../dal/products")
 
 
 // vendor side products services layer
-const displayActiveListings = async(vendor) => {
+const displayActiveListingsOfVendor = async(vendor) => {
     return await productsDataLayer.getActiveProductListings(vendor)
 }
 
-const displayInactiveListings = async(vendor) => {
+const displayInactiveListingsOfVendor = async(vendor) => {
     return await productsDataLayer.getInactiveProductListings(vendor)
 }
 
-const displayAllProductSessions = async(vendor) => {
+const displayAllProductSessionsOfVendor = async(vendor) => {
     let result = await productsDataLayer.getProductSlotsByVendorId(vendor)
     let allProducts = result.toJSON() // array of objects (products)
     let arrayOfProductsWithSessions = []
@@ -26,7 +26,7 @@ const displayAllProductSessions = async(vendor) => {
 }
 
 module.exports = {
-    displayActiveListings,
-    displayInactiveListings,
-    displayAllProductSessions
+    displayActiveListingsOfVendor,
+    displayInactiveListingsOfVendor,
+    displayAllProductSessionsOfVendor
 }

@@ -9,8 +9,8 @@ const productServiceLayer = require("../services/products")
 // view all products
 router.get("/", checkIfAuthenticated, async (req,res) => {
     let vendor = req.session.vendor.id
-    let activeProducts = await productServiceLayer.displayActiveListings(vendor)
-    let inactiveProducts = await productServiceLayer.displayInactiveListings(vendor)
+    let activeProducts = await productServiceLayer.displayActiveListingsOfVendor(vendor)
+    let inactiveProducts = await productServiceLayer.displayInactiveListingsOfVendor(vendor)
     // pass to hbs
     res.render("products/inventory", {
         'activeProducts': activeProducts.toJSON(),
@@ -133,7 +133,7 @@ router.post("/:product_id/delete", checkIfAuthenticated, async(req,res)=>{
 // view sessions page
 router.get("/manage-sessions", checkIfAuthenticated, async (req,res)=>{
 
-    let allProductsWithProductSlots = await productServiceLayer.displayAllProductSessions(req.session.vendor.id)
+    let allProductsWithProductSlots = await productServiceLayer.displayAllProductSessionsOfVendor(req.session.vendor.id)
     res.render("products/manage-sessions", {
         'product': allProductsWithProductSlots
     })

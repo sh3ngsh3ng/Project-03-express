@@ -1,8 +1,20 @@
 const {Product} = require("../models")
 
 
-// vendor side products data layer
-const getActiveProductListings = async (vendor) => {
+// api products data layer
+const getActiveProductListings = async() => {
+    return await Product.collection().where({
+        "product_status": "active"
+    }).fetch({
+        require: false
+    })
+}
+
+
+
+
+// vendor products data layer
+const getActiveProductListingsOfVendor = async (vendor) => {
     return await Product.collection().where({
         "vendor_id": vendor,
         "product_status": "active"
@@ -11,7 +23,7 @@ const getActiveProductListings = async (vendor) => {
     })
 }
 
-const getInactiveProductListings = async(vendor) => {
+const getInactiveProductListingsOfVendor = async(vendor) => {
     return await Product.collection().where({
         "vendor_id": vendor,
         "product_status": "inactive"
@@ -29,7 +41,8 @@ const getProductSlotsByVendorId = async(vendor) => {
 } 
 
 module.exports = {
-    getActiveProductListings,
-    getInactiveProductListings,
-    getProductSlotsByVendorId
+    getActiveProductListingsOfVendor,
+    getInactiveProductListingsOfVendor,
+    getProductSlotsByVendorId,
+    getActiveProductListings
 }

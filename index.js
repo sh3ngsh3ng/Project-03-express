@@ -6,7 +6,7 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const FileStore = require('session-file-store')(session)
 const csrf = require('csurf')
-
+const cors = require("cors")
 
 
 let app = express()
@@ -31,12 +31,16 @@ wax.setLayoutPath("./views/layouts")
 
 
 // Middlewares
+// enablue cors
+app.use(cors())
+
+// enable forms
 app.use(
     express.urlencoded({
         extended: false
     })
 )
-
+// sessions file
 app.use(session({
     store: new FileStore(),
     secret: process.env.SESSION_SECRET,
@@ -45,7 +49,6 @@ app.use(session({
 }))
 
 app.use(flash())
-
 
 // middle ware to save flash messages
 app.use(function(req,res,next) {
@@ -64,7 +67,8 @@ app.use(function(req,res,next) {
 // for all routes => app.use(csrf())
 const csrfInstance = csrf()
 app.use(function(req,res,next){
-    if (req.url === "/checkout/process_payment") {
+    // exclude checkout/process_payment and api routes from CSRF
+    if (req.url === "/checkout/process_payment" || req.url.slice(0,5)=="/api/") {
         return next()
     } else {
         csrfInstance(req, res, next)
@@ -101,32 +105,34 @@ const productRoutes = require("./routes/products")
 const uploadImage = require("./routes/cloudinary")
 const cartRoutes = require("./routes/cart")
 const checkoutRoutes = require("./routes/checkout")
+const api = {
+    'products': require("./routes/api/products")
+}
 
 async function main() {
 
+    // HTTP ROUTES
     // Main Page
     app.get("/main", (req,res)=> {
         res.send("Main Page" + res.locals.success_messages)
     })
     // Login Route
     app.use("/", loginSignUpRoutes)
-
     // Vendor Route
     app.use("/vendor", vendorRoutes)
-
     // Manage Product Routes
     app.use("/products", productRoutes)
-
     // Upload image to cloudinary
     app.use("/upload-image", uploadImage)
-
-
     // shopping cart
     app.use("/cart", cartRoutes)
-
-
     // check out
     app.use("/checkout", checkoutRoutes)
+
+
+    // API ROUTES
+    // get active product listings
+    app.use("/api/products", api.products)
 
 
 }

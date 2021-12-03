@@ -1,8 +1,6 @@
 const {CartItem} = require("../models")
 
 
-
-
 const getAllCartItems = async(userId) => {
     return await CartItem.where({
         "user_id": userId // change to user id for frontend
