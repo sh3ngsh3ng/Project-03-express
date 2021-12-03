@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 
 const userDataLayer = require("../../dal/user")
-
+const {checkIfAuthenticatedJWT} = require("../../middleware")
 
 
 
@@ -13,9 +13,9 @@ router.post("/sign-up", express.json(), async(req,res) => {
     res.send("ok")
 })
 
+// user login
 router.post("/login", express.json(), async(req,res) => {
     let userField = req.body
-    console.log(userField)
     let accessToken = await userDataLayer.userLogin(userField)
     if (accessToken) {
         res.send({
@@ -26,6 +26,12 @@ router.post("/login", express.json(), async(req,res) => {
     }
     
 })
+
+router.get("/test", checkIfAuthenticatedJWT, async (req,res) => {
+    const user = req.user
+    res.send(user)
+})
+
 
 
 module.exports = router

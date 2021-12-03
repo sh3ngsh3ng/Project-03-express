@@ -21,11 +21,12 @@ const cloudinaryVariables = (req,res,next) => {
 }
 
 // check user's authentication with jwt
-const checkIfAuthenticatedJWT = (req,res,next) => {
+const checkIfAuthenticatedJWT = (req, res, next) => {
     const authHeader = req.headers.authorization
-
+    console.log(authHeader)
     if (authHeader) {
-        const token = authHeader.split(" ")[1]
+        const token = authHeader.split(' ')[1]
+
         jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
             if (err) {
                 return res.sendStatus(403) // forbidden
@@ -43,5 +44,6 @@ const checkIfAuthenticatedJWT = (req,res,next) => {
 
 module.exports = {
     checkIfAuthenticated,
-    cloudinaryVariables
+    cloudinaryVariables,
+    checkIfAuthenticatedJWT
 }
