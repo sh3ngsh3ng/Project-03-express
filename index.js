@@ -106,7 +106,8 @@ const uploadImage = require("./routes/cloudinary")
 const cartRoutes = require("./routes/cart")
 const checkoutRoutes = require("./routes/checkout")
 const api = {
-    'products': require("./routes/api/products")
+    'products': require("./routes/api/products"),
+    'user': require("./routes/api/user")
 }
 
 async function main() {
@@ -134,6 +135,9 @@ async function main() {
     // get active product listings
     app.use("/api/products", api.products)
 
+
+    // user sign up
+    app.use("/api/user", api.user)
 
 }
 
