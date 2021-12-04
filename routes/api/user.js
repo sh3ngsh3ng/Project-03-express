@@ -19,7 +19,8 @@ router.post("/login", express.json(), async(req,res) => {
     let accessToken = await userDataLayer.userLogin(userField)
     if (accessToken) {
         res.send({
-            accessToken
+            "accessToken": accessToken,
+            "message": "success"
         })
     } else {
         res.send("Login Failed")
