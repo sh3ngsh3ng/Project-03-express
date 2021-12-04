@@ -7,7 +7,7 @@ const displayActiveListingsOfVendor = async(vendor) => {
 }
 
 const displayInactiveListingsOfVendor = async(vendor) => {
-    return await productsDataLayer.getInactiveProductListings(vendor)
+    return await productsDataLayer.getInactiveProductListingsOfVendor(vendor)
 }
 
 const displayAllProductSessionsOfVendor = async(vendor) => {
