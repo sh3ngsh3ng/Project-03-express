@@ -2,16 +2,15 @@ const express = require("express")
 const router = express.Router()
 const Stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
-const cartServiceLayer = require("../services/cart")
-const checkoutServiceLayer = require("../services/checkout")
+const cartServiceLayer = require("../../services/cart")
+const checkoutServiceLayer = require("../../services/checkout")
 
 
 // route to check out cart items
-router.get("/", async (req,res)=>{
-
-
+router.get("/:userId", async (req,res)=>{
+    console.log("called")
     // get cart items
-    let cartItems = await cartServiceLayer.displayCartItems(1)
+    let cartItems = await cartServiceLayer.displayCartItems(req.params.userId)
     let itemArray = cartItems.toJSON()
     // check validity of checking out
     let validityArray = []
@@ -59,7 +58,8 @@ router.get("/", async (req,res)=>{
             'success_url': process.env.STRIPE_SUCCESS_URL,
             'cancel_url': process.env.STRIPE_ERROR_URL,
             'metadata': {
-                'orders': metadataJSON
+                'orders': metadataJSON,
+                'userId': req.params.userId
             }
         }
 
@@ -71,6 +71,7 @@ router.get("/", async (req,res)=>{
             'sessionId': stripeSession.id,
             'publishableKey': process.env.STRIPE_PUBLISHABLE_KEY
         })
+        
     } else {
         res.send('cehckout failed')
     }
@@ -81,6 +82,7 @@ router.get("/", async (req,res)=>{
 
 // webhook after payment made
 router.post("/process_payment", express.raw({type:'application/json'}), async (req,res)=> {
+    console.log("called")
     let payload = req.body
 
     let endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
@@ -95,9 +97,10 @@ router.post("/process_payment", express.raw({type:'application/json'}), async (r
         if (event.type == "checkout.session.completed") {
             let stripeSession = event.data.object
             let orders = JSON.parse(stripeSession.metadata.orders)
-            console.log(orders)
+            let userId = stripeSession.metadata.userId
+            console.log(orders, userId)
 
-            await checkoutServiceLayer.onCheckOut(orders, 1)
+            await checkoutServiceLayer.onCheckOut(orders, userId)
 
 
             res.send({

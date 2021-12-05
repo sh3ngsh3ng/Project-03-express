@@ -5,8 +5,8 @@ const cartServiceLayer = require("../../services/cart")
 // get user's cart
 router.get("/:userId", async (req,res) => {
     let userId = req.params.userId
-    let cartItems = await cartServiceLayer.displayCartItems(userId) 
-    console.log(cartItems)
+    let cartItems = await cartServiceLayer.displayCartItems(userId)
+    console.log("Cart Items Retrieved") 
     res.json(cartItems)
 })
 

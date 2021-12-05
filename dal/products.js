@@ -6,7 +6,8 @@ const getActiveProductListings = async() => {
     return await Product.collection().where({
         "product_status": "active"
     }).fetch({
-        require: false
+        require: false,
+        withRelated: ['productslots']
     })
 }
 

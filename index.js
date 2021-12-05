@@ -103,12 +103,12 @@ const loginSignUpRoutes = require("./routes/login-su")
 const vendorRoutes = require("./routes/vendor")
 const productRoutes = require("./routes/products")
 const uploadImage = require("./routes/cloudinary")
-const cartRoutes = require("./routes/api/cart")
-const checkoutRoutes = require("./routes/checkout")
+const checkoutRoutes = require("./routes/api/checkout")
 const api = {
     'products': require("./routes/api/products"),
     'user': require("./routes/api/user"),
-    'cart': require("./routes/api/cart")
+    'cart': require("./routes/api/cart"),
+    "checkout": require("./routes/api/checkout")
 }
 
 async function main() {
@@ -140,6 +140,9 @@ async function main() {
     // user cart
     app.use("/api/cart", api.cart)
 
+
+    // user check out
+    app.use("/api/cart/checkout", api.checkout)
 }
 
 main()
