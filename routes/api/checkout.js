@@ -5,9 +5,10 @@ const Stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const cartServiceLayer = require("../../services/cart")
 const checkoutServiceLayer = require("../../services/checkout")
 
+const {checkIfAuthenticatedJWT} = require("../../middleware")
 
 // route to check out cart items
-router.get("/:userId", async (req,res)=>{
+router.get("/:userId",  async (req,res)=>{
     console.log("called")
     // get cart items
     let cartItems = await cartServiceLayer.displayCartItems(req.params.userId)
