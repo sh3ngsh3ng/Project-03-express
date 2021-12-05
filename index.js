@@ -7,7 +7,7 @@ const flash = require('connect-flash')
 const FileStore = require('session-file-store')(session)
 const csrf = require('csurf')
 const cors = require("cors")
-
+const {checkIfAuthenticatedJWT} = require("./middleware")
 
 let app = express()
 
@@ -138,7 +138,7 @@ async function main() {
     app.use("/api/user", api.user)
 
     // user cart
-    app.use("/api/cart", api.cart)
+    app.use("/api/cart", [checkIfAuthenticatedJWT], api.cart)
 
 
     // user check out
