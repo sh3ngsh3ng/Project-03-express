@@ -1,18 +1,19 @@
 const express = require("express")
+const { checkIfAuthenticatedJWT } = require("../../middleware")
 const router = express.Router()
 const Stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 const cartServiceLayer = require("../../services/cart")
 const checkoutServiceLayer = require("../../services/checkout")
 
-const {checkIfAuthenticatedJWT} = require("../../middleware")
-
 // route to check out cart items
-router.get("/:userId",  async (req,res)=>{
+router.get("/:userId", [checkIfAuthenticatedJWT], async (req,res)=>{
     console.log("called")
     // get cart items
     let cartItems = await cartServiceLayer.displayCartItems(req.params.userId)
+    
     let itemArray = cartItems.toJSON()
+    
     // check validity of checking out
     let validityArray = []
     for (let item of itemArray) {
@@ -24,7 +25,7 @@ router.get("/:userId",  async (req,res)=>{
 
     // validity flag
     let validityFlag = validityArray.every((item) => item)
-
+    
     // conditional for a valid checkout
     if (validityFlag) {
         // create line items for checkout
@@ -66,11 +67,15 @@ router.get("/:userId",  async (req,res)=>{
 
         // register session with stripe
         let stripeSession = await Stripe.checkout.sessions.create(payment)
-
+        console.log(stripeSession)
         // send back to the browser
-        res.render('checkout/checkout', {
-            'sessionId': stripeSession.id,
-            'publishableKey': process.env.STRIPE_PUBLISHABLE_KEY
+        // res.render('checkout/checkout', {
+        //     'sessionId': stripeSession.id,
+        //     'publishableKey': process.env.STRIPE_PUBLISHABLE_KEY
+        // })
+        let url = stripeSession.url
+        res.send({
+            url
         })
         
     } else {
@@ -85,7 +90,6 @@ router.get("/:userId",  async (req,res)=>{
 router.post("/process_payment", express.raw({type:'application/json'}), async (req,res)=> {
     console.log("called")
     let payload = req.body
-
     let endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
 
     // extract signature header
@@ -97,12 +101,11 @@ router.post("/process_payment", express.raw({type:'application/json'}), async (r
         event = Stripe.webhooks.constructEvent(payload, sig, endpointSecret)
         if (event.type == "checkout.session.completed") {
             let stripeSession = event.data.object
+            console.log(stripeSession)
             let orders = JSON.parse(stripeSession.metadata.orders)
-            let userId = stripeSession.metadata.userId
-            console.log(orders, userId)
+            let userId = JSON.parse(stripeSession.metadata.userId)
 
             await checkoutServiceLayer.onCheckOut(orders, userId)
-
 
             res.send({
                 'received': true
@@ -110,6 +113,7 @@ router.post("/process_payment", express.raw({type:'application/json'}), async (r
         }
     } catch (e) {
         // handle errors
+        console.log("Process Failed")
         res.send({
             'received': false
         })

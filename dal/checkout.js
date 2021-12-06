@@ -27,6 +27,7 @@ const editProductSlotsQuantityOnCheckOut = async(orders) => {
         productSlot.set("slot_quantity", (productSlot.get('slot_quantity') - orderedQuantity))
         await productSlot.save()
     }
+    return
 }
 
 

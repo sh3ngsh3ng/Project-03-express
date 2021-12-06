@@ -68,7 +68,7 @@ app.use(function(req,res,next) {
 const csrfInstance = csrf()
 app.use(function(req,res,next){
     // exclude checkout/process_payment and api routes from CSRF
-    if (req.url === "/checkout/process_payment" || req.url.slice(0,5)=="/api/") {
+    if (req.url.slice(0,5)=="/api/") {
         return next()
     } else {
         csrfInstance(req, res, next)
@@ -138,11 +138,11 @@ async function main() {
     app.use("/api/user", api.user)
 
     // user cart
-    app.use("/api/cart", [checkIfAuthenticatedJWT], api.cart)
+    app.use("/api/cart", api.cart)
 
 
     // user check out
-    app.use("/api/cart/checkout", api.checkout)
+    app.use("/api/checkout", api.checkout)
 }
 
 main()
