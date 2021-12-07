@@ -49,9 +49,8 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
             await product.save()
             if (form.data.tags) {
                 let tags = form.data.tags
-                console.log(tags)
                 let selectedTags = tags.split(",")
-                product.tags().attach(selectedTags)
+                await product.tags().attach(selectedTags)
             }
             req.flash("success_messages", "New Product has been added")
             res.redirect('/products')

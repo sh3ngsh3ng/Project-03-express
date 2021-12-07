@@ -62,7 +62,7 @@
 <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
 
 <script>
-    {{!-- Start of Widget Set-up --}}
+
     function generateSignature(callback, params_to_sign) {
         axios.get('/upload-image/sign', {
             params: {
@@ -92,21 +92,17 @@
     document.getElementById("upload_widget").addEventListener('click', function() {
         myWidget.open()
     }, false)
-    {{!-- End of Widget Setup --}}
 
-
-    {{!-- Start of Live Update --}}
     document.querySelector("#id_product_name").addEventListener("change", function(){
-        document.querySelector("#product_name").innerHTML = this.value
+        document.querySelector("#product_name").innerHTML = document.querySelector("#id_product_name").value
     })
     document.querySelector("#id_product_description").addEventListener("change", function(){
-        document.querySelector("#product_description").innerHTML = this.value
+        document.querySelector("#product_description").innerHTML = document.querySelector("#id_product_description").value
     })
     document.querySelector("#id_product_price").addEventListener("change", function(){
-        document.querySelector("#product_price").innerHTML = '$' + (this.value)
+        document.querySelector("#product_price").innerHTML = '$' + (document.querySelector("#id_product_price").value)
     })
 
-    {{!-- End of Live update --}}
 </script>
 
 
