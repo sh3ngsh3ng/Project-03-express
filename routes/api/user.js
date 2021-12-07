@@ -23,7 +23,9 @@ router.post("/login", express.json(), async(req,res) => {
             "message": "success"
         })
     } else {
-        res.send("Login Failed")
+        res.send({
+            "message": "failed"
+        })
     }
     
 })
