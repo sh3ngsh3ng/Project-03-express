@@ -66,20 +66,23 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
 
 // view update product form
 router.get('/:product_id/update', [checkIfAuthenticated, cloudinaryVariables], async (req, res) => {
+    const allTags = await Tag.fetchAll().map(tag => [tag.get('id'), tag.get('name')])
     const productId = req.params.product_id
     const product = await Product.where({
         'id': productId
     }).fetch({
-        require: true
+        require: true,
+        withRelated: ['tags']
     })
-
-    const productForm = createProductForm()
+    const productForm = createProductForm(allTags)
 
     productForm.fields.product_name.value = product.get('product_name')
     productForm.fields.product_description.value = product.get('product_description')
     productForm.fields.product_price.value = product.get('product_price')
     productForm.fields.room_size.value = product.get("room_size")
-
+    let selectedTags = await product.related('tags').pluck('id')
+    console.log(selectedTags)
+    productForm.fields.tags.value = selectedTags
     res.render("products/update-product", {
         'form': productForm.toHTML(bootstrapField),
         'product': product.toJSON()
@@ -89,17 +92,29 @@ router.get('/:product_id/update', [checkIfAuthenticated, cloudinaryVariables], a
 
 // process update product form
 router.post("/:product_id/update", checkIfAuthenticated, async(req,res) => {
+    const allTags = await Tag.fetchAll().map(tag => [tag.get('id'), tag.get('name')])
     const product = await Product.where({
         'id': req.params.product_id
     }).fetch({
-        require: true
+        require: true,
+        withRelated: ['tags']
     })
 
-    const productForm = createProductForm()
+    const productForm = createProductForm(allTags)
     productForm.handle(req, {
         'success': async(form) => {
-            product.set(form.data)
+            let {tags, ...productData} = form.data
+            console.log(form.data)
+            product.set(productData)
             product.save()
+
+            let tagIds = tags.split(",")
+            let existingTagIds = await product.related('tags').pluck('id')
+            
+            let toRemove = existingTagIds.filter( id => tagIds.includes(id) === false)
+
+            await product.tags().detach(toRemove)
+            await product.tags().attach(tagIds)
             res.redirect("/products")
         },
         'error': async(form) => {
