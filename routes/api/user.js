@@ -9,8 +9,10 @@ const {checkIfAuthenticatedJWT} = require("../../middleware")
 // user sign up
 router.post("/sign-up", express.json(), async(req,res) => {
     let newUser = req.body
-    userDataLayer.userSignUp(newUser)
-    res.send("ok")
+    let signUpUser = userDataLayer.userSignUp(newUser)
+    res.send({
+        "message": "success"
+    })
 })
 
 // user login
