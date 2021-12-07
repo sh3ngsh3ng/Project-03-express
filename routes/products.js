@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const {Product, ProductSlot} = require("../models")
+const {Product, ProductSlot, Tag} = require("../models")
 const {bootstrapField, createProductForm, createAddSessionForm} = require ("../forms")
 const {checkIfAuthenticated, cloudinaryVariables} = require("../middleware")
 const productServiceLayer = require("../services/products")
@@ -19,8 +19,10 @@ router.get("/", checkIfAuthenticated, async (req,res) => {
 })
 
 // view add product form
-router.get('/add', [checkIfAuthenticated, cloudinaryVariables], (req,res)=>{
-    const productForm = createProductForm()
+router.get('/add', [checkIfAuthenticated, cloudinaryVariables], async (req,res)=>{
+    const allTags = await Tag.fetchAll().map(tag => [tag.get('id'), tag.get('name')])
+    const productForm = createProductForm(allTags)
+
     res.render('products/add-product', {
         'form': productForm.toHTML(bootstrapField),
     })
@@ -28,9 +30,10 @@ router.get('/add', [checkIfAuthenticated, cloudinaryVariables], (req,res)=>{
 
 // process add product form
 router.post('/add', checkIfAuthenticated, async(req,res)=>{
-    const productForm = createProductForm()
+    const allTags = await Tag.fetchAll().map(tag => [tag.get('id'), tag.get('name')])
+    const productForm = createProductForm(allTags)
     productForm.handle(req, {
-        'success': async(form) => {
+        'success': async (form) => {
             const product = new Product()
 
             // product.set(form.data)
@@ -39,11 +42,17 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
             product.set('product_description', form.data.product_description)
             product.set('product_price', form.data.product_price * 100)
             product.set('vendor_id', req.session.vendor.id)
-            product.set('product_status', "active")
+            product.set('product_status', "inactive")
             product.set('thumbnail_url', form.data.thumbnail_url)
             product.set('image_url', form.data.image_url)
             product.set('room_size', form.data.room_size)
             await product.save()
+            if (form.data.tags) {
+                let tags = form.data.tags
+                console.log(tags)
+                let selectedTags = tags.split(",")
+                product.tags().attach(selectedTags)
+            }
             req.flash("success_messages", "New Product has been added")
             res.redirect('/products')
         },

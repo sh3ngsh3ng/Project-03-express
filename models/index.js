@@ -7,6 +7,16 @@ const Product = bookshelf.model('Product', {
     },
     productslots() {
         return this.hasMany('ProductSlot')
+    },
+    tags() {
+        return this.belongsToMany('Tag')
+    }
+})
+
+const Tag = bookshelf.model('Tag', {
+    tableName: 'tags',
+    products() {
+        return this.belongsToMany('Product')
     }
 })
 
@@ -54,4 +64,4 @@ const Order = bookshelf.model("Order", {
     tableName: 'orders'
 })
 
-module.exports = {Product, Vendor, User, CartItem, ProductSlot, OrderItem, Order}
+module.exports = {Product, Tag, Vendor, User, CartItem, ProductSlot, OrderItem, Order}

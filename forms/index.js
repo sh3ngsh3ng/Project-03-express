@@ -26,7 +26,7 @@ var bootstrapField = function (name, object) {
 };
 
 // caolan form documentation: https://github.com/caolan/forms
-const createProductForm = () => {
+const createProductForm = (tags) => {
     return forms.create({
         'product_name': fields.string({
             label: "Title of Escape Room",
@@ -67,6 +67,15 @@ const createProductForm = () => {
                 label: ['form-label']
             },
             'validators': [validators.integer(), validators.max(100, "For Room Size more than 20pax, please send in a request to the administrator.")]
+        }),
+        'tags': fields.string({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.multipleSelect(),
+            choices: tags
         })
     })
 }
