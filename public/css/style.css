@@ -31,6 +31,88 @@
 
 
 
+/* start of Login Page */
+#login-form-div {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+#login-form {
+    width: 45%;
+    height: auto;
+    background-color: white;
+    padding: 30px;
+    border: 1px solid #e1e3e7;
+    border-radius: 10px;
+    box-shadow:0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+#login-form-brand-logo-div {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px 20px 0px;
+}
+
+#login-form-brand-logo-div {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px 20px 0px;
+}
+
+.form-brand-logo {
+    height: 60px;
+    border-radius: 50%;
+    border: 5px solid #20202049;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+#login-btn {
+    width: 100%;
+    background: #1877f2;
+    margin-bottom: 40px;
+}
+
+#sign-up-prompt-div {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+#sign-up-btn-div {
+    display: flex;
+    justify-content: center;
+}
+
+#sign-up-btn {
+    width: 60%;
+    background: #42b72a;
+}
+
+/* end of Login Page */
+
+/* start of Sign Up page */
+#sign-up-form-div {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+#sign-up-form {
+    width: 45%;
+    height: auto;
+    background-color: white;
+    padding: 30px;
+    border: 1px solid #e1e3e7;
+    border-radius: 10px;
+    box-shadow:0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+/* end of Sign Up Page */
+
 
 /* For the table cell texts */
 /* https://stackoverflow.com/questions/9789723/css-text-overflow-in-a-table-cell */

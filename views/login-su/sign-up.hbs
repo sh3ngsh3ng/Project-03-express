@@ -1,13 +1,16 @@
 {{#extends 'base'}}
 
 {{#block 'content'}}
-<h1>You can sign up here!</h1>
-<form method="POST">
-    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
-    {{{form}}}
-    <input type="submit" class="btn btn-primary" value="Register" />
-</form>
 
+<div id="sign-up-form-div">
+    <div id="sign-up-form">
+        <form method="POST">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+            {{{form}}}
+            <input type="submit" class="btn btn-primary" value="Register" />
+        </form>
+    </div>
+</div>
 {{/block}}
 
 
