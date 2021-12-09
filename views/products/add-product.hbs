@@ -23,6 +23,7 @@
     
     <h1 class="add-products-header">Add New Product</h1>
     
+    {{!-- start of card preview --}}
         <div id="preview-card-title-div">
             <h4>Preview of Card</h4>
         </div>
@@ -37,7 +38,7 @@
                 </div>
             </div>
         </div>
-   
+    {{!-- end of card preview --}}
 
     <form method="POST">
         <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
@@ -93,6 +94,7 @@
         myWidget.open()
     }, false)
 
+    // refactor to card live update module
     document.querySelector("#id_product_name").addEventListener("change", function(){
         document.querySelector("#product_name").innerHTML = document.querySelector("#id_product_name").value
     })

@@ -1,7 +1,34 @@
 {{#extends 'base'}}
 
 {{#block 'content'}}
-    <h1>Update Product</h1>
+    {{#if error_messages}}
+        <div class="alert alert-danger">
+            {{error_messages}}
+        </div>
+    {{/if}}
+
+    <h1 class="add-products-header">Update Product</h1>
+
+    {{!-- start of card preview --}}
+    <div id="preview-card-title-div">
+            <h4>Preview of Card</h4>
+        </div>
+        <div id="preview-card-div">
+            <div class="card" style="width: 18rem;">
+                <img id="card-image" class="card-img-top" src={{product.thumbnail_url}} alt="preview image">
+                <div class="card-body">
+                    <h5 id="product_name" class="card-title">{{product.product_name}}</h5>
+                    <p id="product_description" class="card-text">{{product.product_description}}</p>
+                    <p id="product_price">$ {{changeToDollar product.product_price}}</p>
+                    <btn class="btn btn-success">Book Now!</btn>
+                </div>
+            </div>
+        </div>
+
+    {{!-- end of card preview --}}
+
+
+    
     <a href="/products" class="btn btn-sm btn-danger">Back</a>
     <h2>{{product.product_name}}</h2>
     <form method="POST">
@@ -16,6 +43,12 @@
         {{{form}}}
         <input type="submit" value= "Update" class="btn btn-primary"/>
     </form>
+
+
+
+
+
+
 {{/block}}
 
 {{#block 'script'}}
@@ -58,6 +91,16 @@
             myWidget.open()
         }, false)
 
+        // refactor to card live update module
+        document.querySelector("#id_product_name").addEventListener("change", function(){
+            document.querySelector("#product_name").innerHTML = document.querySelector("#id_product_name").value
+        })
+        document.querySelector("#id_product_description").addEventListener("change", function(){
+            document.querySelector("#product_description").innerHTML = document.querySelector("#id_product_description").value
+        })
+        document.querySelector("#id_product_price").addEventListener("change", function(){
+            document.querySelector("#product_price").innerHTML = '$' + (document.querySelector("#id_product_price").value)
+        })
 
     </script>
 {{/block}}

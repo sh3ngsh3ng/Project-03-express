@@ -56,7 +56,7 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
             res.redirect('/products')
         },
         'error': async(form) => {
-            req.flash("error_messages", "Please fill up the form properly")
+            req.flash("error_messages", "Error field. Please fill up the form again")
             res.render('products/add-product', {
                 'form': form.toHTML(bootstrapField)
             })
@@ -119,9 +119,11 @@ router.post("/:product_id/update", checkIfAuthenticated, async(req,res) => {
 
             await product.tags().detach(toRemove)
             await product.tags().attach(tagIds)
+            req.flash("success_messages", `${product.get("product_name")} has been updated!`)
             res.redirect("/products")
         },
         'error': async(form) => {
+            req.flash("error_messages", "Error field. Please fill up the form again")
             res.render("products/update-product", {
                 'form': form.toHTML(bootstrapField),
                 'product': product.toJSON()
