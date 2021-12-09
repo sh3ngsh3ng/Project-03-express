@@ -8,6 +8,7 @@ const productDataLayer = require("../../dal/products")
 // both active product and their respective productslots are sent back
 router.get("/active-listings", async (req,res) => {
     let activeListings = await productDataLayer.getActiveProductListings()
+    console.log(activeListings.toJSON())
     console.log("called")
     res.json(activeListings)
 })

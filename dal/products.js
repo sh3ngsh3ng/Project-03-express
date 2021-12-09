@@ -7,7 +7,7 @@ const getActiveProductListings = async() => {
         "product_status": "active"
     }).fetch({
         require: false,
-        withRelated: ['productslots']
+        withRelated: ['productslots', 'tags']
     })
 }
 

@@ -77,11 +77,13 @@
         }, (error, result) => {
             if (!error && result.event === "success") {
                 console.log('Done! Here is the image infor: ', result)
-                document.querySelector("#upload_widget").style.display="none"
-
+                console.log(result)
                 document.querySelector('#id_image_url').value = result.info.url;
                 document.querySelector('#id_thumbnail_url').value = result.info.thumbnail_url;
                 document.querySelector('#uploaded_image').src = result.info.thumbnail_url;
+                // live preview
+                document.querySelector("#card-image").src = result.info.thumbnail_url
+                // image beside upload button
                 document.querySelector('#uploaded_image').style.display = 'inline';
             }
         })
@@ -101,6 +103,7 @@
         document.querySelector("#id_product_price").addEventListener("change", function(){
             document.querySelector("#product_price").innerHTML = '$' + (document.querySelector("#id_product_price").value)
         })
+
 
     </script>
 {{/block}}
