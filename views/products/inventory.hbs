@@ -42,42 +42,41 @@
             {{!-- Accordion Body --}}
             <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne" data-bs-parent="#accordionExample">
                 {{#if activeProducts}}
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Thumbnail</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Price/Pax</th>
-                            <th>Room Size</th>
-                            <th>Edit Product</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each activeProducts}}
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td>
-                                    <img src='{{thumbnail_url}}'/>
-                                </td>
-                                <td>{{product_name}}</td>
-                                <td>{{product_description}}</td>
-                                <td>${{changeToDollar product_price}}</td>
-                                <td>{{room_size}}</td>
-                                <td>
-                                    <a href="/products/{{id}}/update" class="btn btn-sm btn-primary">Update</a>
-                                    <a href="/products/{{id}}/delete" class="btn btn-sm btn-danger">Delete</a>
-                                    <a href="/products/{{id}}/remove-listing" class="btn btn-sm btn-secondary">Change To Inactive</a>
-                                    <a href="/products/{{id}}/add-session" class="btn btn-sm btn-success">Add Session</a>
-                                </td>
+                                <th>Thumbnail</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Price/Pax</th>
+                                <th>Room Size</th>
+                                <th>Edit Product</th>
                             </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {{#each activeProducts}}
+                                <tr>
+                                    <td>
+                                        <img src='{{thumbnail_url}}'/>
+                                    </td>
+                                    <td>{{product_name}}</td>
+                                    <td>{{product_description}}</td>
+                                    <td>${{changeToDollar product_price}}</td>
+                                    <td>{{room_size}}</td>
+                                    <td>
+                                        <a href="/products/{{id}}/update" class="btn btn-sm btn-primary">Update</a>
+                                        <a href="/products/{{id}}/delete" class="btn btn-sm btn-danger">Delete</a>
+                                        <a href="/products/{{id}}/remove-listing" class="btn btn-sm btn-secondary">Change To Inactive</a>
+                                        <a href="/products/{{id}}/add-session" class="btn btn-sm btn-success">Add Session</a>
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                {{else}}
+                    <h1>You have no active listings</h1>
+                {{/if}}
             </div>
-            {{else}}
-            <h1>You have no active listings</h1>
-            {{/if}}
-
 
             {{!-- end of Active Products --}}
 
@@ -92,41 +91,39 @@
             {{!-- Accordion Body --}}
             <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo" data-bs-parent="#accordionExample">
                 {{#if inactiveProducts}}
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Thumbnail</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Price/Pax</th>
-                            <th>Room Size</th>
-                            <th>Edit Product</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each inactiveProducts}}
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td>
-                                    <img src='{{thumbnail_url}}'/>
-                                </td>
-                                <td>{{product_name}}</td>
-                                <td>{{product_description}}</td>
-                                <td>${{changeToDollar product_price}}</td>
-                                <td>{{room_size}}</td>
-                                <td>
-                                    <a href="/products/{{id}}/update" class="btn btn-sm btn-primary">Update</a>
-                                    <a href="/products/{{id}}/delete" class="btn btn-sm btn-danger">Delete</a>
-                                    <a href="/products/{{id}}/add-listing" class="btn btn-sm btn-secondary">Change To Active</a>
-                                </td>
+                                <th>Thumbnail</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Price/Pax</th>
+                                <th>Room Size</th>
+                                <th>Edit Product</th>
                             </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {{#each inactiveProducts}}
+                                <tr>
+                                    <td>
+                                        <img src='{{thumbnail_url}}'/>
+                                    </td>
+                                    <td>{{product_name}}</td>
+                                    <td>{{product_description}}</td>
+                                    <td>${{changeToDollar product_price}}</td>
+                                    <td>{{room_size}}</td>
+                                    <td>
+                                        <a href="/products/{{id}}/update" class="btn btn-sm btn-primary">Update</a>
+                                        <a href="/products/{{id}}/delete" class="btn btn-sm btn-danger">Delete</a>
+                                        <a href="/products/{{id}}/add-listing" class="btn btn-sm btn-secondary">Change To Active</a>
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
                 {{else}}
                     <h1>No Products Avail</h1>
                 {{/if}}
-                
-                
             </div>
             {{!-- end of Inactive Products --}}
             
