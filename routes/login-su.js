@@ -37,7 +37,7 @@ router.post("/sign-up", (req,res) => {
 
             await vendor.save()
             req.flash("success_messages", "You have signed up successfully!")
-            res.redirect("/login")
+            res.redirect("/")
         },
         'error': (form) => {
             res.render("login-su/sign-up", {
@@ -48,16 +48,21 @@ router.post("/sign-up", (req,res) => {
 })
 
 // view vendor login form
-router.get("/login", (req,res) => {
+router.get("/", (req,res) => {
     const loginForm = createLoginForm()
-    res.render("login-su/login", {
-        'form': loginForm.toHTML(bootstrapField)
-    })
+    if (req.session.vendor) {
+        res.redirect("/vendor/dashboard")
+    } else {
+        res.render("login-su/login", {
+            'form': loginForm.toHTML(bootstrapField)
+        })
+    }
+    
 })
 
 
 // process vendor login form
-router.post("/login", (req,res) => {
+router.post("/", (req,res) => {
     const loginForm = createLoginForm()
     loginForm.handle(req, {
         'success': async (form) => {
@@ -83,7 +88,7 @@ router.post("/login", (req,res) => {
                     res.redirect("/vendor/dashboard")
                 } else {
                     req.flash("error_messages", "Login Failed. Please try again")
-                    res.redirect("/login")
+                    res.redirect("/")
                 }
                 
             }

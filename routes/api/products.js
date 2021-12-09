@@ -12,7 +12,10 @@ router.get("/active-listings", async (req,res) => {
     res.json(activeListings)
 })
 
+// promotional listings
 
+
+// featured listings
 
 
 module.exports = router

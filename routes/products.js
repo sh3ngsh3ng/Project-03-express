@@ -232,6 +232,7 @@ router.get("/:product_id/add-listing", async (req,res) => {
     console.log("Listing Added Successfully")
 })
 
+// remove product from listing
 router.get("/:product_id/remove-listing", async(req,res)=>{
     let product = await Product.where({
         "id": req.params.product_id

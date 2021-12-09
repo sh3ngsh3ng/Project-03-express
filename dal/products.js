@@ -12,8 +12,6 @@ const getActiveProductListings = async() => {
 }
 
 
-
-
 // vendor products data layer
 const getActiveProductListingsOfVendor = async (vendor) => {
     return await Product.collection().where({

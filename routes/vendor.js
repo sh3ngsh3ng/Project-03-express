@@ -23,7 +23,7 @@ router.get("/schedule", (req,res) => {
 router.get("/logout", (req,res) => {
     req.session.vendor = null
     req.flash("success_messages", "You have logged out")
-    res.redirect("/login")
+    res.redirect("/")
 } )
 
 

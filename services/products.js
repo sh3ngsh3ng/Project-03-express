@@ -3,7 +3,7 @@ const productsDataLayer = require("../dal/products")
 
 // vendor side products services layer
 const displayActiveListingsOfVendor = async(vendor) => {
-    return await productsDataLayer.getActiveProductListings(vendor)
+    return await productsDataLayer.getActiveProductListingsOfVendor(vendor)
 }
 
 const displayInactiveListingsOfVendor = async(vendor) => {

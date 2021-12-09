@@ -13,6 +13,7 @@ router.post("/sign-up", express.json(), async(req,res) => {
     res.send({
         "message": "success"
     })
+    // code for failed sign up
 })
 
 // user login
@@ -32,11 +33,6 @@ router.post("/login", express.json(), async(req,res) => {
     
 })
 
-// check protected route (delete later)
-router.get("/test", checkIfAuthenticatedJWT, async (req,res) => {
-    const user = req.user
-    res.send(user)
-})
 
 
 

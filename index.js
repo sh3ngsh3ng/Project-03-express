@@ -7,7 +7,6 @@ const flash = require('connect-flash')
 const FileStore = require('session-file-store')(session)
 const csrf = require('csurf')
 const cors = require("cors")
-const {checkIfAuthenticatedJWT} = require("./middleware")
 
 let app = express()
 
@@ -77,7 +76,6 @@ app.use(function(req,res,next){
 
 // share csrf token with all hbs
 app.use(function(req,res,next){
-
     if (req.csrfToken) {
         res.locals.csrfToken = req.csrfToken()
     }
@@ -114,11 +112,7 @@ const api = {
 async function main() {
 
     // HTTP ROUTES
-    // Main Page
-    app.get("/main", (req,res)=> {
-        res.send("Main Page" + res.locals.success_messages)
-    })
-    // Login Route
+    // Login Route (main page)
     app.use("/", loginSignUpRoutes)
     // Vendor Route
     app.use("/vendor", vendorRoutes)
@@ -147,7 +141,7 @@ async function main() {
 
 main()
 
-app.listen(3000, ()=> {
+app.listen(8080, ()=> {
     console.log("Server Started")
 })
 

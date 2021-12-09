@@ -79,11 +79,8 @@ router.get("/:userId", [checkIfAuthenticatedJWT], async (req,res)=>{
         })
         
     } else {
-        res.send('cehckout failed')
+        res.send('checkout failed')
     }
-
-    
-
 })
 
 // webhook after payment made
