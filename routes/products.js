@@ -52,7 +52,7 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
                 let selectedTags = tags.split(",")
                 await product.tags().attach(selectedTags)
             }
-            req.flash("success_messages", "New Product has been added")
+            req.flash("success_messages", "New Product has been added. Check your 'inactive' listings.")
             res.redirect('/products')
         },
         'error': async(form) => {
@@ -78,7 +78,7 @@ router.get('/:product_id/update', [checkIfAuthenticated, cloudinaryVariables], a
 
     productForm.fields.product_name.value = product.get('product_name')
     productForm.fields.product_description.value = product.get('product_description')
-    productForm.fields.product_price.value = product.get('product_price')
+    productForm.fields.product_price.value = product.get('product_price') / 100
     productForm.fields.room_size.value = product.get("room_size")
     let selectedTags = await product.related('tags').pluck('id')
     console.log(selectedTags)
@@ -103,9 +103,10 @@ router.post("/:product_id/update", checkIfAuthenticated, async(req,res) => {
     const productForm = createProductForm(allTags)
     productForm.handle(req, {
         'success': async(form) => {
-            let {tags, ...productData} = form.data
-            console.log(form.data)
+            let {tags, product_price, ...productData} = form.data
+            console.log(product_price)
             product.set(productData)
+            product.set("product_price", product_price * 100)
             product.save()
 
             let tagIds = tags.split(",")
