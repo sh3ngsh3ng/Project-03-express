@@ -6,7 +6,7 @@
     <h2>{{product.product_name}}</h2>
     <form method="POST">
         <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
-        {{#if product.image_url}}
+        {{#if product.thumbnail_url}}
                 <img src="{{product.thumbnail_url}}" id="uploaded_image" style="display:block"/>
             {{else}}
                 <img src="" id ="uploaded-image" style="display:none"/>

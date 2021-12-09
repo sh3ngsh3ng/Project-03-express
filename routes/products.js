@@ -80,6 +80,8 @@ router.get('/:product_id/update', [checkIfAuthenticated, cloudinaryVariables], a
     productForm.fields.product_description.value = product.get('product_description')
     productForm.fields.product_price.value = product.get('product_price') / 100
     productForm.fields.room_size.value = product.get("room_size")
+    productForm.fields.thumbnail_url.value = product.get("thumbnail_url")
+    productForm.fields.image_url.value = product.get("image_url")
     let selectedTags = await product.related('tags').pluck('id')
     console.log(selectedTags)
     productForm.fields.tags.value = selectedTags
@@ -104,6 +106,7 @@ router.post("/:product_id/update", checkIfAuthenticated, async(req,res) => {
     productForm.handle(req, {
         'success': async(form) => {
             let {tags, product_price, ...productData} = form.data
+            console.log(form.data)
             console.log(product_price)
             product.set(productData)
             product.set("product_price", product_price * 100)
