@@ -12,6 +12,7 @@ router.get("/active-listings", async (req,res) => {
     res.json(activeListings)
 })
 
+// return all tags
 router.get("/tags", async(req,res) => {
     const allTags = await productDataLayer.getAllTags()
     res.json(allTags)
