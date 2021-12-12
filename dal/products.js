@@ -1,4 +1,4 @@
-const {Product} = require("../models")
+const {Product, Tag} = require("../models")
 
 
 // api products data layer
@@ -39,9 +39,15 @@ const getProductSlotsByVendorId = async(vendor) => {
     return vendorProductsWithProductSlots
 } 
 
+const getAllTags = async() => {
+    let allTags = await Tag.fetchAll().map(tag => [tag.get('id'), tag.get('name')])
+    return allTags
+}
+
 module.exports = {
     getActiveProductListingsOfVendor,
     getInactiveProductListingsOfVendor,
     getProductSlotsByVendorId,
-    getActiveProductListings
+    getActiveProductListings,
+    getAllTags
 }

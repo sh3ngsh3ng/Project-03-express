@@ -163,11 +163,55 @@ const createAddSessionForm = () => {
     })
 }
 
+const createSearchForm = (tags) => {
+    return forms.create({
+        'name': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'min_cost': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'tags': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.multipleSelect(),
+            choices: tags
+        }),
+        'start_date': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.datetimeLocal()
+        }),
+        'end_date': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.datetimeLocal()
+        })
+    })
+}
 
 
 module.exports = {bootstrapField, 
                 createProductForm, 
                 createRegistrationForm,
                 createLoginForm,
-                createAddSessionForm
+                createAddSessionForm,
+                createSearchForm
             }
