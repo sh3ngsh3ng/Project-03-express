@@ -39,18 +39,20 @@ router.get("/search", async(req,res) => {
 
             let tags = req.query.tags
             let name = req.query.name
+            let max_cost = req.query.max_cost
 
             if (tags) {
                 q = q.query('join', 'products_tags', 'products.id', 'product_id')
                 .where('tag_id', 'in', tags)
-
             }
 
             if (name) {
                 q = q.where('product_name', 'like', `%${name}%`)
             }
 
-
+            if (max_cost) {
+                q = q.where('product_price', '<=', max_cost * 100)
+            }
 
 
             let searchProducts = await q.fetch({
