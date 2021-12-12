@@ -21,7 +21,8 @@ router.get("/tags", async(req,res) => {
 router.get("/search", async(req,res) => {
     let searchForm = createSearchForm()
     const allTags = productDataLayer.getAllTags()
-    let q = Product.collection()
+    // only active product listings shown
+    let q = Product.collection().where({'product_status': 'active'})
 
     searchForm.handle(req, {
         'empty': async(form) => {
@@ -37,12 +38,21 @@ router.get("/search", async(req,res) => {
             // return search results
 
             let tags = req.query.tags
-            console.log(tags)
+            let name = req.query.name
+
             if (tags) {
                 q = q.query('join', 'products_tags', 'products.id', 'product_id')
-                .where({'product_status': 'active'}).where('tag_id', 'in', tags)
+                .where('tag_id', 'in', tags)
 
             }
+
+            if (name) {
+                q = q.where('product_name', 'like', `%${name}%`)
+            }
+
+
+
+
             let searchProducts = await q.fetch({
                 withRelated: ['productslots', 'tags']
             })
