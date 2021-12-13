@@ -159,8 +159,8 @@ const createAddSessionForm = () => {
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
-            },
-            widget: widgets.datetimeLocal()
+            }
+            // widget: widgets.datetimeLocal()
         })
     })
 }
@@ -197,14 +197,6 @@ const createSearchForm = (tags) => {
                 label: ['form-label']
             },
             // widget: widgets.datetimeLocal()
-        }),
-        'end_date': fields.string({
-            required: false,
-            errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            },
-            widget: widgets.datetimeLocal()
         })
     })
 }
