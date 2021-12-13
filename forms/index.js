@@ -5,7 +5,7 @@ const fields = forms.fields;
 const validators = forms.validators;
 const widgets = forms.widgets
 
-
+var datetimeLocalWidget = input('datetime-local');
 let datetimeLocal = function (options) {
     var opt = options || {};
     var w = datetimeLocalWidget(opt);
