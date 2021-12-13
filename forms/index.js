@@ -4,7 +4,38 @@ const forms = require("forms");
 const fields = forms.fields;
 const validators = forms.validators;
 const widgets = forms.widgets
-const {input} = require('../node_modules/forms/lib/widgets')
+const {tag} = require("../node_modules/forms/tag")
+
+var getUserAttrs = tag.getUserAttrs;
+
+var input = function (type) {
+    return function (opts) {
+        var opt = opts || {};
+        var userAttrs = getUserAttrs(opt);
+        var w = {
+            classes: opt.classes,
+            type: type,
+            formatValue: function (value) {
+                return value || value === 0 ? value : null;
+            }
+        };
+        w.toHTML = function (name, field) {
+            var f = field || {};
+            var attrs = {
+                type: type,
+                name: name,
+                id: f.id === false ? false : f.id || true,
+                classes: w.classes,
+                value: w.formatValue(f.value)
+            };
+            return tag('input', [
+                attrs, userAttrs, w.attrs || {}
+            ]);
+        };
+        return w;
+    };
+};
+
 
 var datetimeLocalWidget = input('datetime-local');
 let datetimeLocal = function (options) {
