@@ -200,7 +200,7 @@ router.post("/:product_id/add-session", checkIfAuthenticated, async(req,res)=> {
 
             const productSlot = new ProductSlot()
             productSlot.set("slot_datetime", form.data.slot_datetime)
-            productSlot.set('slot_availability', true)
+            productSlot.set('slot_availability', 1)
             productSlot.set('slot_quantity', product.toJSON().room_size)
             productSlot.set('product_id', req.params.product_id)
             await productSlot.save()

@@ -71,7 +71,6 @@ let datetimeLocal = function (options) {
     };
     return w;
 };
-console.log(datetimeLocal)
 
 
 
