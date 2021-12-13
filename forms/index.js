@@ -179,7 +179,7 @@ const createAddSessionForm = () => {
             cssClasses: {
                 label: ['form-label']
             },
-            widget: widgets.datetimeLocal()
+            widget: datetimeLocal()
         })
     })
 }
@@ -215,7 +215,7 @@ const createSearchForm = (tags) => {
             cssClasses: {
                 label: ['form-label']
             },
-            widget: widgets.datetimeLocal()
+            widget: datetimeLocal()
         })
     })
 }
