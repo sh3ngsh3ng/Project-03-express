@@ -4,8 +4,7 @@ const forms = require("forms");
 const fields = forms.fields;
 const validators = forms.validators;
 const widgets = forms.widgets
-const {tag} = require("../node_modules/forms/tag")
-
+const {tag} = require("node_modules/forms/lib/tag.js")
 var getUserAttrs = tag.getUserAttrs;
 
 var input = function (type) {
