@@ -4,9 +4,8 @@ const forms = require("forms");
 const fields = forms.fields;
 const validators = forms.validators;
 const widgets = forms.widgets
-const {tag} = require("../node_modules/forms/lib/tag.js")
+const tag  = require("../node_modules/forms/lib/tag.js")
 var getUserAttrs = tag.attrs;
-
 var input = function (type) {
     return function (opts) {
         var opt = opts || {};
@@ -34,8 +33,6 @@ var input = function (type) {
         return w;
     };
 };
-
-
 var datetimeLocalWidget = input('datetime-local');
 let datetimeLocal = function (options) {
     var opt = options || {};
