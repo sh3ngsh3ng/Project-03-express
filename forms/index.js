@@ -5,6 +5,7 @@ const fields = forms.fields;
 const validators = forms.validators;
 const widgets = forms.widgets
 const tag  = require("../node_modules/forms/lib/tag.js")
+const reduce = require('../node_modules/reduce')
 
 var dataRegExp = /^data-[a-z]+([-][a-z]+)*$/;
 var ariaRegExp = /^aria-[a-z]+$/;
