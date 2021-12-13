@@ -8,5 +8,4 @@ node_modules/
 .github/
 .env
 .vscode
-node_modules
 sessions
