@@ -6,16 +6,19 @@
             {{error_messages}}
         </div>
     {{/if}}
-
-    <h1 class="add-products-header">Update Product</h1>
-
+    <div style="display: flex; justify-content:space-between; align-items:center;">
+        <h1 class="add-products-header">Update Product: {{product.product_name}}</h1>
+        <a href="/products" class="btn btn-sm btn-danger" style="height: 35px;">Back</a>
+    </div>
     {{!-- start of card preview --}}
     <div id="preview-card-title-div">
             <h4>Preview of Card</h4>
         </div>
         <div id="preview-card-div">
-            <div class="card" style="width: 18rem;">
-                <img id="card-image" class="card-img-top" src={{product.thumbnail_url}} alt="preview image">
+            <div id="preview-card" class="card" style="width: 18rem;">
+                <div class="card-image-div">
+                    <img id="card-image" class="card-img-top" src={{product.thumbnail_url}} alt="preview image">
+                </div>
                 <div class="card-body">
                     <h5 id="product_name" class="card-title">{{product.product_name}}</h5>
                     <p id="product_description" class="card-text">{{product.product_description}}</p>
@@ -29,26 +32,22 @@
 
 
     
-    <a href="/products" class="btn btn-sm btn-danger">Back</a>
-    <h2>{{product.product_name}}</h2>
-    <form method="POST">
-        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
-        {{#if product.thumbnail_url}}
-                <img src="{{product.thumbnail_url}}" id="uploaded_image" style="display:block"/>
-            {{else}}
-                <img src="" id ="uploaded-image" style="display:none"/>
-        {{/if}}
-        <a href="#" id="upload_widget" class ="btn btn-secondary btn-sm">Upload</a>
+    <div class="add-products-div">
+        <form method="POST">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+            {{#if product.thumbnail_url}}
+                    <img src="{{product.thumbnail_url}}" id="uploaded_image" style="display:block"/>
+                {{else}}
+                    <img src="" id ="uploaded-image" style="display:none"/>
+            {{/if}}
+            <a href="#" id="upload_widget" class ="btn btn-secondary btn-sm">Change Image</a>
 
-        {{{form}}}
-        <input type="submit" value= "Update" class="btn btn-primary"/>
-    </form>
-
-
-
-
-
-
+            {{{form}}}
+            <div class="submit-form-btn-div">
+                <input id="update-product-submit-btn" type="submit" value= "Update" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
 {{/block}}
 
 {{#block 'script'}}

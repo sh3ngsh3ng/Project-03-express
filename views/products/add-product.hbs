@@ -29,8 +29,8 @@
         </div>
         <div id="preview-card-div">
             <div id="preview-card" class="card" style="width: 18rem;">
-                <div id="card-image-div">
-                    <img id="card-image" class="card-img-top" src="/images/cloud-upload.svg" alt="preview image" title="click to upload">
+                <div class="card-image-div">
+                    <img class="card-image" class="card-img-top" src="/images/cloud-upload.svg" alt="preview image" title="click to upload">
                 </div>
                 <div class="card-body">
                     <h5 id="product_name" class="card-title">Card title</h5>
@@ -41,17 +41,17 @@
             </div>
         </div>
     {{!-- end of card preview --}}
-    <div id="add-products-form-div">
+    <div class="add-products-div">
         <form method="POST">
             <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
             <div id="add-product-form-div">
                 {{{form}}}
             </div>
-            {{!-- <div>
+            <div>
                 <a href="#" class = "btn btn-primary" id="upload_widget">Upload Image</a>
                 <img src="" style="display:none" id="uploaded_image"/>
-            </div> --}}
-            <div id="add-product-submit-btn-div">
+            </div>
+            <div class="submit-form-btn-div">
                 <input id="add-product-submit-btn"type="submit" value= "Add Product" class="btn btn-primary"/>
             </div>
         </form>
@@ -86,12 +86,10 @@
     }, (error, result) => {
         if (!error && result.event === "success") {
             console.log('Done! Here is the image infor: ', result)
-            document.querySelector("#upload_widget").style.display="none"
+            document.querySelector("#card-image").src = result.info.url
+
             document.querySelector('#id_image_url').value = result.info.url
             document.querySelector('#id_thumbnail_url').value = result.info.thumbnail_url
-            document.querySelector("#card-image").src = result.info.url
-            document.querySelector('#uploaded_image').src = result.info.thumbnail_url
-            document.querySelector('#uploaded_image').style.display = 'inline'
         }
     })
 
