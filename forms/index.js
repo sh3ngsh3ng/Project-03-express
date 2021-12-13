@@ -139,7 +139,7 @@ const createLoginForm = () => {
                 label: ['form-label']
             }
         }),
-        'password': fields.string({
+        'password': fields.password({
             required: true,
             errorAfterField: true,
             cssClasses: {

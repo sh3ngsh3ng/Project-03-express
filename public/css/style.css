@@ -155,6 +155,15 @@
     margin-bottom: 40px;
 }
 
+#login-prompt-div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* end of Login Page */
+
+/* start of Signup Page */
 #sign-up-prompt-div {
     display: flex;
     justify-content: center;
@@ -171,9 +180,6 @@
     background: #42b72a;
 }
 
-/* end of Login Page */
-
-/* start of Sign Up page */
 #sign-up-form-div {
     display: flex;
     justify-content: center;
