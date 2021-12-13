@@ -5,7 +5,25 @@ const fields = forms.fields;
 const validators = forms.validators;
 const widgets = forms.widgets
 const tag  = require("../node_modules/forms/lib/tag.js")
-var getUserAttrs = tag.attrs;
+
+var dataRegExp = /^data-[a-z]+([-][a-z]+)*$/;
+var ariaRegExp = /^aria-[a-z]+$/;
+var legalAttrs = [
+    'autocomplete', 'autocorrect', 'autofocus', 'autosuggest', 'checked', 'dirname', 'disabled', 'tabindex', 'list', 'max', 'maxlength', 'min', 'novalidate', 'pattern', 'placeholder', 'readonly', 'required', 'size', 'step'
+];
+var ignoreAttrs = [
+    'id', 'name', 'class', 'classes', 'type', 'value', 'multiple'
+];
+var getUserAttrs = function (opt) {
+    return reduce(opt, function (attributes, option, k) {
+        if ((ignoreAttrs.indexOf(k) === -1 && legalAttrs.indexOf(k) > -1) || dataRegExp.test(k) || ariaRegExp.test(k)) {
+            // eslint-disable-next-line no-param-reassign
+            attributes[k] = option;
+        }
+        return attributes;
+    }, {});
+};
+
 var input = function (type) {
     return function (opts) {
         var opt = opts || {};
@@ -52,6 +70,8 @@ let datetimeLocal = function (options) {
     };
     return w;
 };
+console.log(datetimeLocal)
+
 
 
 var bootstrapField = function (name, object) {
