@@ -28,8 +28,10 @@
             <h4>Preview of Card</h4>
         </div>
         <div id="preview-card-div">
-            <div class="card" style="width: 18rem;">
-                <img id="card-image" class="card-img-top" src="/images/preview.png" alt="preview image">
+            <div id="preview-card" class="card" style="width: 18rem;">
+                <div id="card-image-div">
+                    <img id="card-image" class="card-img-top" src="/images/cloud-upload.svg" alt="preview image" title="click to upload">
+                </div>
                 <div class="card-body">
                     <h5 id="product_name" class="card-title">Card title</h5>
                     <p id="product_description" class="card-text">Design the product card display by filling in the form below!</p>
@@ -39,18 +41,21 @@
             </div>
         </div>
     {{!-- end of card preview --}}
-
-    <form method="POST">
-        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
-        <div id="add-product-form-div">
-            {{{form}}}
-        </div>
-        <div>
-            <a href="#" class = "btn btn-primary" id="upload_widget">Upload</a>
-            <img src="" style="display:none" id="uploaded_image"/>
-        </div>
-        <input type="submit" value= "Add Product" class="btn btn-primary"/>
-    </form>
+    <div id="add-products-form-div">
+        <form method="POST">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+            <div id="add-product-form-div">
+                {{{form}}}
+            </div>
+            {{!-- <div>
+                <a href="#" class = "btn btn-primary" id="upload_widget">Upload Image</a>
+                <img src="" style="display:none" id="uploaded_image"/>
+            </div> --}}
+            <div id="add-product-submit-btn-div">
+                <input id="add-product-submit-btn"type="submit" value= "Add Product" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
 {{/block}}
 
 
@@ -90,9 +95,14 @@
         }
     })
 
-    document.getElementById("upload_widget").addEventListener('click', function() {
+    // open widget to upload image
+    document.getElementById("card-image").addEventListener('click', function() {
         myWidget.open()
     }, false)
+
+    {{!-- document.getElementById("upload_widget").addEventListener('click', function() {
+        myWidget.open()
+    }, false) --}}
 
     // refactor to card live update module
     document.querySelector("#id_product_name").addEventListener("change", function(){

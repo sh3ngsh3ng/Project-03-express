@@ -22,7 +22,8 @@ router.get("/tags", async(req,res) => {
 router.get("/search", async(req,res) => {
     let searchForm = createSearchForm()
     const allTags = productDataLayer.getAllTags()
-    // only active product listings shown
+
+    // base query + only active product listings shown
     let q = Product.collection().where({'product_status': 'active'})
 
     searchForm.handle(req, {

@@ -5,13 +5,62 @@
 
 
 
-/* vendor navbar */
+/* start of vendor navbar */
 .vendor-nav-bar-items {
     justify-content: end;
 }
 
+.brand-logo {
+    height: 25px
+}
+
+/* end of vendor navbar */
+
+
+/* start of Dashboard Page */
+#loading-icon-div{
+    position: absolute;
+    top: 40%;
+    left: 45%
+}
+#loading-icon {
+    width: 50px;
+    height: 50px;
+}
+/* end of Dashboard Page */
+
+
+/* start of ProductListings Tab */
+.no-products-prompt {
+    text-align: center;
+}
+/* end of ProductListings Tab */
+
+
+
+
+/* start of AddNewProduct Tab */
 
 /* preview card */
+#preview-card {
+    border-radius: 10px;
+    box-shadow: 0px 3px 20px rgba(0,0,0,0.2);
+}
+
+#card-image-div {
+    height: 200px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px 10px 0 0;
+    border: 1px solid rgba(156, 139, 139, 0.829);
+}
+
+#card-image {
+    height: 100%;
+}
+
 #product_description {
     height: 80px;
     white-space: initial;
@@ -19,6 +68,17 @@
     text-overflow: ellipsis
 }
 
+#add-product-submit-btn-div {
+    display: flex;
+    justify-content: center;
+}
+
+#add-product-submit-btn {
+    background-color: green;
+}
+
+
+/* end of card preview */
 
 /* start of add-new-products */
 #preview-card-div {
@@ -33,7 +93,13 @@
 
 #add-product-form-div {
     margin: 20px;
+    padding: 20px;
 }
+
+
+/* end of AddNewProduct Tab */
+
+
 
 
 
