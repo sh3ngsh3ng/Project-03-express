@@ -5,6 +5,25 @@ const fields = forms.fields;
 const validators = forms.validators;
 const widgets = forms.widgets
 
+var datetimeLocalWidget = input('datetime-local');
+let datetimeLocal = function (options) {
+    var opt = options || {};
+    var w = datetimeLocalWidget(opt);
+    w.formatValue = function (value) {
+        if (!value) {
+            return null;
+        }
+
+        var date = is.date(value) ? value : new Date(value);
+
+        if (isNaN(date.getTime())) {
+            return null;
+        }
+
+        return date.toISOString().slice(0, 23);
+    };
+    return w;
+};
 
 
 var bootstrapField = function (name, object) {
@@ -159,8 +178,8 @@ const createAddSessionForm = () => {
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
-            }
-            // widget: widgets.datetimeLocal()
+            },
+            widget: widgets.datetimeLocal()
         })
     })
 }
@@ -196,7 +215,7 @@ const createSearchForm = (tags) => {
             cssClasses: {
                 label: ['form-label']
             },
-            // widget: widgets.datetimeLocal()
+            widget: widgets.datetimeLocal()
         })
     })
 }
