@@ -1,17 +1,17 @@
 const express = require("express")
 const hbs = require("hbs")
 const wax = require("wax-on")
-require("dotenv").config()
 const session = require('express-session')
 const flash = require('connect-flash')
 const FileStore = require('session-file-store')(session)
 const csrf = require('csurf')
 const cors = require("cors")
 
+require("dotenv").config()
 let app = express()
 
-
 app.set("view engine", "hbs")
+app.use(express.static("public"))
 
 // custom handlebars
 hbs.handlebars.registerHelper('ifEqual', function(x, y, options) {
@@ -22,12 +22,8 @@ hbs.handlebars.registerHelper('changeToDollar', function(x) {
     return x / 100
 })
 
-
-app.use(express.static("public"))
-
 wax.on(hbs.handlebars)
 wax.setLayoutPath("./views/layouts")
-
 
 // Middlewares
 // enablue cors
@@ -93,9 +89,6 @@ app.use(function(err, req, res, next) {
 })
 
 
-
-
-
 // Routes
 const loginSignUpRoutes = require("./routes/login-su")
 const vendorRoutes = require("./routes/vendor")
@@ -141,7 +134,7 @@ async function main() {
 
 main()
 
-app.listen(process.env.PORT, ()=> {
+app.listen(3000, ()=> {
     console.log("Server Started")
 })
 
