@@ -1,9 +1,10 @@
 const express = require("express")
 const router = express.Router()
+const { checkIfAuthenticatedJWT } = require("../../middleware")
 const cartServiceLayer = require("../../services/cart")
 
 // get user's cart
-router.get("/:userId", async (req,res) => {
+router.get("/:userId", checkIfAuthenticatedJWT, async (req,res) => { // added checkIfAuthenticatedJWT middleware, yet to bec hecked
     let userId = req.params.userId
     let cartItems = await cartServiceLayer.displayCartItems(userId)
     console.log("Cart Items Retrieved") 

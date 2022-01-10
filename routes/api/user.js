@@ -13,7 +13,7 @@ router.post("/sign-up", express.json(), async(req,res) => {
     res.send({
         "message": "success"
     })
-    // code for failed sign up
+    // send status, react interpret and rnder
 })
 
 // user login
@@ -26,6 +26,7 @@ router.post("/login", express.json(), async(req,res) => {
             "message": "success"
         })
     } else {
+        // send status, react interpret and render
         res.send({
             "message": "failed"
         })

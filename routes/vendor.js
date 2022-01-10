@@ -11,7 +11,6 @@ router.get("/dashboard", (req,res) => {
             'vendor': vendor
         })
     }
-    
 })
 
 // schedule page

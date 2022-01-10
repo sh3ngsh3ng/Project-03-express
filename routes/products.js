@@ -6,7 +6,7 @@ const {checkIfAuthenticated, cloudinaryVariables} = require("../middleware")
 const productServiceLayer = require("../services/products")
 
 
-// view all products
+// view all vendor's products
 router.get("/", checkIfAuthenticated, async (req,res) => {
     let vendor = req.session.vendor.id
     let activeProducts = await productServiceLayer.displayActiveListingsOfVendor(vendor)
@@ -22,7 +22,6 @@ router.get("/", checkIfAuthenticated, async (req,res) => {
 router.get('/add', [checkIfAuthenticated, cloudinaryVariables], async (req,res)=>{
     const allTags = await Tag.fetchAll().map(tag => [tag.get('id'), tag.get('name')])
     const productForm = createProductForm(allTags)
-
     res.render('products/add-product', {
         'form': productForm.toHTML(bootstrapField),
     })
@@ -37,7 +36,6 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
             const product = new Product()
 
             // product.set(form.data)
-
             product.set('product_name', form.data.product_name)
             product.set('product_description', form.data.product_description)
             product.set('product_price', form.data.product_price * 100)
@@ -90,7 +88,6 @@ router.get('/:product_id/update', [checkIfAuthenticated, cloudinaryVariables], a
         'product': product.toJSON()
     })
 })
-
 
 // process update product form
 router.post("/:product_id/update", checkIfAuthenticated, async(req,res) => {
@@ -161,7 +158,6 @@ router.post("/:product_id/delete", checkIfAuthenticated, async(req,res)=>{
 
 // view sessions page
 router.get("/manage-sessions", checkIfAuthenticated, async (req,res)=>{
-
     let allProductsWithProductSlots = await productServiceLayer.displayAllProductSessionsOfVendor(req.session.vendor.id)
     res.render("products/manage-sessions", {
         'product': allProductsWithProductSlots
@@ -226,7 +222,7 @@ router.post("/:product_id/add-session", checkIfAuthenticated, async(req,res)=> {
 
 
 // change product listing to "active"
-router.get("/:product_id/add-listing", async (req,res) => {
+router.get("/:product_id/add-listing", checkIfAuthenticated, async (req,res) => {
     let product = await Product.where({
         "id": req.params.product_id
     }).fetch({
@@ -238,8 +234,8 @@ router.get("/:product_id/add-listing", async (req,res) => {
     console.log("Listing Added Successfully")
 })
 
-// remove product from listing
-router.get("/:product_id/remove-listing", async(req,res)=>{
+// change product listing to "inactive"
+router.get("/:product_id/remove-listing", checkIfAuthenticated, async(req,res)=>{
     let product = await Product.where({
         "id": req.params.product_id
     }).fetch({

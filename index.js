@@ -45,7 +45,7 @@ app.use(session({
 
 app.use(flash())
 
-// middle ware to save flash messages
+// middleware to save flash messages
 app.use(function(req,res,next) {
     res.locals.success_messages = req.flash("success_messages")
     res.locals.error_messages = req.flash("error_messages")
@@ -113,6 +113,8 @@ async function main() {
     app.use("/products", productRoutes)
     // Upload image to cloudinary
     app.use("/upload-image", uploadImage)
+
+    
     // check out
     app.use("/checkout", checkoutRoutes)
 
@@ -126,7 +128,6 @@ async function main() {
 
     // user cart
     app.use("/api/cart", api.cart)
-
 
     // user check out
     app.use("/api/checkout", api.checkout)
