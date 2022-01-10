@@ -12,7 +12,6 @@ const hashPassword = (password) => {
     return hash
 }
 
-
 // display vendor sign up form
 router.get("/sign-up", (req,res) => {
     const registerForm = createRegistrationForm()
@@ -59,7 +58,6 @@ router.get("/", (req,res) => {
     }
     
 })
-
 
 // process vendor login form
 router.post("/", (req,res) => {
