@@ -21,7 +21,6 @@ router.get("/tags", async(req,res) => {
 // search for products
 router.get("/search", async(req,res) => {
     let searchForm = createSearchForm()
-    const allTags = await productDataLayer.getAllTags()
 
     // base query + only active product listings shown
     let q = Product.collection().where({'product_status': 'active'})
@@ -42,6 +41,9 @@ router.get("/search", async(req,res) => {
             let tags = req.query.tags
             let name = req.query.name
             let max_cost = req.query.max_cost
+            let room_type = req.query.room_type
+            let play_time = req.query.play_time
+            let age_restriction = parseInt(req.query.age_restriction)
 
             if (tags) {
                 q = q.query('join', 'products_tags', 'products.id', 'product_id')
@@ -54,6 +56,18 @@ router.get("/search", async(req,res) => {
 
             if (max_cost) {
                 q = q.where('product_price', '<=', max_cost * 100)
+            }
+
+            if (room_type) {
+                q = q.where('room_type', '=', room_type)
+            }
+
+            if (play_time) {
+                q = q.where('play_time', '=', play_time)
+            }
+
+            if (age_restriction) {
+                q = q.where('age_restriction', '<', age_restriction)
             }
 
 
