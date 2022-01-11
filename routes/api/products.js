@@ -66,9 +66,9 @@ router.get("/search", async(req,res) => {
                 q = q.where('play_time', '=', play_time)
             }
 
-            if (age_restriction) {
-                q = q.where('age_restriction', '<', age_restriction)
-            }
+            // if (age_restriction) {
+            //     q = q.where('age_restriction', '<', age_restriction)
+            // }
 
 
             let searchProducts = await q.fetch({
