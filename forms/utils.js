@@ -74,7 +74,7 @@ let roomTypes = [
                     ['mystery_murder', 'Mystery Murder'], 
                     ['amazing_race', 'Amazing Race']
                 ]
-
+// multiple select option for play time
 let playTime = [
                     [30, "30 mins"],
                     [45, "45 mins"],
@@ -82,7 +82,7 @@ let playTime = [
                     [90, "90 mins"],
                     [120, '120 mins']
                 ]
-
+// multiple select option for age restriction
 let ageRestriction = [
                     [0, "No Age Restriction"],
                     [9, "9 years old"],

@@ -46,7 +46,6 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
             product.set('thumbnail_url', form.data.thumbnail_url)
             product.set('image_url', form.data.image_url)
             product.set('room_size', form.data.room_size)
-            console.log(typeof(form.data.room_type))
             product.set('room_type', form.data.room_type)
             product.set('play_time', form.data.play_time)
             product.set('age_restriction', form.data.age_restriction)
@@ -88,8 +87,10 @@ router.get('/:product_id/update', [checkIfAuthenticated, cloudinaryVariables], a
     productForm.fields.room_size.value = product.get("room_size")
     productForm.fields.thumbnail_url.value = product.get("thumbnail_url")
     productForm.fields.image_url.value = product.get("image_url")
+    productForm.fields.room_type.value = product.get("room_type")
+    productForm.fields.play_time.value = product.get("play_time")
+    productForm.fields.age_restriction.value = product.get("age_restriction")
     let selectedTags = await product.related('tags').pluck('id')
-    console.log(selectedTags)
     productForm.fields.tags.value = selectedTags
     res.render("products/update-product", {
         'form': productForm.toHTML(bootstrapField),
@@ -111,8 +112,7 @@ router.post("/:product_id/update", checkIfAuthenticated, async(req,res) => {
     productForm.handle(req, {
         'success': async(form) => {
             let {tags, product_price, ...productData} = form.data
-            console.log(form.data)
-            console.log(product_price)
+
             product.set(productData)
             product.set("product_price", product_price * 100)
             product.save()
