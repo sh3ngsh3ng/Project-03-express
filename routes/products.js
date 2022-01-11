@@ -20,6 +20,7 @@ router.get("/", checkIfAuthenticated, async (req,res) => {
 
 // view add product form
 router.get('/add', [checkIfAuthenticated, cloudinaryVariables], async (req,res)=>{
+    
     const allTags = await Tag.fetchAll().map(tag => [tag.get('id'), tag.get('name')])
     const productForm = createProductForm(allTags)
     res.render('products/add-product', {
@@ -29,6 +30,7 @@ router.get('/add', [checkIfAuthenticated, cloudinaryVariables], async (req,res)=
 
 // process add product form
 router.post('/add', checkIfAuthenticated, async(req,res)=>{
+    console.log("Called")
     const allTags = await Tag.fetchAll().map(tag => [tag.get('id'), tag.get('name')])
     const productForm = createProductForm(allTags)
     productForm.handle(req, {
@@ -60,6 +62,7 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
             })
         }
     })
+    
 }) 
 
 // view update product form
