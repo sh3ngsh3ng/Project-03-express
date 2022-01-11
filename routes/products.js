@@ -46,6 +46,11 @@ router.post('/add', checkIfAuthenticated, async(req,res)=>{
             product.set('thumbnail_url', form.data.thumbnail_url)
             product.set('image_url', form.data.image_url)
             product.set('room_size', form.data.room_size)
+            console.log(typeof(form.data.room_type))
+            product.set('room_type', form.data.room_type)
+            product.set('play_time', form.data.play_time)
+            product.set('age_restriction', form.data.age_restriction)
+            
             await product.save()
             if (form.data.tags) {
                 let tags = form.data.tags

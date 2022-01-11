@@ -4,7 +4,7 @@ const forms = require("forms");
 const fields = forms.fields;
 const validators = forms.validators;
 const widgets = forms.widgets
-const {datetimeLocal, roomTypes} = require("./utils")
+const {datetimeLocal, roomTypes, playTime, ageRestriction} = require("./utils")
 
 
 
@@ -88,6 +88,25 @@ const createProductForm = (tags) => {
             },
             widget: widgets.select(),
             choices: roomTypes
+        }),
+        'play_time': fields.string({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: playTime
+        }),
+        'age_restriction': fields.string({
+            "label": "Age Restriction (at least)",
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: ageRestriction
         })
     })
 }

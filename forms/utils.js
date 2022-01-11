@@ -75,9 +75,24 @@ let roomTypes = [
                     ['amazing_race', 'Amazing Race']
                 ]
 
+let playTime = [
+                    [30, "30 mins"],
+                    [45, "45 mins"],
+                    [60, "60 mins"],
+                    [90, "90 mins"],
+                    [120, '120 mins']
+                ]
 
+let ageRestriction = [
+                    [0, "No Age Restriction"],
+                    [9, "9 years old"],
+                    [12, "12 years old"],
+                    [21, "21 years old"],
+                ]                
 
 module.exports = {
     datetimeLocal,
-    roomTypes
+    roomTypes,
+    playTime,
+    ageRestriction
 }
