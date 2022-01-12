@@ -4,16 +4,16 @@ const { checkIfAuthenticatedJWT } = require("../../middleware")
 const cartServiceLayer = require("../../services/cart")
 
 // get user's cart
-router.get("/:userId", checkIfAuthenticatedJWT, async (req,res) => { // added checkIfAuthenticatedJWT middleware, yet to bec hecked
+router.get("/:userId", async (req,res) => { // added checkIfAuthenticatedJWT middleware, yet to bec hecked
     let userId = req.params.userId
     let cartItems = await cartServiceLayer.displayCartItems(userId)
-    console.log("Cart Items Retrieved") 
     res.json(cartItems)
 })
 
 // add item to user's cart
 router.get("/:userId/:productSlotId/add-item", async (req,res) => {
-    await cartServiceLayer.addToCart(req.params.userId, req.params.productSlotId) //change to user id
+    console.log("called")
+    await cartServiceLayer.addToCart(req.params.userId, req.params.productSlotId) 
     console.log("Item added")
     res.send("ok")
 })

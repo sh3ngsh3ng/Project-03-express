@@ -92,7 +92,8 @@ const removeOneQuantity = async(userId, productSlotId) => {
 
 
 
-module.exports = {getAllCartItems, 
+module.exports = {
+    getAllCartItems, 
     getSpecificCartItems, 
     addCartItems, 
     addOneQuantity,

@@ -96,7 +96,9 @@ router.post("/process_payment", express.raw({type:'application/json'}), async (r
 
     try{
         event = Stripe.webhooks.constructEvent(payload, sig, endpointSecret)
+        console.log(event)
         if (event.type == "checkout.session.completed") {
+            console.log("indented")
             let stripeSession = event.data.object
             console.log(stripeSession)
             let orders = JSON.parse(stripeSession.metadata.orders)

@@ -95,6 +95,7 @@ const vendorRoutes = require("./routes/vendor")
 const productRoutes = require("./routes/products")
 const uploadImage = require("./routes/cloudinary")
 const checkoutRoutes = require("./routes/api/checkout")
+const orderRoutes = require("./routes/orders")
 const api = {
     'products': require("./routes/api/products"),
     'user': require("./routes/api/user"),
@@ -113,8 +114,9 @@ async function main() {
     app.use("/products", productRoutes)
     // Upload image to cloudinary
     app.use("/upload-image", uploadImage)
+    // Orders Route
+    // app.use("/orders", orderRoutes)
 
-    
     // check out
     app.use("/checkout", checkoutRoutes)
 
