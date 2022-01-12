@@ -38,12 +38,12 @@ router.get("/search", async(req,res) => {
         'success': async(form) => {
             // return search results
 
-            let tags = req.query.tags
+            let tags = req.query.tags // an array of string value
             let name = req.query.name
             let max_cost = req.query.max_cost
             let room_type = req.query.room_type
-            let play_time = req.query.play_time
-            let age_restriction = parseInt(req.query.age_restriction)
+            let play_time = req.query.play_time // an array
+            // let age_restriction = parseInt(req.query.age_restriction)
 
             if (tags) {
                 q = q.query('join', 'products_tags', 'products.id', 'product_id')
@@ -63,7 +63,15 @@ router.get("/search", async(req,res) => {
             }
 
             if (play_time) {
-                q = q.where('play_time', '=', play_time)
+                // if all is selected, all playtime shown
+                if (play_time.includes('0')) {
+                    q = q.where('play_time', ">", 0)
+                } else {
+                    let searchQueryArray = play_time.filter(value => value !== '0')
+                    searchQueryArray = play_time.map(value => parseInt(value))
+                    q = q.where('play_time', 'in', searchQueryArray)
+                }
+                
             }
 
             // if (age_restriction) {
