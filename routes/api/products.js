@@ -61,6 +61,7 @@ router.get("/search", async(req,res) => {
             if (room_type) {
                 q = q.where('room_type', '=', room_type)
             }
+            
 
             if (play_time) {
                 // if all is selected, all playtime shown
@@ -70,9 +71,10 @@ router.get("/search", async(req,res) => {
                     let searchQueryArray = play_time.filter(value => value !== '0')
                     searchQueryArray = play_time.map(value => parseInt(value))
                     q = q.where('play_time', 'in', searchQueryArray)
-                }
-                
+                } 
             }
+
+
 
             // if (age_restriction) {
             //     q = q.where('age_restriction', '<', age_restriction)
