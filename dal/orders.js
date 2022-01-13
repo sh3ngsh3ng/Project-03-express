@@ -20,7 +20,7 @@ const createOrderItems = async (orders, newOrder) => {
     for (let i = 0; i < orders.length; i++) {
         let newOrderItem = new OrderItem({
             'order_id': orderId,
-            'product_slot_id': orders[i].product_slot_id,
+            'product_slots_id': orders[i].product_slot_id,
             'order_item_quantity': orders[i].quantity,
             'order_item_status': "processing"
         })
