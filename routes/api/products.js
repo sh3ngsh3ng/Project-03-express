@@ -8,6 +8,7 @@ const {Product} = require("../../models")
 // get active listings of vendor's product
 // both active product and their respective productslots are sent back
 router.get("/active-listings", async (req,res) => {
+    console.log("called")
     let activeListings = await productDataLayer.getActiveProductListings()
     res.json(activeListings)
 })

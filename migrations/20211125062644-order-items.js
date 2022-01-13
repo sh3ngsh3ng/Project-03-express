@@ -18,6 +18,7 @@ exports.up = function(db) {
   return db.createTable('order_items', {
     id: {type: 'int', primaryKey: true, autoIncrement: true, unsigned: true},
     order_item_quantity: {type:'int'},
+    order_item_status: {type: 'string', length: '45', notNull: true},
     order_id: {
       type: 'int',
       unsigned: true,
@@ -32,12 +33,12 @@ exports.up = function(db) {
         mapping: 'id'
       }
     },
-    product_slot_id: {
+    product_slots_id: {
       type: 'int',
       unsigned: true,
       notNull: true,
       foreignKey: {
-        name: "order_items_product_slot_id",
+        name: "order_items_product_slots_id",
         table: 'product_slots',
         rules: {
           onDelete: 'cascade',
@@ -46,6 +47,7 @@ exports.up = function(db) {
         mapping: 'id'
       }
     }
+
   })
 };
 

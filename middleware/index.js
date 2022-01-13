@@ -28,6 +28,7 @@ const checkIfAuthenticatedJWT = (req, res, next) => {
 
         jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
             if (err) {
+                console.log("Forbidden")
                 return res.sendStatus(403) // forbidden
             }
 
@@ -35,6 +36,7 @@ const checkIfAuthenticatedJWT = (req, res, next) => {
             next()
         })
     } else {
+        console.log("Unauthorized")
         res.sendStatus(401) // unauthorized
     }
 

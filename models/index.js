@@ -57,7 +57,13 @@ const Vendor = bookshelf.model('Vendor', {
 
 
 const OrderItem = bookshelf.model('OrderItem', {
-    tableName: "order_items"
+    tableName: "order_items",
+    productslot() {
+        return this.belongsTo('ProductSlot', 'product_slots_id')
+    },
+    order() {
+        return this.belongsTo('Order')
+    }
 })
 
 const Order = bookshelf.model("Order", {

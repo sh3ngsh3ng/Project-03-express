@@ -97,15 +97,16 @@ router.post("/process_payment", express.raw({type:'application/json'}), async (r
 
     try {
         event = Stripe.webhooks.constructEvent(payload, sig, endpointSecret)
-        console.log("event => ", event)
+        // console.log("event => ", event)
         if (event.type == "checkout.session.completed") {
             let stripeSession = event.data.object
-            console.log("stripeSession => ", stripeSession)
-            let orders = JSON.parse(stripeSession.metadata.orders)
+            // console.log("stripeSession => ", stripeSession)
+            let orders = JSON.parse(stripeSession.metadata.orders) // array of obj { product_id: 1, product_slot_id: 1, quantity: 1 }
             let userId = JSON.parse(stripeSession.metadata.userId)
+            let totalCost = JSON.parse(stripeSession.amount_total)
             
             // update quantity slot
-            await checkoutServiceLayer.onCheckOut(orders, userId)
+            await checkoutServiceLayer.onCheckOut(orders, userId, totalCost)
             
             // create orders (1)
 
