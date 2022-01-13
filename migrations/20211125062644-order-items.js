@@ -47,7 +47,6 @@ exports.up = function(db) {
         mapping: 'id'
       }
     }
-
   })
 };
 
