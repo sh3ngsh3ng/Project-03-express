@@ -14,14 +14,14 @@ const displayAllProductSessionsOfVendor = async(vendor) => {
     let result = await productsDataLayer.getProductSlotsByVendorId(vendor)
     let allProducts = result.toJSON() // array of objects (products)
     let arrayOfProductsWithSessions = []
-    // select products with product slots
+    // select products with product_slots (not all products have product_slots)
     for (let i = 0; i < allProducts.length; i++) {
         let productSlotsArray = allProducts[i].productslots
         if (productSlotsArray.length > 0) {
             arrayOfProductsWithSessions.push(allProducts[i])
         }
     }
-    
+    console.log(arrayOfProductsWithSessions)
     return arrayOfProductsWithSessions
 }
 

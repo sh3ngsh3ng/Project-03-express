@@ -115,7 +115,7 @@ async function main() {
     // Upload image to cloudinary
     app.use("/upload-image", uploadImage)
     // Orders Route
-    // app.use("/orders", orderRoutes)
+    app.use("/orders", orderRoutes)
 
     // check out
     app.use("/checkout", checkoutRoutes)

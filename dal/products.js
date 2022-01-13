@@ -32,11 +32,15 @@ const getInactiveProductListingsOfVendor = async(vendor) => {
 }
 
 const getProductSlotsByVendorId = async(vendor) => {
-    let vendorProductsWithProductSlots = await Product.where({"vendor_id": vendor}).fetchAll({
+    try {let vendorProductsWithProductSlots = await Product.where({"vendor_id": vendor}).fetchAll({
         require: false,
         withRelated: ['productslots']
     })
-    return vendorProductsWithProductSlots
+    console.log(vendorProductsWithProductSlots.toJSON())
+    return vendorProductsWithProductSlots}
+    catch (e) {
+        console.log("error =>", e)
+    }
 } 
 
 const getAllTags = async() => {

@@ -1,6 +1,25 @@
-const {Order, OrderItem } = require("../models")
+const {Order, OrderItem, ProductSlot } = require("../models")
 
-// create order (invoice) for user
+// (VENDOR) vendor to view their order items
+const getSpecificOrderItems = async(productSlotId) => {
+    console.log("getOrderItems Called")
+    let vendorOrderItems = await OrderItem.where({
+        "product_slots_id": productSlotId
+    }).fetchAll({
+        require: false, // true vs false
+        withRelated: ['order', 'order.user']
+    })
+    return vendorOrderItems.toJSON()
+}
+
+
+// (VENDOR) vendor to get contact details of users from order items
+
+
+
+
+
+// (ON CHECKOUT) create order (invoice)
 const createOrder = async(userId, totalCost) => {
     let newOrder = new Order({
         'order_date': new Date().toISOString().slice(0, 19).replace('T', ' '),
@@ -10,11 +29,12 @@ const createOrder = async(userId, totalCost) => {
     })
 
     let order = await newOrder.save()
-    console.log("order => ",order.toJSON())
+    console.log("Order Created")
     return order.toJSON() // returns row as object
 }
 
-// ceate order items
+
+// (ON CHEKCOUT) ceate order items
 const createOrderItems = async (orders, newOrder) => {
     try {let orderId = newOrder.id
     for (let i = 0; i < orders.length; i++) {
@@ -30,10 +50,10 @@ const createOrderItems = async (orders, newOrder) => {
         console.log('createOrderItems error =>', e)
     }
     return
-    
 }
 
 module.exports = {
     createOrder,
-    createOrderItems
+    createOrderItems,
+    getSpecificOrderItems
 }

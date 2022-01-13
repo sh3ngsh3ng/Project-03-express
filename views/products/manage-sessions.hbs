@@ -13,7 +13,10 @@
             <a class="nav-link" href="/products/add">Add New Product</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="/products/manage-sessions">Sessions</a>
+            <a class="nav-link active" href="/products/manage-sessions">Manage Sessions</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/products/manage-sessions">Manage Orders</a>
         </li>
         </ul>
     {{!-- end of tabs --}}
@@ -39,7 +42,7 @@
                             <th>Date</th>
                             <th>Time</th>
                             <th>Slots left</th>
-                            <th>View Participants</th>
+                            <th>Manage Orders</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,9 +55,8 @@
                                 <td>{{../product_name}}</td>
                                 <td>{{slot_datetime}}</td>
                                 <td>{{slot_datetime}}</td>
-                                <td>? / {{slot_quantity}}</td>
-                                <td>Click here</td>
-
+                                <td>{{slot_quantity}} / {{../room_size}}</td>
+                                <td><a class="nav-link" href="/orders/{{id}}">Click Here</a></td>
                             </tr>
                             {{/each}}
                         {{/each}}

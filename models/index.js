@@ -27,6 +27,36 @@ const ProductSlot = bookshelf.model('ProductSlot', {
     },
     cartitems(){
         return this.hasMany('CartItem')
+    },
+    orderitems() {
+        return this.hasMany('OrderItem')
+    }
+})
+
+const User = bookshelf.model('User', {
+    tableName: 'users',
+    cartitems () {
+        return this.hasMany('CartItem')
+    },
+    orders() {
+        return this.hasMany('Order')
+    }
+})
+
+const Vendor = bookshelf.model('Vendor', {
+    tableName: 'vendors',
+    products() {
+        return this.hasMany('Product')
+    }
+})
+
+const OrderItem = bookshelf.model('OrderItem', {
+    tableName: "order_items",
+    productslot() {
+        return this.belongsTo('ProductSlot', 'product_slots_id')
+    },
+    order() {
+        return this.belongsTo('Order')
     }
 })
 
@@ -40,34 +70,13 @@ const CartItem = bookshelf.model('CartItem', {
     }
 })
 
-const User = bookshelf.model('User', {
-    tableName: 'users',
-    cartitems () {
-        return this.hasMany('CartItem')
-    }
-})
 
-const Vendor = bookshelf.model('Vendor', {
-    tableName: 'vendors',
-    products() {
-        return this.hasMany('Product')
-    }
-})
-
-
-
-const OrderItem = bookshelf.model('OrderItem', {
-    tableName: "order_items",
-    productslot() {
-        return this.belongsTo('ProductSlot', 'product_slots_id')
-    },
-    order() {
-        return this.belongsTo('Order')
-    }
-})
 
 const Order = bookshelf.model("Order", {
-    tableName: 'orders'
+    tableName: 'orders',
+    user() {
+        return this.belongsTo('User')
+    }
 })
 
 module.exports = {Product, Tag, Vendor, User, CartItem, ProductSlot, OrderItem, Order}

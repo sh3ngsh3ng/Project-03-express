@@ -4,7 +4,7 @@ const {Product, ProductSlot, Tag} = require("../models")
 const {bootstrapField, createProductForm, createAddSessionForm} = require ("../forms")
 const {checkIfAuthenticated, cloudinaryVariables} = require("../middleware")
 const productServiceLayer = require("../services/products")
-
+const ordersDataLayer = require("../dal/orders")
 
 // view all vendor's products
 router.get("/", checkIfAuthenticated, async (req,res) => {
@@ -150,7 +150,6 @@ router.get("/:product_id/delete", checkIfAuthenticated, async(req,res)=> {
     })
 })
 
-
 // process deletion of product
 router.post("/:product_id/delete", checkIfAuthenticated, async(req,res)=>{
     const product = await Product.where({
@@ -254,6 +253,7 @@ router.get("/:product_id/remove-listing", checkIfAuthenticated, async(req,res)=>
     res.redirect("/products")
     console.log("Listing Removed Successfully")
 })
+
 
 
 module.exports = router

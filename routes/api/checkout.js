@@ -8,7 +8,7 @@ const checkoutServiceLayer = require("../../services/checkout")
 
 // route to check out cart items
 router.get("/:userId", [checkIfAuthenticatedJWT], async (req,res)=>{
-    console.log("called")
+    // console.log("called")
     // get cart items
     let cartItems = await cartServiceLayer.displayCartItems(req.params.userId)
     
@@ -68,7 +68,7 @@ router.get("/:userId", [checkIfAuthenticatedJWT], async (req,res)=>{
 
         // register session with stripe
         let stripeSession = await Stripe.checkout.sessions.create(payment)
-        console.log(stripeSession)
+        // console.log(stripeSession)
         // send back to the browser
         // res.render('checkout/checkout', {
         //     'sessionId': stripeSession.id,
@@ -97,10 +97,10 @@ router.post("/process_payment", express.raw({type:'application/json'}), async (r
 
     try {
         event = Stripe.webhooks.constructEvent(payload, sig, endpointSecret)
-        // console.log("event => ", event)
+        console.log("event => ", event)
         if (event.type == "checkout.session.completed") {
             let stripeSession = event.data.object
-            // console.log("stripeSession => ", stripeSession)
+            console.log("stripeSession => ", stripeSession)
             let orders = JSON.parse(stripeSession.metadata.orders) // array of obj { product_id: 1, product_slot_id: 1, quantity: 1 }
             let userId = JSON.parse(stripeSession.metadata.userId)
             let totalCost = JSON.parse(stripeSession.amount_total)
