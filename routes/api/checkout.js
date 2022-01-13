@@ -85,7 +85,6 @@ router.get("/:userId", [checkIfAuthenticatedJWT], async (req,res)=>{
 
 // webhook after payment made
 router.post("/process_payment", express.raw({type:'application/json'}), async (req,res)=> {
-    console.log("called")
     let payload = req.body
     let endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
 
@@ -94,13 +93,12 @@ router.post("/process_payment", express.raw({type:'application/json'}), async (r
 
     let event
 
-    try{
+    try {
         event = Stripe.webhooks.constructEvent(payload, sig, endpointSecret)
-        console.log(event)
+        console.log("event => ", event)
         if (event.type == "checkout.session.completed") {
-            console.log("indented")
             let stripeSession = event.data.object
-            console.log(stripeSession)
+            console.log("stripeSession => ", stripeSession)
             let orders = JSON.parse(stripeSession.metadata.orders)
             let userId = JSON.parse(stripeSession.metadata.userId)
 
