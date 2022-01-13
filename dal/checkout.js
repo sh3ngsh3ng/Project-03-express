@@ -16,11 +16,9 @@ const checkProductSlotsQuantity = async (productSlotId, checkOutQuantity) => {
 }
 
 const editProductSlotsQuantityOnCheckOut = async(orders) => {
-    console.log("orders => ", orders)
     // minus productslot quantity
     for (let i = 0; i < orders.length; i++) {
         let productSlotId = orders[i].product_slot_id
-        console.log("productSlotId => ", productSlotId)
         let orderedQuantity = orders[i].quantity
         let productSlot = await ProductSlot.where({'id': productSlotId}).fetch({
             require: false

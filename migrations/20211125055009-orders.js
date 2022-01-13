@@ -19,7 +19,7 @@ exports.up = function(db) {
     id: {type: 'int', primaryKey: true, autoIncrement: true, unsigned: true},
     order_date: {type: 'datetime'},
     order_total_cost: {type: 'int'},
-    order_status: {type: 'boolean'}
+    order_status: {type: 'string', length: '45'}
   })
 };
 
