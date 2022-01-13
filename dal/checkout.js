@@ -16,11 +16,13 @@ const checkProductSlotsQuantity = async (productSlotId, checkOutQuantity) => {
 }
 
 const editProductSlotsQuantityOnCheckOut = async(orders) => {
+    console.log("orders => ", orders)
     // minus productslot quantity
     for (let i = 0; i < orders.length; i++) {
-        let productId = orders[i].product_id
+        let productSlotId = orders[i].product_slot_id
+        console.log("productSlotId => ", productSlotId)
         let orderedQuantity = orders[i].quantity
-        let productSlot = await ProductSlot.where({'product_id': productId}).fetch({
+        let productSlot = await ProductSlot.where({'id': productSlotId}).fetch({
             require: false
         })
 
@@ -29,6 +31,8 @@ const editProductSlotsQuantityOnCheckOut = async(orders) => {
     }
     return
 }
+
+
 
 
 // add multiple select for checkout (in progress)

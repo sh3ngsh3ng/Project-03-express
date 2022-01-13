@@ -12,8 +12,8 @@ router.get("/:userId", async (req,res) => { // added checkIfAuthenticatedJWT mid
 
 // add item to user's cart
 router.get("/:userId/:productSlotId/add-item", async (req,res) => {
-    console.log("called")
-    await cartServiceLayer.addToCart(req.params.userId, req.params.productSlotId) 
+    console.log(req.params.productSlotId)
+    await cartServiceLayer.addToCart(req.params.userId, req.params.productSlotId)
     console.log("Item added")
     res.send("ok")
 })

@@ -189,7 +189,7 @@ router.get("/:product_id/add-session", checkIfAuthenticated, async(req,res)=> {
     })
 })
 
-// process adding session of product (into product slots table)
+// process adding session of product (into product_slots table)
 router.post("/:product_id/add-session", checkIfAuthenticated, async(req,res)=> {
     const addSessionForm = createAddSessionForm()
 

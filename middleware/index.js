@@ -23,7 +23,6 @@ const cloudinaryVariables = (req,res,next) => {
 // check user's authentication with jwt
 const checkIfAuthenticatedJWT = (req, res, next) => {
     const authHeader = req.headers.authorization
-    console.log(authHeader)
     if (authHeader) {
         const token = authHeader.split(' ')[1]
 

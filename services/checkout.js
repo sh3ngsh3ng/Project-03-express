@@ -6,7 +6,8 @@ const validCheckOut = async (productSlotId, checkOutQuantity) => {
     return await checkoutDataLayer.checkProductSlotsQuantity(productSlotId, checkOutQuantity)
 }
 
-// orders will be array of objects
+// called when checkedout success (checkout.session.completed)
+// orders will be array of objects, each object is a product slot
 const onCheckOut = async(orders, userId) => {
     // update quantity slots
     await checkoutDataLayer.editProductSlotsQuantityOnCheckOut(orders)

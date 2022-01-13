@@ -13,7 +13,7 @@ router.get("/:userId", [checkIfAuthenticatedJWT], async (req,res)=>{
     let cartItems = await cartServiceLayer.displayCartItems(req.params.userId)
     
     let itemArray = cartItems.toJSON()
-    
+    // console.log("itemArray =>", itemArray)
     // check validity of checking out
     let validityArray = []
     for (let item of itemArray) {
@@ -23,7 +23,7 @@ router.get("/:userId", [checkIfAuthenticatedJWT], async (req,res)=>{
         validityArray.push(validity)
     }
 
-    // validity flag
+    // validity flag (to check for quantity available)
     let validityFlag = validityArray.every((item) => item)
     
     // conditional for a valid checkout
@@ -32,6 +32,7 @@ router.get("/:userId", [checkIfAuthenticatedJWT], async (req,res)=>{
         let lineItems = []
         let metadata = []
         for (let item of cartItems) {
+            console.log("item => ", item.toJSON())
 
             const lineItem = {
                 'name': item.related('productslot').related("product").get('product_name'),
@@ -47,7 +48,7 @@ router.get("/:userId", [checkIfAuthenticatedJWT], async (req,res)=>{
 
             metadata.push({
                 'product_id': item.related('productslot').related("product").get('id'),
-                'product_slot_id': item.get("id"),
+                'product_slot_id': item.related('productslot').get("id"),
                 'quantity': item.get("cart_items_quantity")
             })
         }
@@ -79,6 +80,7 @@ router.get("/:userId", [checkIfAuthenticatedJWT], async (req,res)=>{
         })
         
     } else {
+        // handle checkout failure on client side (due to quantity)
         res.send('checkout failed')
     }
 })
@@ -101,8 +103,15 @@ router.post("/process_payment", express.raw({type:'application/json'}), async (r
             console.log("stripeSession => ", stripeSession)
             let orders = JSON.parse(stripeSession.metadata.orders)
             let userId = JSON.parse(stripeSession.metadata.userId)
-
+            
+            // update quantity slot
             await checkoutServiceLayer.onCheckOut(orders, userId)
+            
+            // create orders (1)
+
+
+            // add to order_items table (2)
+
 
             res.send({
                 'received': true
