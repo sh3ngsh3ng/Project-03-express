@@ -230,11 +230,40 @@ const createSearchForm = (tags) => {
     })
 }
 
+const createFilterForm = () => {
+    return forms.create({
+        
+        'name': fields.string({
+            label: 'Search By Keywords',
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'payment_status': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'date': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        })
+    })
+}
+
 
 module.exports = {bootstrapField, 
                 createProductForm, 
                 createRegistrationForm,
                 createLoginForm,
                 createAddSessionForm,
-                createSearchForm
+                createSearchForm,
+                createFilterForm
             }

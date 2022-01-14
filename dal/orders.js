@@ -1,14 +1,15 @@
 const {Order, OrderItem, ProductSlot } = require("../models")
 
 // (VENDOR) vendor to view all order items
-// const getOrderItems = async(vendor) => {
-//     let allVendorOrderItems = await OrderItem.where({
-//         'vendor_id': vendor
-//     }).fetchAll({
-//         require: false,
-//         withRelated: ['productslot', 'productslot.product', 'order', 'order.user']
-//     })
-// }
+const getOrderItems = async(vendor) => {
+    let allVendorOrderItems = await OrderItem.where({
+        'vendor_id': vendor
+    }).fetchAll({
+        require: false,
+        withRelated: ['productslot', 'productslot.product', 'order', 'order.user']
+    })
+    return allVendorOrderItems.toJSON()
+}
 
 // (VENDOR) vendor to view specific order items
 const getSpecificOrderItems = async(productSlotId) => {
@@ -69,5 +70,6 @@ const createOrderItems = async (orders, newOrder) => {
 module.exports = {
     createOrder,
     createOrderItems,
+    getOrderItems,
     getSpecificOrderItems
 }
