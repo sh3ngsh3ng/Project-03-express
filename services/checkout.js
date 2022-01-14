@@ -9,7 +9,7 @@ const validCheckOut = async (productSlotId, checkOutQuantity) => {
 // called when checkedout success (checkout.session.completed)
 // orders will be array of objects, each object is a product slot
 const onCheckOut = async(orders, userId, totalCost) => {
-
+    
     // update quantity slots
     await checkoutDataLayer.editProductSlotsQuantityOnCheckOut(orders)
     // update user's cart

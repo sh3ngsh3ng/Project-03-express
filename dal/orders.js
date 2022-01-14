@@ -1,6 +1,16 @@
 const {Order, OrderItem, ProductSlot } = require("../models")
 
-// (VENDOR) vendor to view their order items
+// (VENDOR) vendor to view all order items
+// const getOrderItems = async(vendor) => {
+//     let allVendorOrderItems = await OrderItem.where({
+//         'vendor_id': vendor
+//     }).fetchAll({
+//         require: false,
+//         withRelated: ['productslot', 'productslot.product', 'order', 'order.user']
+//     })
+// }
+
+// (VENDOR) vendor to view specific order items
 const getSpecificOrderItems = async(productSlotId) => {
     console.log("getOrderItems Called")
     let vendorOrderItems = await OrderItem.where({
@@ -36,17 +46,21 @@ const createOrder = async(userId, totalCost) => {
 
 // (ON CHEKCOUT) ceate order items
 const createOrderItems = async (orders, newOrder) => {
-    try {let orderId = newOrder.id
-    for (let i = 0; i < orders.length; i++) {
-        let newOrderItem = new OrderItem({
-            'order_id': orderId,
-            'product_slots_id': orders[i].product_slot_id,
-            'order_item_quantity': orders[i].quantity,
-            'order_item_status': "processing"
-        })
-        await newOrderItem.save()
-        console.log("Order Item created")
-    }} catch (e) {
+    try {
+        let orderId = newOrder.id
+        for (let i = 0; i < orders.length; i++) {
+            let newOrderItem = new OrderItem({
+                'order_id': orderId,
+                'product_slots_id': orders[i].product_slot_id,
+                'order_item_quantity': orders[i].quantity,
+                'order_item_status': "processing",
+                'vendor_id': 1
+            })
+            await newOrderItem.save()
+            console.log("Order Item created")
+            }
+    } 
+    catch (e) {
         console.log('createOrderItems error =>', e)
     }
     return
