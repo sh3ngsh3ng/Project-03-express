@@ -54,7 +54,7 @@ const createOrderItems = async (orders, newOrder) => {
                 'product_slots_id': orders[i].product_slot_id,
                 'order_item_quantity': orders[i].quantity,
                 'order_item_status': "processing",
-                'vendor_id': 1
+                'vendor_id': orders[i].vendor_id
             })
             await newOrderItem.save()
             console.log("Order Item created")

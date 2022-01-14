@@ -49,7 +49,8 @@ router.get("/:userId", [checkIfAuthenticatedJWT], async (req,res)=>{
             metadata.push({
                 'product_id': item.related('productslot').related("product").get('id'),
                 'product_slot_id': item.related('productslot').get("id"),
-                'quantity': item.get("cart_items_quantity")
+                'quantity': item.get("cart_items_quantity"),
+                'vendor_id': item.related('productslot').related("product").get('vendor_id')
             })
         }
 
