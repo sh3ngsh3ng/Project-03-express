@@ -90,9 +90,20 @@ let ageRestriction = [
                     [21, "21 years old"],
                 ]                
 
+
+let paymentStatus = [
+                    ['all', 'All'],
+                    ['processing', 'Pending'],
+                    ['paid', 'Paid'],
+                    ['cancelled', 'Cancelled']
+                ]
+
+
+
 module.exports = {
     datetimeLocal,
     roomTypes,
     playTime,
-    ageRestriction
+    ageRestriction,
+    paymentStatus
 }

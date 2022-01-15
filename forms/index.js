@@ -4,7 +4,7 @@ const forms = require("forms");
 const fields = forms.fields;
 const validators = forms.validators;
 const widgets = forms.widgets
-const {datetimeLocal, roomTypes, playTime, ageRestriction} = require("./utils")
+const {datetimeLocal, roomTypes, playTime, ageRestriction, paymentStatus} = require("./utils")
 
 
 
@@ -246,14 +246,9 @@ const createFilterForm = () => {
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
-            }
-        }),
-        'date': fields.string({
-            required: false,
-            errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            }
+            },
+            widget: widgets.select(),
+            choices: paymentStatus
         })
     })
 }
