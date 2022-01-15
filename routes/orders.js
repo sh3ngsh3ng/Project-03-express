@@ -16,6 +16,7 @@ router.get("/", async (req,res) => {
 })
 
 
+// change to post
 // display all orders of a specific product slot
 router.get("/:productSlotId", async (req, res) => {
     let orders = await ordersDataLayer.getSpecificOrderItems(req.params.productSlotId)

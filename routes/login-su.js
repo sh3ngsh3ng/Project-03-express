@@ -72,7 +72,7 @@ router.post("/", (req,res) => {
 
             if (!vendor) {
                 req.flash("error_messages", "Login Failed. Please try again.")
-                res.redirect("/login")
+                res.redirect("/")
             } else {
                 // user found (login success + fail)
                 if (vendor.get("password") === hashPassword(form.data.password)) {
