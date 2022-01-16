@@ -6,14 +6,13 @@ const getOrderItems = async(vendor) => {
         'vendor_id': vendor
     }).fetchAll({
         require: false,
-        withRelated: ['productslot', 'productslot.product', 'order', 'order.user']
+        withRelated: ['user', 'productslot', 'productslot.product', 'order']
     })
     return allVendorOrderItems.toJSON()
 }
 
 // (VENDOR) vendor to view specific order items
 const getSpecificOrderItems = async(productSlotId) => {
-    console.log("getOrderItems Called")
     let vendorOrderItems = await OrderItem.where({
         "product_slots_id": productSlotId
     }).fetchAll({
@@ -21,6 +20,20 @@ const getSpecificOrderItems = async(productSlotId) => {
         withRelated: ['order', 'order.user']
     })
     return vendorOrderItems.toJSON()
+}
+
+// (VENDOR) change order status
+const changeOrderStatus = async(userId, vendorId, productSlotId, orderId) => {
+    console.log("changeOrderStatus called")
+    let orderItemToBeChanged = await OrderItem.where({
+        "user_id": userId,
+        "vendor_id": vendorId,
+        "product_slots_id": productSlotId,
+        "order_id": orderId
+    }).fetch()
+    orderItemToBeChanged.set("order_item_status", "confirmed")
+    orderItemToBeChanged.save()
+    return orderItemToBeChanged.toJSON()
 }
 
 
@@ -72,5 +85,6 @@ module.exports = {
     createOrder,
     createOrderItems,
     getOrderItems,
-    getSpecificOrderItems
+    getSpecificOrderItems,
+    changeOrderStatus
 }

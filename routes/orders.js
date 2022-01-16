@@ -9,6 +9,7 @@ const { Product, ProductSlot, OrderItem } = require("../models")
 router.get("/", async (req,res) => {
     const filterForm = createFilterForm().toHTML(bootstrapField)
     let orders = await ordersDataLayer.getOrderItems(req.session.vendor.id)
+    console.log(orders)
     res.render('products/manage-orders', {
         orders, filterForm
     })
@@ -74,7 +75,6 @@ router.post("/", async (req,res) => {
             })
             
             orders = orders.toJSON()
-            console.log(orders)
 
             if (orders.length == 0) {
                 res.render('products/manage-orders', {
@@ -107,5 +107,24 @@ router.get("/:productSlotId", async (req, res) => {
     // }) // DESC
 
 // add orders
+
+// change order status
+router.get("/update-status/confirm", async(req,res) => {
+    console.log(req.query)
+    console.log("called")
+    // authenticate
+    // user id
+    let userId = req.query.userId
+    // product slot id
+    let productSlotId = req.query.productSlotId
+    // vendor id
+    let vendorId = req.query.vendorId
+    // order id
+    let orderId = req.query.orderId
+    console.log(userId, productSlotId, vendorId)
+    let changeOrder = await ordersDataLayer.changeOrderStatus(userId, vendorId, productSlotId, orderId)
+    res.redirect("/")
+})
+
 
 module.exports = router

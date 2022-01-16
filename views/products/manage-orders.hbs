@@ -61,9 +61,9 @@
             <td>{{user.email}}</td>
             <td>
                 {{#eq order_item_status "pending"}}
-                <select class="form-select change_order_status">
+                <select id={{productslot.id}} name={{user.id}} class="form-select change_order_status">
                     <option value="{{order_item_status}}" selected>Pending</option>
-                    <option value="confirmed">Confirm Order</option>
+                    <option value='{"status": "confirmed", "orderId": "{{order.id}}"}'>Confirm Order</option>
                     <option value="cancelled">Cancel Order</option>
                 </select>
                 {{/eq}}
@@ -90,10 +90,25 @@
 <script>
     document.querySelectorAll(".change_order_status").forEach(item => {
         item.addEventListener('click', function(evt) {
-            if (evt.target.value == "confirmed") {
+            let optionValueObj = JSON.parse(evt.target.value)
+            console.log(optionValueObj)
+            if (optionValueObj.status == "confirmed") {
                 let answer = window.confirm("Confirm Order?")
                 if (answer) {
                     console.log("confirmed")
+                    let currentUrl = window.location.href
+                    let result = axios.get(currentUrl + "update-status/confirm", {
+                        params: {
+                            'userId': this.name,
+                            'vendorId': {{vendor.id}},
+                            'productSlotId': this.id,
+                            'orderId': optionValueObj.orderId
+                        }
+                    })
+                    setTimeout(function() {
+                        alert("Updating Order Status")
+                        window.location.reload()
+                    }, 1000)
                 } else {
                     console.log("declined")
                     this.value = "pending"
