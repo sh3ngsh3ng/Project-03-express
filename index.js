@@ -13,6 +13,12 @@ let app = express()
 app.set("view engine", "hbs")
 app.use(express.static("public"))
 
+// 188 handlebars helper
+var helpers = require("handlebars-helpers")({
+    handlebars: hbs.handlebars
+});
+
+
 // custom handlebars
 hbs.handlebars.registerHelper('ifEqual', function(x, y, options) {
     return (x == y) ? options.fn(this) : options.inverse(this)

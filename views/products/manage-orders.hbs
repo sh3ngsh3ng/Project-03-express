@@ -59,7 +59,22 @@
         <tr>
             <td>{{user.username}}</td>
             <td>{{user.email}}</td>
-            <td>{{order_item_status}}</td>
+            <td>
+                {{#eq order_item_status "pending"}}
+                <select class="form-select change_order_status">
+                    <option value="{{order_item_status}}" selected>Pending</option>
+                    <option value="confirmed">Confirm Order</option>
+                    <option value="cancelled">Cancel Order</option>
+                </select>
+                {{/eq}}
+
+                {{#eq order_item_status "confirmed"}}
+                <select class="form-select" disabled>
+                    <option>Order Confirmed</option>
+                </select>
+                {{/eq}}
+
+            </td>
             <td>{{order.order_status}}</td>
             <td>{{order_item_quantity}}</td>
         </tr>
@@ -70,6 +85,25 @@
 
 {{/block}}
 
+{{#block "script"}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+<script>
+    document.querySelectorAll(".change_order_status").forEach(item => {
+        item.addEventListener('click', function(evt) {
+            if (evt.target.value == "confirmed") {
+                let answer = window.confirm("Confirm Order?")
+                if (answer) {
+                    console.log("confirmed")
+                } else {
+                    console.log("declined")
+                    this.value = "pending"
+                }
+            }
+        })
+    })
 
+
+</script>
+{{/block}}
 
 {{/extends}}
