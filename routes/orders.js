@@ -15,8 +15,6 @@ router.get("/", async (req,res) => {
 })
 
 router.post("/", async (req,res) => {
-    console.log("called")
-    console.log("body =>", req.body)
     let filterForm = createFilterForm()
 
     filterForm.handle(req, {
@@ -42,7 +40,7 @@ router.post("/", async (req,res) => {
 
             let payment_status = req.body.payment_status
             let name = req.body.name
-            let q = OrderItem.where({'vendor_id': req.session.vendor.id})
+            let q = OrderItem.where({'order_items.vendor_id': req.session.vendor.id})
             filterForm = filterForm.toHTML(bootstrapField)
 
             if (payment_status) {
@@ -60,12 +58,14 @@ router.post("/", async (req,res) => {
 
             }
 
-            
             if (name) {
-                console.log(req.body.name)
                 q =  q.query('join', 'users', 'users.id', 'order_items.user_id')
+                .query('join', 'product_slots', 'product_slots_id', 'order_items.product_slots_id')
+                .query('join', 'products', 'product_id', 'product_slots.product_id')
                 .where('username', 'like', `%${name}%`)
             }
+
+
 
             let orders = await q.fetchAll({
                 require: false,

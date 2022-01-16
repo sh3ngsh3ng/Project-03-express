@@ -50,6 +50,9 @@ const Vendor = bookshelf.model('Vendor', {
     tableName: 'vendors',
     products() {
         return this.hasMany('Product')
+    },
+    orderitems() {
+        return this.hasMany('OrderItem')
     }
 })
 
@@ -63,6 +66,9 @@ const OrderItem = bookshelf.model('OrderItem', {
     },
     user() {
         return this.belongsTo('User')
+    },
+    vendor() {
+        return this.belongsTo('Vendor')
     }
 })
 
