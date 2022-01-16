@@ -93,7 +93,7 @@ let ageRestriction = [
 
 let orderStatus = [
                     ['all', 'All'],
-                    ['processing', 'Pending'],
+                    ['pending', 'Pending'],
                     ['confirmed', 'Confirmed'],
                     ['cancelled', 'Cancelled']
                 ]

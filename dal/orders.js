@@ -54,7 +54,7 @@ const createOrderItems = async (orders, newOrder, userId) => {
                 'order_id': orderId,
                 'product_slots_id': orders[i].product_slot_id,
                 'order_item_quantity': orders[i].quantity,
-                'order_item_status': "processing",
+                'order_item_status': "pending",
                 'vendor_id': orders[i].vendor_id,
                 "user_id": userId
             })

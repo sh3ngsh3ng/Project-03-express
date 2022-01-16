@@ -45,8 +45,8 @@ router.post("/", async (req,res) => {
             filterForm = filterForm.toHTML(bootstrapField)
 
             if (order_status) {
-                if (order_status == "processing") {
-                    q = q.where({"order_item_status": "processing"})
+                if (order_status == "pending") {
+                    q = q.where({"order_item_status": "pending"})
                 }
 
                 if (order_status == "confirmed") {
