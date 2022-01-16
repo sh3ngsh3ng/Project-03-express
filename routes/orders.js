@@ -61,25 +61,19 @@ router.post("/", async (req,res) => {
             }
 
             
-            // if (name) {
-            //     try {
-            //     q =  q.query('join', 'order_items', 'orders.id', 'order_id')
-            //     console.log(q)
-            //     let result = await q.fetchAll()
-            //     result = result.toJSON()
-            //     console.log("result =>", result)
-            //     res.send("Success")}
-            //     catch (e) {
-            //         console.log("error =>", e)
-            //     }
-            // }
+            if (name) {
+                console.log(req.body.name)
+                q =  q.query('join', 'users', 'users.id', 'order_items.user_id')
+                .where('username', 'like', `%${name}%`)
+            }
 
             let orders = await q.fetchAll({
                 require: false,
-                withRelated: ['order', 'order.user']
+                withRelated: ['user', 'productslot', 'productslot.product']
             })
-            console.log(orders)
+            
             orders = orders.toJSON()
+            console.log(orders)
             res.render('products/manage-orders', {
                 orders, filterForm
             })
