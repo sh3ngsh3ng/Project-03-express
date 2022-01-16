@@ -35,7 +35,7 @@ const createOrder = async(userId, totalCost) => {
     let newOrder = new Order({
         'order_date': new Date().toISOString().slice(0, 19).replace('T', ' '),
         'order_total_cost': totalCost,
-        'order_status': "processing",
+        'order_status': "paid",
         'user_id': userId
     })
 
@@ -46,7 +46,7 @@ const createOrder = async(userId, totalCost) => {
 
 
 // (ON CHEKCOUT) ceate order items
-const createOrderItems = async (orders, newOrder) => {
+const createOrderItems = async (orders, newOrder, userId) => {
     try {
         let orderId = newOrder.id
         for (let i = 0; i < orders.length; i++) {
@@ -55,7 +55,8 @@ const createOrderItems = async (orders, newOrder) => {
                 'product_slots_id': orders[i].product_slot_id,
                 'order_item_quantity': orders[i].quantity,
                 'order_item_status': "processing",
-                'vendor_id': orders[i].vendor_id
+                'vendor_id': orders[i].vendor_id,
+                "user_id": userId
             })
             await newOrderItem.save()
             console.log("Order Item created")

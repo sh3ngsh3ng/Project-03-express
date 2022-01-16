@@ -17,7 +17,7 @@ const onCheckOut = async(orders, userId, totalCost) => {
     // create user's order
     let newOrder = await ordersDataLayer.createOrder(userId, totalCost) // newOrder is the new row created in orders table
     // create order items
-    await ordersDataLayer.createOrderItems(orders, newOrder)
+    await ordersDataLayer.createOrderItems(orders, newOrder, userId)
     return
 }
 

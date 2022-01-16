@@ -14,6 +14,7 @@ router.get("/", async (req,res) => {
     })
 })
 
+// seach orders
 router.post("/", async (req,res) => {
     let filterForm = createFilterForm()
 
@@ -30,7 +31,7 @@ router.post("/", async (req,res) => {
             // display all
             let orders = await ordersDataLayer.getOrderItems(req.session.vendor.id)
             let filterForm = form.toHTML(bootstrapField)
-            req.flash("error_messages", "No results found")
+            req.flash("error_messages", "Search Error")
             res.render('products/manage-orders', {
                 orders, filterForm
             })
@@ -69,14 +70,22 @@ router.post("/", async (req,res) => {
 
             let orders = await q.fetchAll({
                 require: false,
-                withRelated: ['user', 'productslot', 'productslot.product']
+                withRelated: ['user', 'productslot', 'productslot.product', 'order']
             })
             
             orders = orders.toJSON()
             console.log(orders)
-            res.render('products/manage-orders', {
-                orders, filterForm
-            })
+
+            if (orders.length == 0) {
+                res.render('products/manage-orders', {
+                    orders, filterForm
+                })
+            } else {
+                res.render('products/manage-orders', {
+                    orders, filterForm
+                })
+            }
+            
         }
     })
     
