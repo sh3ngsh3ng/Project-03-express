@@ -61,21 +61,6 @@
             <td>{{user.username}}</td>
             <td>{{user.email}}</td>
             <td>
-                {{!-- {{#eq order_item_status "pending"}}
-                    <select id={{productslot.id}} name={{user.id}} class="form-select">
-                        <option class="change_order_status" value='{"status": "pending", "orderId": "{{order.id}}"}' selected>Pending</option>
-                        <option class="change_order_status" value='{"status": "confirmed", "orderId": "{{order.id}}"}'>Confirm Order</option>
-                        <option class="change_order_status" value='{"status": "cancelled", "orderId": "{{order.id}}"}'>Cancel Order</option>
-                    </select>
-                {{/eq}}
-
-                {{#eq order_item_status "confirmed"}}
-                    <select id={{productslot.id}} name={{user.id}} class="form-select change_order_status">
-                        <option class="change_order_status"  value='{"status": "pending", "orderId": "{{order.id}}"}' >Set Pending</option>
-                        <option class="change_order_status" value='{"status": "confirmed", "orderId": "{{order.id}}"}' selected>Order Confirmed</option>
-                        <option class="change_order_status" value='{"status": "cancelled", "orderId": "{{order.id}}"}'>Cancel Order</option>
-                    </select>
-                {{/eq}} --}}
                 {{#eq order_item_status "pending"}}
                     <span class="badge bg-warning">Pending</span>
                 {{/eq}}
@@ -83,12 +68,15 @@
                 {{#eq order_item_status "confirmed"}}
                     <span class="badge bg-success">Confirmed</span>
                 {{/eq}}
+
+                {{#eq order_item_status "cancelled"}}
+                    <span class="badge bg-success">Cancelled</span>
+                {{/eq}}
             </td>
             <td>
-                <btn class="btn btn-warning">Pending</btn>
-                <btn class="btn btn-success">Confirm</btn>
-                
-                <btn class="btn btn-danger">Delete</btn>
+                <button name="pending" value="{{order.id}},{{user.id}},{{productslot.id}}" class="action-btn btn btn-warning">Pending</button>
+                <button name="confirmed" value="{{order.id}},{{user.id}},{{productslot.id}}" class="action-btn btn btn-success">Confirm</button>
+                <button name="cancelled" value="{{order.id}},{{user.id}},{{productslot.id}}" class="action-btn btn btn-danger">Delete</button>
             </td>
             <td>{{order.order_status}}</td>
             <td>{{order_item_quantity}}</td>
@@ -104,39 +92,42 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
 <script>
 
-
-
-
-
-    {{!-- document.querySelectorAll(".change_order_status").forEach(item => {
-        item.addEventListener('click', function(evt) {
-            let optionValueObj = JSON.parse(evt.target.value)
-            if (optionValueObj.status == "confirmed") {
-                let answer = window.confirm("Confirm Order?")
-                if (answer) {
-                    console.log("confirmed")
-                    let currentUrl = window.location.href
-                    let result = axios.get(currentUrl + "update-status/confirm", {
-                        params: {
-                                'userId': this.name,
-                                'vendorId': {{vendor.id}},
-                                'productSlotId': this.id,
-                                'orderId': optionValueObj.orderId
-                        }
-                    })
-                    setTimeout(function() {
-                        alert("Order Status Changed")
-                        window.location.reload()
-                    }, 800)
-                } else {
-                    console.log("declined")
-                    this.value = "pending"
-                }
-                console.log("test")
-            } 
-        })
-    }) --}}
-
+document.querySelectorAll(".action-btn").forEach(item => {
+    item.addEventListener('click', function(evt) {
+        let orderStatus = this.name
+        let orderId = parseInt(this.value.split(",")[0])
+        let userId = parseInt(this.value.split(",")[1])
+        let productSlotId = parseInt(this.value.split(",")[2])
+        let vendorId = {{vendor.id}}
+        console.log("orderstatus => ",orderStatus)
+        console.log("orderid => ",orderId)
+        console.log("userId => ",userId)
+        console.log("productslotid", productSlotId)
+        if (orderStatus == "confirmed") {
+            let answer = window.confirm("Confirm Order?")
+            if (answer) {
+                let currentUrl = window.location.href
+                let result = axios.get(currentUrl + "update-status/confirm", {
+                    params: {
+                        orderStatus, orderId, userId, productSlotId, vendorId
+                    }
+                })
+                setTimeout(function() {
+                    alert("Order Status Changed")
+                    window.location.reload()
+                }, 800)
+            } else {
+                console.log("declined")
+            }
+        }
+        if (orderStatus == "pending") {
+            console.log("do pending")
+        }
+        if (orderStatus == "cancelled") {
+            console.log("do delete")
+        }
+    })
+})
 
 </script>
 {{/block}}
