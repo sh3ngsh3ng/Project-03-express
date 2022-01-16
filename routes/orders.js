@@ -39,21 +39,21 @@ router.post("/", async (req,res) => {
         'success': async(form) => {
             // return search resutls
 
-            let payment_status = req.body.payment_status
+            let order_status = req.body.order_status
             let name = req.body.name
             let q = OrderItem.where({'order_items.vendor_id': req.session.vendor.id})
             filterForm = filterForm.toHTML(bootstrapField)
 
-            if (payment_status) {
-                if (payment_status == "processing") {
+            if (order_status) {
+                if (order_status == "processing") {
                     q = q.where({"order_item_status": "processing"})
                 }
 
-                if (payment_status == "paid") {
-                    q = q.where({"order_item_status": "paid"})
+                if (order_status == "confirmed") {
+                    q = q.where({"order_item_status": "confirmed"})
                 }
 
-                if (payment_status == "cancelled") {
+                if (order_status == "cancelled") {
                     q = q.where({"order_item_status": "cancelled"})
                 }
 

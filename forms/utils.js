@@ -91,10 +91,10 @@ let ageRestriction = [
                 ]                
 
 
-let paymentStatus = [
+let orderStatus = [
                     ['all', 'All'],
                     ['processing', 'Pending'],
-                    ['paid', 'Paid'],
+                    ['confirmed', 'Confirmed'],
                     ['cancelled', 'Cancelled']
                 ]
 
@@ -105,5 +105,5 @@ module.exports = {
     roomTypes,
     playTime,
     ageRestriction,
-    paymentStatus
+    orderStatus
 }
