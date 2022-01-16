@@ -70,7 +70,7 @@
                 {{/eq}}
 
                 {{#eq order_item_status "cancelled"}}
-                    <span class="badge bg-success">Cancelled</span>
+                    <span class="badge bg-danger">Cancelled</span>
                 {{/eq}}
             </td>
             <td>
@@ -99,14 +99,10 @@ document.querySelectorAll(".action-btn").forEach(item => {
         let userId = parseInt(this.value.split(",")[1])
         let productSlotId = parseInt(this.value.split(",")[2])
         let vendorId = {{vendor.id}}
-        console.log("orderstatus => ",orderStatus)
-        console.log("orderid => ",orderId)
-        console.log("userId => ",userId)
-        console.log("productslotid", productSlotId)
+        let currentUrl = window.location.href
         if (orderStatus == "confirmed") {
             let answer = window.confirm("Confirm Order?")
             if (answer) {
-                let currentUrl = window.location.href
                 let result = axios.get(currentUrl + "update-status/confirm", {
                     params: {
                         orderStatus, orderId, userId, productSlotId, vendorId
@@ -115,16 +111,37 @@ document.querySelectorAll(".action-btn").forEach(item => {
                 setTimeout(function() {
                     alert("Order Status Changed")
                     window.location.reload()
-                }, 800)
-            } else {
-                console.log("declined")
+                }, 500)
             }
         }
         if (orderStatus == "pending") {
-            console.log("do pending")
+            let answer = window.confirm("Do you want to set to 'Pending'?")
+            if (answer) {
+                let result = axios.get(currentUrl + "update-status/confirm", {
+                    params: {
+                        orderStatus, orderId, userId, productSlotId, vendorId
+                    }
+                })
+                setTimeout(function() {
+                    alert("Order Status Changed")
+                    window.location.reload()
+                }, 500)
+            }
+            
         }
         if (orderStatus == "cancelled") {
-            console.log("do delete")
+            let answer = window.confirm("Do you want to cancel this order?")
+            if (answer) {
+                let result = axios.get(currentUrl + "update-status/confirm", {
+                    params: {
+                        orderStatus, orderId, userId, productSlotId, vendorId
+                    }
+                })
+                setTimeout(function() {
+                    alert("Order Status Changed")
+                    window.location.reload()
+                }, 500)
+            }
         }
     })
 })

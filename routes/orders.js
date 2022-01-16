@@ -110,19 +110,16 @@ router.get("/:productSlotId", async (req, res) => {
 
 // change order status
 router.get("/update-status/confirm", async(req,res) => {
-    console.log(req.query)
     console.log("called")
     // authenticate
-    // user id
     let userId = req.query.userId
-    // product slot id
     let productSlotId = req.query.productSlotId
-    // vendor id
     let vendorId = req.query.vendorId
-    // order id
     let orderId = req.query.orderId
+    let orderStatus = req.query.orderStatus
+
     console.log(userId, productSlotId, vendorId)
-    let changeOrder = await ordersDataLayer.changeOrderStatus(userId, vendorId, productSlotId, orderId)
+    let changeOrder = await ordersDataLayer.changeOrderStatus(userId, vendorId, productSlotId, orderId, orderStatus)
     res.redirect("/")
 })
 

@@ -23,7 +23,7 @@ const getSpecificOrderItems = async(productSlotId) => {
 }
 
 // (VENDOR) change order status
-const changeOrderStatus = async(userId, vendorId, productSlotId, orderId) => {
+const changeOrderStatus = async(userId, vendorId, productSlotId, orderId, orderStatus) => {
     console.log("changeOrderStatus called")
     let orderItemToBeChanged = await OrderItem.where({
         "user_id": userId,
@@ -31,7 +31,7 @@ const changeOrderStatus = async(userId, vendorId, productSlotId, orderId) => {
         "product_slots_id": productSlotId,
         "order_id": orderId
     }).fetch()
-    orderItemToBeChanged.set("order_item_status", "confirmed")
+    orderItemToBeChanged.set("order_item_status", orderStatus)
     orderItemToBeChanged.save()
     return orderItemToBeChanged.toJSON()
 }
