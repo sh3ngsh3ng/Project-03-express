@@ -106,7 +106,8 @@ const api = {
     'products': require("./routes/api/products"),
     'user': require("./routes/api/user"),
     'cart': require("./routes/api/cart"),
-    "checkout": require("./routes/api/checkout")
+    "checkout": require("./routes/api/checkout"),
+    "orders": require("./routes/api/orders")
 }
 
 async function main() {
@@ -125,7 +126,7 @@ async function main() {
 
     // check out
     app.use("/checkout", checkoutRoutes)
-
+    
 
     // API ROUTES
     // get active product listings
@@ -139,6 +140,10 @@ async function main() {
 
     // user check out
     app.use("/api/checkout", api.checkout)
+
+
+    // user orders route
+    app.use("/api/orders", api.orders)
 }
 
 main()

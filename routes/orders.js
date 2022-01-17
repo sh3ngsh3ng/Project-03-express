@@ -7,6 +7,7 @@ const { Product, ProductSlot, OrderItem } = require("../models")
 
 // display all orders of a vendor
 router.get("/", async (req,res) => {
+    console.log("called")
     const filterForm = createFilterForm().toHTML(bootstrapField)
     let orders = await ordersDataLayer.getOrderItems(req.session.vendor.id)
     console.log(orders)
