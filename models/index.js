@@ -88,6 +88,9 @@ const Order = bookshelf.model("Order", {
     tableName: 'orders',
     user() {
         return this.belongsTo('User')
+    },
+    orderitems () {
+        return this.hasMany("OrderItem")
     }
 })
 
