@@ -102,12 +102,7 @@ router.get("/:productSlotId", async (req, res) => {
     })
     // res.send(orders)
 })
-// sorting
-// let result = await ProductSlot.collection().orderBy('slot_datetime', 'ASC').fetch({
-    //     require: false
-    // }) // DESC
 
-// add orders
 
 // change order status
 router.get("/update-status/confirm", async(req,res) => {
