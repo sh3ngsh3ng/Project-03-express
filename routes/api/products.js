@@ -8,9 +8,25 @@ const {Product} = require("../../models")
 // get active listings of vendor's product
 // both active product and their respective productslots are sent back
 router.get("/active-listings", async (req,res) => {
-    console.log("called")
-    let activeListings = await productDataLayer.getActiveProductListings()
-    res.json(activeListings)
+
+    let query = req.query.room
+
+    if (query) {
+        console.log("called1")
+        let result = await Product.collection().where({
+            "product_status": "active",
+            "room_type": query
+        }).fetch({
+            require: false,
+            withRelated:['productslots', 'tags']
+        })
+        res.json(result)
+    } else {
+        console.log("called")
+        let activeListings = await productDataLayer.getActiveProductListings()
+        res.json(activeListings)
+    }
+    
 })
 
 // return all tags
